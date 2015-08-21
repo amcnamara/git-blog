@@ -1,2 +1,4 @@
 .aws_token
 node_modules/
+assets/
+content/

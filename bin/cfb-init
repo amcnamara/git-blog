@@ -1,0 +1,15 @@
+echo "Installing node http-server..."
+npm install http-server
+echo "  done.\n"
+
+echo "Creating content directory..."
+mkdir -p content
+echo "  done.\n"
+
+echo "Please enter your AWS access token:"
+read -s -e token
+echo "  done.\n"
+
+echo "Writing token to .aws_token..."
+echo "$token" > .aws_token
+echo "  done."

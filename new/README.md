@@ -1,0 +1,5 @@
+Powered by [git-blog](https://github.com/amcnamara/git-blog)
+
+The project powering this blog is likely to have minor (or perhaps major) bugs, if you run into any please feel free to open an issue on the github project or send a PR. The aims of this project are to have an _extremely_ lightweight drafting and publishing mechanism for static blogs to be hosted in [AWS'](https://aws.amazon.com/) [S3](https://aws.amazon.com/s3/) and [Cloudfront](https://aws.amazon.com/cloudfront/). Another goal of this project is to use [git](https://git-scm.com/) to store all revisions for both content posterity as well and enabling a simple publishing workflow from multiple machines; which is why publishing contains a bundle of the git repo and the tool contains support for cloning existing blogs. Please note that this project is not really an extension of git and lacks some of git's safety features; specifically publishing upstream is always destructive (it's up to you to ensure what you're publishing has all upstream changes, if any).
+
+For usage, please refer to `git-blog --help`

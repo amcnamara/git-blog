@@ -4,9 +4,16 @@ BINSRC=$(dirname $0)
 
 source $BINSRC/git-blog-helpers.sh
 source $BINSRC/git-blog-init.sh
-#source $BINSRC/git-blog-configure.sh
-#source $BINSRC/git-blog-add.sh
+source $BINSRC/git-blog-configure.sh
+source $BINSRC/git-blog-add.sh
 source $BINSRC/git-blog-build.sh
-#source $BINSRC/git-blog-publish.sh
+source $BINSRC/git-blog-publish.sh
 
-initialize $1
+#initialize $1
+#configure
+
+#echo "\nSuccessfully create new blog repo!"
+#echo $PWD
+#exit 0
+
+usage

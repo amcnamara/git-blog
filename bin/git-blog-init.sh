@@ -15,3 +15,13 @@ function initialize() {
     echo "Copying initial resources"
     cp -R $BINSRC/../new/* .
 }
+
+function clone() {
+    if [ -z $1 ]; then
+	echo "Argument missing: upstream git bundle"
+	exit 1
+    fi
+
+    # Clone existing git-blog repo
+    git clone $1
+}

@@ -3,11 +3,10 @@
 BINSRC=$(dirname $0)
 
 source $BINSRC/git-blog-helpers.sh
-#source $BINSRC/git-blog-init.sh
+source $BINSRC/git-blog-init.sh
 #source $BINSRC/git-blog-configure.sh
 #source $BINSRC/git-blog-add.sh
 source $BINSRC/git-blog-build.sh
 #source $BINSRC/git-blog-publish.sh
 
-cd_base
-build
+initialize $1

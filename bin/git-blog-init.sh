@@ -1,29 +1,30 @@
 function initialize() {
-    echo "Installing node http-server..."
-    npm install http-server
+    if [ -z $1 ]; then
+	echo "Argument missing: blog repo name"
+	exit 1
+    fi
+    if [ -e $1 ]; then
+	echo "Error: Directory with this name already exists"
+	exit 1
+    fi
 
+    # Create repo
+    mkdir $1
+    cd $1
+    git init
+    echo "Copying initial resources"
+    cp -R $BINSRC/../new/* .
+
+    # Initialize AWS token
     echo "\nPlease enter your AWS access token:"
     read -s -e token
 
-    echo "\nWriting token to .aws_token..."
-    echo "$token" > .aws_token
-
-    echo "\nCreating content directory..."
-    mkdir -p content
-    echo ./$_
-
-    echo "\nCreating assets directory..."
-    mkdir -p assets
-    echo ./$_
-    mkdir -p assets/layouts
-    echo ./$_
-    NOW=$(date +"%m%d%Y%H%M")
-    touch assets/layouts/${NOW}_template.html
-    echo ./$_
-    mkdir -p assets/images
-    echo ./$_
-    mkdir -p assets/stylesheets
-    echo ./$_
-    touch assets/stylesheets/${NOW}_style.css
-    echo ./$_
+    if [ -z $token ]; then
+        echo "No token provided, please provision $PWD/.aws_token before publishing"
+        exit 0
+    else
+        echo "Writing token to $PWD/.aws_token"
+        echo "Please be careful not to check-in or otherwise make this credential public!"
+        echo $token > .aws_token
+    fi
 }

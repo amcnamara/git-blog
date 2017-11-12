@@ -9,6 +9,4 @@ $(for key in $(multimarkdown -m $FILE); do
 done)  
 ---    
 METADATA
-
-    pwd
 }

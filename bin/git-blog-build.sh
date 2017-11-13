@@ -1,7 +1,7 @@
 function build() {
     cd_base
 
-    PUBLIC_DIR=./public
+    PUBLIC_DIR=$PWD/public
     TEMPLATE_DIR=./templates
     CONTENT_DIR=./content
 
@@ -28,7 +28,7 @@ function build() {
             mkdir -p $PUBLIC_DIR/$midpath
         fi
 
-        echo "Writing '$output'"
+        echo "Writing $output"
 
         # TODO: Consider adding support for http://www.html-tidy.org/ on output
         cat <<METADATA | cat ./config.yaml - | mustache - $template >> $output

@@ -1,3 +1,8 @@
+VERSION="1.0"
+function touch_version() {
+    echo "version=$VERSION" > .git_blog
+}
+
 function cd_base() {
     while [ ! -e "./.gitblog" ]; do
 	if [ $PWD == "/" ]; then
@@ -7,6 +12,9 @@ function cd_base() {
             cd ..
 	fi
     done
+
+    # Any command which operates at the base of the repo should mark the binary version
+    touch_version
 }
 
 function usage() {

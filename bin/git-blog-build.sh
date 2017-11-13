@@ -7,6 +7,8 @@ function build() {
 
     rm -rf $PUBLIC_DIR
 
+    rsync -a ./static/* ./public
+
     for post in $(find $CONTENT_DIR -name "*.md"); do
 	# Find the template and corresponding output path for the given post
         midpath=$(dirname $post | cut -d/ -f3- -)

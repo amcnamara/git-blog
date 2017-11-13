@@ -1,5 +1,5 @@
 function cd_base() {
-    while [ ! -e "./.git-blog" ]; do
+    while [ ! -e "./.gitblog" ]; do
 	if [ $PWD == "/" ]; then
             echo "You are not in a git-blog directory"
             exit 1

@@ -13,7 +13,7 @@ function initialize() {
     cd $1
     git init
     echo "Copying initial resources"
-    cp -R $BINSRC/../new/* .
+    rsync -a $BINSRC/../new/ .
 }
 
 function clone() {

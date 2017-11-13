@@ -11,31 +11,31 @@ source $BINSRC/git-blog-publish.sh
 
 case $1 in
     init)
-	initialize $2
-	configure
-	echo "Successfully created new blog repo!"
-	echo $PWD
-	;;
+        initialize $2
+        configure
+        echo "Successfully created new blog repo!"
+        echo $PWD
+        ;;
     clone)
-	clone $2
-	configure_aws
-	echo "Successfully cloned existing blog repo!"
-	;;
+        clone $2
+        configure_aws
+        echo "Successfully cloned existing blog repo!"
+        ;;
     configure)
-	configure
-	;;
+        configure
+        ;;
     add)
-	add $2
-	;;
+        add $2
+        ;;
     build)
-	build
-	;;
+        build
+        ;;
     publish)
-	publish
-	;;
+        publish
+        ;;
     *)
-	usage
-	;;
+        usage
+        ;;
 esac
 
 exit 0

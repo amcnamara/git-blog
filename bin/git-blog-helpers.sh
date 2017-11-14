@@ -1,6 +1,6 @@
 VERSION="1.0"
 function touch_version() {
-    echo "version=$VERSION" > .git_blog
+    echo "version=$VERSION" > .gitblog
 }
 
 function cd_base() {

@@ -12,7 +12,7 @@ function build() {
     for post in $(find $CONTENT_DIR -name "*.md"); do
         # Find the template and corresponding output path for the given post
         midpath=$(dirname $post | cut -d/ -f3- -)
-        template=$TEMPLATE_DIR/$midpath/index.mustache
+        template=$TEMPLATE_DIR/$midpath/template.mustache
         output=$PUBLIC_DIR/$midpath/$(basename $post | cut -d. -f1 -).html
 
 	# Ensure that the template exists for the given post

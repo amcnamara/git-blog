@@ -17,6 +17,21 @@ function cd_base() {
     touch_version
 }
 
+function is_config_attribute() {
+    cd_base
+
+    # NOTE: This craps out when inlined(?).
+    regex="$1:[[:blank:]]*([[:alnum:]]+)"
+
+    if [[ $(cat ./config.yaml) =~ $regex ]]; then
+	if [[ "true" == $(echo ${BASH_REMATCH[1]} | tr '[:upper:]' '[:lower:]') ]]; then
+	    return 0
+	fi
+    fi
+
+    return 1
+}
+
 function usage() {
     cat <<EOF
 Usage:

@@ -40,4 +40,18 @@ content: '$(multimarkdown --snippet $post)'
 ---
 METADATA
     done
+
+    # Build options (all are recommended and enabled by default on a new git-blog):
+    # - Index content, ordered by creation time
+    # - Generate RSS feed of content, ordered by creation time
+    # - Generate Git bundle asset
+
+    if is_config_attribute "index"; then
+    fi
+
+    if is_config_attribute "rss"; then
+    fi
+
+    if is_config_attribute "bundle"; then
+    fi
 }

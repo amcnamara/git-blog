@@ -6,7 +6,7 @@ function build() {
     content=`find $CONTENT_DIR -name "*.md"`
 
     if [[ ! ${content[@]} ]]; then
-	pbold "No content found to build, use ${GREEN}git-blog add${NOCOLOUR} to create some!"
+	echo "No content found to build, use \`${YELLOW}git-blog add${NOCOLOUR}\` to create some!"
 	exit 1
     fi
 

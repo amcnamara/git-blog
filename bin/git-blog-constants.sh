@@ -7,7 +7,6 @@ WHITE='\033[0;97m'
 
 GIT_BASEDIR=`git rev-parse --show-toplevel`
 CONFIG_FILE=$GIT_BASEDIR/config.yaml
-AWS_TOKEN_FILE=$GIT_BASEDIR/.aws_token
 
 PUBLIC_DIR=$GIT_BASEDIR/public
 TEMPLATE_DIR=$GIT_BASEDIR/templates

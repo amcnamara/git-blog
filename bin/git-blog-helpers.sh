@@ -3,17 +3,42 @@ function touch_version() {
     echo "version=$VERSION" > $GIT_BASEDIR/.gitblog
 }
 
+function is_command() {
+    if command -v ${1} > /dev/null 2 >&1; then
+	return 0
+    fi
+
+    return 1
+}
+
 function check_dependencies() {
-    if ! command -v aws; then
-     	perror "Missing awscli dependency, please visit: ${WHITE}https://aws.amazon.com/cli/${NOCOLOUR}"
-     	exit 1
+    # Ensure that the necessary commands are installed
+    # TODO: Use a package manager with real dependency management
+    if ! is_command "git"; then
+        perror "Missing 'git' source control dependency, please visit: ${WHITE}https://git-scm.com/book/en/v2/Getting-Started-Installing-Git${NOCOLOUR}"
+        exit 1
+    fi
+
+    if ! is_command "multimarkdown"; then
+        perror "Missing 'multimarkdown' templating dependency, please visit: ${WHITE}http://fletcher.github.io/MultiMarkdown-5/installation${NOCOLOUR}"
+        exit 1
+    fi
+
+    if ! is_command "mustache"; then
+        perror "Missing 'mustache' templating dependency, please visit: ${WHITE}https://www.npmjs.com/package/mustache${NOCOLOUR}"
+        exit 1
+    fi
+
+    if ! is_command "aws"; then
+        perror "Missing 'aws' hosting dependency, please visit: ${WHITE}http://docs.aws.amazon.com/cli/latest/userguide/installing.html${NOCOLOUR}"
+        exit 1
     fi
 }
 
 function is_gitblog() {
     # Ensure that the git repo we're in is a git-blog.
     if [ ! -e "$GIT_BASEDIR/.gitblog" ]; then
-        perror "You are not in a git-blog directory."
+        perror "You are not in a git-blog directory"
         exit 1
     fi
 

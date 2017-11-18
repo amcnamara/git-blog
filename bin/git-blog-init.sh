@@ -12,7 +12,7 @@ function initialize() {
         exit 1
     fi
 
-    # Create repo
+    # Create new git-blog repo.
     mkdir $1
     cd $1
     git init
@@ -28,11 +28,12 @@ function clone() {
         exit 1
     fi
 
-    # Clone existing git-blog repo
+    # Clone existing git-blog repo.
     git clone $1
 
     # TODO: Parse basename from upstream repo and change to that dir before configuring.
     repo=$1
+    psuccess "Created cloned repo $repo"
 
-    psuccess "Created cloned $repo"
+    reload_constants
 }

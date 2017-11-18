@@ -10,13 +10,13 @@ source $BINSRC/git-blog-add.sh
 source $BINSRC/git-blog-build.sh
 source $BINSRC/git-blog-publish.sh
 
-touch_version
+check_dependencies
 
 case $1 in
     init)
         initialize $2
         configure
-        psuccess "Created new blog repo ${WHITE}$PWD${NOCOLOUR}"
+        psuccess "Created new blog repo ${WHITE}$GIT_BASEDIR${NOCOLOUR}"
         ;;
     clone)
         clone $2

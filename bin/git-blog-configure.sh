@@ -1,7 +1,7 @@
 function configure_social() {
     # Configure social handles only if they don't already exist
     if grep -qE "twitter|facebook|email" $CONFIG_FILE; then
-        pwarning "A config file with social handles already exists, please edit $CONFIG_FILE directly."
+        pwarning "A config file with social handles already exists, please edit $CONFIG_FILE directly"
     else
         pbold "Please enter your twitter handle (or leave blank):"
         read -e twitter
@@ -24,16 +24,20 @@ CONF
 
 function configure_upstream() {
     # Configure blog endpoint if it isn't already present
-    if grep -q "location" $CONFIG_FILE; then
-        pwarning "A config file with an endpoint location already exsits, please edit $CONFIG_FILE directly."
+    if grep -qE "location|region" $CONFIG_FILE; then
+        pwarning "A config file with an S3 endpoint already exsits, please edit $CONFIG_FILE directly"
     else
-        pbold "Please enter the ARN of the S3 bucket where your blog is hosted:"
+        pbold "Please enter the AWS region where your blog is hosted:"
+	read -e region
+	pbold "Please enter the ARN of the S3 bucket where your blog is hosted:"
         read -e bucket
-        if [ -z $bucket ]; then
-            echo "No bucket location provided, please provision $CONFIG_FILE before publishing."
+	
+	if [[ ! -z $bucket && ! -z $region ]]; then
+            pwarning "No bucket location or region provided, please provision $CONFIG_FILE before publishing"
         else
             cat >> $CONFIG_FILE <<CONF
 ---
+region: $region
 location: $bucket
 ---
 CONF
@@ -52,9 +56,9 @@ function configure_aws() {
 
     if [ -z $token ]; then
         if [ -e $AWS_TOKEN_FILE ]; then
-	    echo "No token provided, a credential already exists at $AWS_TOKEN_FILE and hos not been changed."
+	    echo "No token provided, a credential already exists at $AWS_TOKEN_FILE and hos not been changed"
         else
-            echo "No token provided, please provision $AWS_TOKEN_FILE before publishing."
+            pwarning "No token provided, please provision $AWS_TOKEN_FILE before publishing"
         fi
     else
         echo "Writing token to $AWS_TOKEN_FILE"

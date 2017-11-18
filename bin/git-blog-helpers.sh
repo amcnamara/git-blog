@@ -3,14 +3,22 @@ function touch_version() {
     echo "version=$VERSION" > $GIT_BASEDIR/.gitblog
 }
 
-function is_gitblog() {
-    # Ensure that the git repo we're in is a git-blog.
-    if [ ! -e "$GIT_BASEDIR/.gitblog" ]; then
-	echo "${RED}ERROR${NOCOLOUR}: You are not in a git-blog directory."
-	exit 1
+function check_dependencies() {
+    if ! command -v aws; then
+     	perror "Missing awscli dependency, please visit: ${WHITE}https://aws.amazon.com/cli/${NOCOLOUR}"
+     	exit 1
     fi
 }
 
+function is_gitblog() {
+    # Ensure that the git repo we're in is a git-blog.
+    if [ ! -e "$GIT_BASEDIR/.gitblog" ]; then
+        perror "You are not in a git-blog directory."
+        exit 1
+    fi
+
+    touch_version
+}
 
 function is_config_attribute() {
     # NOTE: This craps out when inlined(?).

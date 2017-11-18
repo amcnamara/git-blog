@@ -16,7 +16,7 @@ function is_config_attribute() {
     # NOTE: This craps out when inlined(?).
     regex="$1:[[:blank:]]*([[:alnum:]]+)"
 
-    if [[ $(cat $GIT_BASEDIR/config.yaml) =~ $regex ]]; then
+    if [[ $(cat $CONFIG_FILE) =~ $regex ]]; then
 	if [[ "true" == $(echo ${BASH_REMATCH[1]} | tr '[:upper:]' '[:lower:]') ]]; then
 	    return 0
 	fi
@@ -36,4 +36,20 @@ Usage:
   git-blog build             Builds all static assets into public
   git-blog publish           Copies static assets to target S3 bucket
 EOF
+}
+
+function pbold() {
+    echo "${WHITE}$1${NOCOLOUR}"
+}
+
+function psuccess() {
+    echo "${GREEN}Success${NOCOLOUR}: $1"
+}
+
+function pwarning() {
+    echo "${YELLOW}Warning${NOCOLOUR}: $1"
+}
+
+function perror() {
+    echo "${RED}ERROR${NOCOLOUR}: $1"
 }

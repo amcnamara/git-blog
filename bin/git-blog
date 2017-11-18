@@ -16,13 +16,11 @@ case $1 in
     init)
         initialize $2
         configure
-        echo "${GREEN}Successfully created new blog repo!${NOCOLOUR}"
-        echo $PWD
+        psuccess "Created new blog repo ${WHITE}$PWD${NOCOLOUR}"
         ;;
     clone)
         clone $2
         configure_aws
-        echo "${GREEN}Successfully cloned existing blog repo!${NOCOLOUR}"
         ;;
     configure)
 	is_gitblog

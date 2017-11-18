@@ -2,6 +2,7 @@
 
 BINSRC=$(dirname $0)
 
+source $BINSRC/git-blog-constants.sh
 source $BINSRC/git-blog-helpers.sh
 source $BINSRC/git-blog-init.sh
 source $BINSRC/git-blog-configure.sh
@@ -9,28 +10,34 @@ source $BINSRC/git-blog-add.sh
 source $BINSRC/git-blog-build.sh
 source $BINSRC/git-blog-publish.sh
 
+touch_version
+
 case $1 in
     init)
         initialize $2
         configure
-        echo "Successfully created new blog repo!"
+        echo "${GREEN}Successfully created new blog repo!${NOCOLOUR}"
         echo $PWD
         ;;
     clone)
         clone $2
         configure_aws
-        echo "Successfully cloned existing blog repo!"
+        echo "${GREEN}Successfully cloned existing blog repo!${NOCOLOUR}"
         ;;
     configure)
+	is_gitblog
         configure
         ;;
     add)
+	is_gitblog
         add $2
         ;;
     build)
+	is_gitblog
         build
         ;;
     publish)
+	is_gitblog
         publish
         ;;
     *)

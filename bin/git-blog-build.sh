@@ -1,15 +1,16 @@
 function build() {
     cd_base
 
-    PUBLIC_DIR=$PWD/public
-    TEMPLATE_DIR=./templates
-    CONTENT_DIR=./content
+    echo $PUBLIC_DIR
 
     rm -rf $PUBLIC_DIR
-
     rsync -a ./static/* ./public
 
-    for post in $(find $CONTENT_DIR -name "*.md"); do
+    # Get all markdown content files ordered by creation time
+    content=$(ls -tU $(find $CONTENT_DIR -name "*.md"))
+
+    # Render all content
+    for post in $content; do
         # Find the template and corresponding output path for the given post
         midpath=$(dirname $post | cut -d/ -f3- -)
         template=$TEMPLATE_DIR/$midpath/template.mustache
@@ -41,17 +42,29 @@ content: '$(multimarkdown --snippet $post)'
 METADATA
     done
 
-    # Build options (all are recommended and enabled by default on a new git-blog):
+    # Build options (all are recommended and enabled by default in new projects, see README):
     # - Index content, ordered by creation time
+    # - Sitemap of content links
     # - Generate RSS feed of content, ordered by creation time
     # - Generate Git bundle asset
 
     if is_config_attribute "index"; then
+	echo "WARNING: Index generation not yet implemented."
+    fi
+
+    if is_config_attribute "sitemap"; then
+	echo "WARNING: Sitemap generation not yet implemented."
     fi
 
     if is_config_attribute "rss"; then
+	echo "WARNING: RSS generation not yet implemented."
     fi
 
     if is_config_attribute "bundle"; then
+	name="$PUBLIC_DIR/$(basename $PWD).git"
+	git bundle create $name --all
+	echo "Generated git bundle: $name"
     fi
+
+    # TODO: Use gzip to compress assets? Need to set content-encoding on the S3 bucket/files(?)
 }

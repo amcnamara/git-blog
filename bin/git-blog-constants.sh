@@ -1,0 +1,10 @@
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+GRAY='\033[0;37m'
+NOCOLOUR='\033[0m'
+
+GIT_BASEDIR=`git rev-parse --show-toplevel`
+
+PUBLIC_DIR=$GIT_BASEDIR/public
+TEMPLATE_DIR=$GIT_BASEDIR/templates
+CONTENT_DIR=$GIT_BASEDIR/content

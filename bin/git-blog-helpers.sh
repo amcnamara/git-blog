@@ -1,29 +1,22 @@
 VERSION="1.0"
 function touch_version() {
-    echo "version=$VERSION" > .gitblog
+    echo "version=$VERSION" > $GIT_BASEDIR/.gitblog
 }
 
-function cd_base() {
-    while [ ! -e "./.gitblog" ]; do
-	if [ $PWD == "/" ]; then
-            echo "You are not in a git-blog directory"
-            exit 1
-	else
-            cd ..
-	fi
-    done
-
-    # Any command which operates at the base of the repo should mark the binary version
-    touch_version
+function is_gitblog() {
+    # Ensure that the git repo we're in is a git-blog.
+    if [ ! -e "$GIT_BASEDIR/.gitblog" ]; then
+	echo "${RED}ERROR${NOCOLOUR}: You are not in a git-blog directory."
+	exit 1
+    fi
 }
+
 
 function is_config_attribute() {
-    cd_base
-
     # NOTE: This craps out when inlined(?).
     regex="$1:[[:blank:]]*([[:alnum:]]+)"
 
-    if [[ $(cat ./config.yaml) =~ $regex ]]; then
+    if [[ $(cat $GIT_BASEDIR/config.yaml) =~ $regex ]]; then
 	if [[ "true" == $(echo ${BASH_REMATCH[1]} | tr '[:upper:]' '[:lower:]') ]]; then
 	    return 0
 	fi

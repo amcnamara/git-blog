@@ -1,12 +1,14 @@
 function write() {
+    datestamp=`date '+%b %d, %Y'`
+    timestamp=`date '+%l:%M %p'`
+    timestamp=${timestamp#\ } # Trim leading space if hour has a single digit.
+
     # NOTE: We need to prepend a datestamp to the file in order to sort
     #       posts by creation time, since this file metadata is lost on
     #       cloned repositories.
-    datestamp=`date '+%b %d, %Y'`
-    timestamp=`date '+%l:%M %p'`
-    timestamp=${timestamp#\ } # Trim leading space if hour has a single digit
     filename="$POST_DIR/`date '+%Y_%m_%d'`_$1.md"
 
+    # This is exceedingly unlikely now that filenames have a creation timestamp.
     if [ -e $filename ]; then
 	perror "A post with this name already exsits"
 	exit 1

@@ -62,16 +62,6 @@ function build() {
 
         pbold "Writing $output"
 
-	cat <<METADATA | cat $CONFIG_FILE -
-$index
----
-$(for key in $(multimarkdown -m $document); do
-  echo $key: $(multimarkdown -e=$key $document)
-done)
-content: '$(multimarkdown --snippet $document)'
----
-METADATA
-
         # TODO: Consider adding support for http://www.html-tidy.org/ on output
         cat <<METADATA | cat $CONFIG_FILE - | mustache - $template >> $output
 $index

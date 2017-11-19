@@ -1,5 +1,5 @@
 function reload_constants() {
-    source $BINSRC/git-blog-constants.sh
+    source $BINSRC/_git-blog-constants.sh
 }
 
 function initialize() {
@@ -20,6 +20,9 @@ function initialize() {
     rsync -a $BINSRC/../new/ .
 
     reload_constants
+    configure
+
+    psuccess "Created new blog repo ${WHITE}$GIT_BASEDIR${NOCOLOUR}"
 }
 
 function clone() {
@@ -28,12 +31,17 @@ function clone() {
         exit 1
     fi
 
-    # Clone existing git-blog repo.
-    git clone $1
+    # Parse repo name out of bundle name:
+    # - If a URL or bath is provided drop everything until the last /
+    # - If the bundle filename ends with .git strip it out
+    repo=${$1##\/}
+    repo=${repo%\.git}
 
-    # TODO: Parse basename from upstream repo and change to that dir before configuring.
-    repo=$1
-    psuccess "Created cloned repo $repo"
+    # Clone an existing git-blog repo.
+    git clone $1 $repo
 
+    cd $repo
     reload_constants
+
+    psuccess "Created cloned repo $repo"
 }

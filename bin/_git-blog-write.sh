@@ -1,5 +1,13 @@
-function add() {
-    if [ -e $POST_DIR/$1.md ]; then
+function write() {
+    # NOTE: We need to prepend a datestamp to the file in order to sort
+    #       posts by creation time, since this file metadata is lost on
+    #       cloned repositories.
+    datestamp=`date '+%b %d, %Y'`
+    timestamp=`date '+%l:%M %p'`
+    timestamp=${timestamp#\ } # Trim leading space if hour has a single digit
+    filename="$POST_DIR/`date '+%Y_%m_%d'`_$1.md"
+
+    if [ -e $filename ]; then
 	perror "A post with this name already exsits"
 	exit 1
     fi
@@ -12,17 +20,19 @@ function add() {
     title=$title${1:1}
     title=`tr '_' ' ' <<< $title`
 
-    cat <<POST > $POST_DIR/$1.md
+    cat <<POST > $filename
 title: "$title"
+timestamp: "$timestamp"
+datestamp: "$datestamp"
 description: ""
 
 <!-- post content starts here -->
 POST
 
-    pbold "Writing $POST_DIR/$1.md"
+    pbold "Writing $filename"
 
     # Try to find a default editor, open the new file.
     # NOTE: It's necessary to plumb through std in and out from the subshell
     #       otherwise vi will be orphoned from the terminal.
-    `${EDITOR:-vi} $POST_DIR/$1.md < $(tty) > $(tty)`
+    `${EDITOR:-vi} $filename < $(tty) > $(tty)`
 }

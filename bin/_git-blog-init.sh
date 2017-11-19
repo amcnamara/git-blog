@@ -4,11 +4,11 @@ function reload_constants() {
 
 function initialize() {
     if [ -z $1 ]; then
-        perror "Argument missing, must provide a directory name for the repo."
+        perror "Argument missing, must provide a directory name for the repo"
         exit 1
     fi
     if [ -e $1 ]; then
-        perror "Directory with this name already exists."
+        perror "Directory with this name already exists"
         exit 1
     fi
 
@@ -27,14 +27,14 @@ function initialize() {
 
 function clone() {
     if [ -z $1 ]; then
-        perror "Argument missing, must provide upstream git bundle."
+        perror "Argument missing, must provide upstream git bundle"
         exit 1
     fi
 
     # Parse repo name out of bundle name:
     # - If a URL or bath is provided drop everything until the last /
     # - If the bundle filename ends with .git strip it out
-    repo=${$1##\/}
+    repo=${1##*\/}
     repo=${repo%\.git}
 
     # Clone an existing git-blog repo.

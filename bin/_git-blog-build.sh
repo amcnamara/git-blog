@@ -107,11 +107,15 @@ METADATA
     fi
 
     if is_config_attribute "bundle"; then
-        name="$PUBLIC_DIR/$(basename $GIT_BASEDIR).git"
-        if git bundle create $name --all; then
-            psuccess "Generated git bundle: $name"
+        if [ -z `git rev-list -n 1 --all` ]; then
+            pwarning "Cannot build a git bundle, no commits have been detected."
         else
-            perror "Could not create git bundle"
+            name="$PUBLIC_DIR/$(basename $GIT_BASEDIR).git"
+            if git bundle create $name --all; then
+                psuccess "Generated git bundle: $name"
+            else
+                perror "Could not create git bundle"
+            fi
         fi
     fi
 

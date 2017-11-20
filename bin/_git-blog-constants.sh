@@ -1,9 +1,8 @@
-RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
-GRAY='\033[0;37m'
-NOCOLOUR='\033[0m'
+RED='\033[0;31m'
 WHITE='\033[0;97m'
+NOCOLOUR='\033[0m'
 
 GIT_BASEDIR=`git rev-parse --show-toplevel`
 CONFIG_FILE=$GIT_BASEDIR/config.yaml

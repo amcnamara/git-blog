@@ -6,6 +6,7 @@ NOCOLOUR='\033[0m'
 
 GIT_BASEDIR=$(git rev-parse --show-toplevel)
 CONFIG_FILE=$GIT_BASEDIR/config.yaml
+LOG_FILE=$GIT_BASEDIR/debug.log
 
 PUBLIC_DIR=$GIT_BASEDIR/public
 TEMPLATE_DIR=$GIT_BASEDIR/templates

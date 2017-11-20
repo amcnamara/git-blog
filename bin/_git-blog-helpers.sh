@@ -3,6 +3,16 @@ function touch_version() {
     echo "version=$VERSION" > $GIT_BASEDIR/.gitblog
 }
 
+function plumb_logs() {
+    echo >> $LOG_FILE # Clear a new line
+    pdebug "$(basename $0) $@"
+    exec 2>>$LOG_FILE
+}
+
+function pdebug() {
+    echo "[${WHITE}$(date +%s)s${NOCOLOUR}] $1" >> $LOG_FILE
+}
+
 function is_command() {
     if command -v ${1} > /dev/null 2 >&1; then
 	return 0
@@ -77,6 +87,7 @@ function pwarning() {
 
 function perror() {
     echo "${RED}ERROR${NOCOLOUR}: $1"
+    echo "       $LOG_FILE"
 }
 
 function usage() {

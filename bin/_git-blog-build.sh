@@ -70,7 +70,7 @@ function build() {
         pbold "Writing $output"
 
         # TODO: Consider adding support for http://www.html-tidy.org/ on output
-        cat <<METADATA | cat $CONFIG_FILE - | mustache - $template >> $output
+        cat <<METADATA | cat $CONFIG_FILE - | mustache - $template > $output
 $index
 ---
 $(for key in $(multimarkdown -m $document); do
@@ -88,7 +88,24 @@ METADATA
     # - Generate Git bundle asset
 
     if is_config_attribute "index"; then
-        pwarning "Index generation not yet implemented."
+        output=$PUBLIC_DIR/index.html
+        template=$TEMPLATE_DIR/index.mustache
+
+        if [ ! -e $template ]; then
+            perror "Could not generate index.html, missing template $TEMPLATE_DIR/index.mustache"
+            exit 1
+        fi
+
+        pbold "Writing $output"
+
+        cat <<< """$index""" | cat $CONFIG_FILE - | mustache - $template > $output
+
+        if [ $? -eq 0 ]; then
+            psuccess "Generated index"
+        else
+            perror "Failed to generate index"
+            exit 1
+        fi
     fi
 
     if is_config_attribute "sitemap"; then
@@ -103,11 +120,13 @@ METADATA
             pwarning "Blog domain not set in config, can only generate relative URLs"
         fi
 
+        pbold "Writing $OUT_SITEMAP_FILE"
+
         for path in $paths; do
             echo $domain${path#$PUBLIC_DIR} >> $OUT_SITEMAP_FILE
         done
 
-        psuccess "Generated sitemap $OUT_SITEMAP_FILE"
+        psuccess "Generated sitemap"
     fi
 
     if is_config_attribute "rss"; then
@@ -119,8 +138,11 @@ METADATA
             pwarning "Cannot build a git bundle, no commits have been detected."
         else
             name="$PUBLIC_DIR/$(basename $GIT_BASEDIR).git"
-            if git bundle create $name --all; then
-                psuccess "Generated git bundle: $name"
+
+	    pbold "Writing $name"
+
+	    if git bundle create $name --all; then
+                psuccess "Generated git bundle"
             else
                 perror "Could not create git bundle"
             fi

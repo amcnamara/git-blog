@@ -21,20 +21,22 @@ CONF
 
 function configure_upstream() {
     # Configure blog endpoint if it isn't already present
-    if grep -qE "location|region" $CONFIG_FILE; then
-        pwarning "A config file with an S3 endpoint already exsits, please edit $CONFIG_FILE directly"
+    if grep -qE "region|bucket|domain" $CONFIG_FILE; then
+        pwarning "A config file with upstream attributes already exsits, please edit $CONFIG_FILE directly"
     else
         read -p "Please enter the AWS region where your blog is hosted: " region
         read -p "Please enter the ARN of the S3 bucket where your blog is hosted: " bucket
-	
-        if [[ ! -z $bucket || ! -z $region ]]; then
+        read -p "Please enter the domain (including http[s]://) where your blog is hosted: " domain
+
+        if [[ -z $bucket || -z $region ]]; then
             pwarning "No bucket location or region provided, please provision $CONFIG_FILE before publishing"
         fi
 
         cat >> $CONFIG_FILE <<CONF
 ---
 region: $region
-location: $bucket
+bucket: $bucket
+domain: $domain
 ---
 CONF
     fi
@@ -43,4 +45,5 @@ CONF
 function configure() {
     configure_social
     configure_upstream
+    pbold "Writing $CONFIG_FILE"
 }

@@ -4,7 +4,7 @@ RED='\033[0;31m'
 WHITE='\033[0;97m'
 NOCOLOUR='\033[0m'
 
-GIT_BASEDIR=`git rev-parse --show-toplevel`
+GIT_BASEDIR=$(git rev-parse --show-toplevel)
 CONFIG_FILE=$GIT_BASEDIR/config.yaml
 
 PUBLIC_DIR=$GIT_BASEDIR/public

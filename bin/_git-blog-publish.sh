@@ -1,6 +1,6 @@
 function publish() {
     # Ensure that all local changes have been committed
-    if [[ `git status --porcelain` ]]; then
+    if [[ $(git status --porcelain) ]]; then
 	perror "Cannot publish, you have uncommited local changes"
 	exit 1
     fi

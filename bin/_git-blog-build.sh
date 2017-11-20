@@ -98,6 +98,9 @@ METADATA
 
         pbold "Writing $output"
 
+        # NOTE: Need to use triple-quote escaping here because my shell's echo
+        #       builtin doesn't support the -e flag, and printf fails on the
+        #       dashes in the YAML content. So we escape it and dump to stdin.
         cat <<< """$index""" | cat $CONFIG_FILE - | mustache - $template > $output
 
         if [ $? -eq 0 ]; then
@@ -148,6 +151,4 @@ METADATA
             fi
         fi
     fi
-
-    # TODO: Use gzip to compress assets? Need to set content-encoding on the S3 bucket/files(?)
 }

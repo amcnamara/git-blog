@@ -75,7 +75,7 @@ function perror() {
 }
 
 function usage() {
-    cat <<EOF
+    cat <<USAGE
 Usage:
   git-blog --help            This message
   git-blog init <name>       Creates a new local blog repo, with some default assets
@@ -84,5 +84,5 @@ Usage:
   git-blog write <title>     Creates a new blog post
   git-blog build             Builds all static assets into public
   git-blog publish           Copies static assets to target S3 bucket
-EOF
+USAGE
 }

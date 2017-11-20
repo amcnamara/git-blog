@@ -1,4 +1,10 @@
 function build() {
+    if [[ $PWD == $PUBLIC_DIR* ]]; then
+        perror "Cannot run this script from within $PUBLIC_DIR, your current working directory will be removed"
+        exit 1
+    fi
+
+    # Blow away all existing built assets, and copy in all static assets
     rm -rf $PUBLIC_DIR
     rsync -a $STATIC_DIR/* $PUBLIC_DIR
 
@@ -45,7 +51,8 @@ function build() {
         midpath=${midpath:${#CONTENT_DIR}+1}
 
         template=$TEMPLATE_DIR/$midpath/template.mustache
-        output=$PUBLIC_DIR/$midpath/$(basename $document | cut -d. -f1 -).html
+        filename=`basename $document | cut -d. -f1 -`.html
+        output=$PUBLIC_DIR/$midpath/$filename
 
         # Ensure that the template exists for the given document
         if [ ! -e $template ]; then
@@ -85,7 +92,14 @@ METADATA
     fi
 
     if is_config_attribute "sitemap"; then
-        pwarning "Sitemap generation not yet implemented."
+        # Lookup all public markup, including both generated and copied static pages.
+        paths=`find $PUBLIC_DIR -name '*.html'`
+
+        for path in $paths; do
+            echo ${path#$PUBLIC_DIR} >> $OUT_SITEMAP_FILE
+        done
+
+        psuccess "Generated sitemap $OUT_SITEMAP_FILE"
     fi
 
     if is_config_attribute "rss"; then

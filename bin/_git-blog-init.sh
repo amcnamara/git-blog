@@ -20,6 +20,12 @@ function initialize() {
     rsync -a $BINSRC/../new/ .
 
     reload_constants
+
+    # Now that we know the repo name, try to add a rule in robots for the bundle.
+    if [ -e $STATIC_DIR/robots.txt ]; then
+	echo "Disallow: /$1.git" >> $STATIC_DIR/robots.txt
+    fi
+
     configure
 
     psuccess "Created new blog repo ${WHITE}$GIT_BASEDIR${NOCOLOUR}"

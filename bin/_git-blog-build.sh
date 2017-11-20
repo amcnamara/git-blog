@@ -95,8 +95,16 @@ METADATA
         # Lookup all public markup, including both generated and copied static pages.
         paths=`find $PUBLIC_DIR -name '*.html'`
 
+        # Sitemaps should only contain fully qualified URLs, prefix domain if it's set.
+        domain=$(echo_config_attribute "domain")
+
+	# TODO: Validate domain against RFC-3986
+        if [ -z $domain ]; then
+            pwarning "Blog domain not set in config, can only generate relative URLs"
+        fi
+
         for path in $paths; do
-            echo ${path#$PUBLIC_DIR} >> $OUT_SITEMAP_FILE
+            echo $domain${path#$PUBLIC_DIR} >> $OUT_SITEMAP_FILE
         done
 
         psuccess "Generated sitemap $OUT_SITEMAP_FILE"

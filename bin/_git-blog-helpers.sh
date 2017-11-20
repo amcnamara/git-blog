@@ -45,16 +45,21 @@ function is_gitblog() {
     touch_version
 }
 
-function is_config_attribute() {
+function echo_config_attribute() {
     # NOTE: This craps out when inlined(?).
-    regex="$1:[[:blank:]]*([[:alnum:]]+)"
+    regex="$1:[[:blank:]]*([[:print:]]+)"
 
     if [[ $(cat $CONFIG_FILE) =~ $regex ]]; then
-	if [[ "true" == $(echo ${BASH_REMATCH[1]} | tr '[:upper:]' '[:lower:]') ]]; then
-	    return 0
-	fi
+	echo ${BASH_REMATCH[1]}
     fi
+}
 
+function is_config_attribute() {
+    value=$(echo_config_attribute $1)
+
+    if [[ "true" == $(echo $value | tr '[:upper:]' '[:lower:]') ]]; then
+        return 0
+    fi
     return 1
 }
 

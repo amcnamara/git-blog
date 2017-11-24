@@ -40,10 +40,9 @@ function build() {
     local -A index=()
     for count in ${!posts[@]}; do
         post=${posts[$count]}
-        index["$count,title"]=$(multimarkdown -e=title $post)
-        index["$count,timestamp"]=$(multimarkdown -e=timestamp $post)
-        index["$count,datestamp"]=$(multimarkdown -e=datestamp $post)
-        index["$count,description"]=$(multimarkdown -e=description $post)
+        for key in $(multimarkdown -m $post); do
+            index[$count,$key]=$(multimarkdown -e=$key $post)
+        done
     done
 
     source mo

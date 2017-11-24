@@ -1,5 +1,12 @@
 <html>
+  {{> ../partials/_meta_header}}
   <body>
-    {{{content}}}
+    <div class="container">
+      {{> ../partials/_content_header}}
+      <div class="post">
+        {{{content}}}
+      </div>
+      {{> ../partials/_content_footer}}
+    </div>
   </body>
 </html>

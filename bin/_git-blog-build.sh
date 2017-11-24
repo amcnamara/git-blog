@@ -1,3 +1,10 @@
+function runIndex() {
+    template=$(cat)
+    for index in $(seq 0 ${#posts[@]}); do
+        echo -e $template | sed "s/post./index.$index,/g"
+    done
+}
+
 function build() {
     if [[ $PWD == $PUBLIC_DIR* ]]; then
         perror "Cannot run this script from within $PUBLIC_DIR, your current working directory will be removed"
@@ -12,7 +19,7 @@ function build() {
     content=$(find $CONTENT_DIR -name "*.md")
 
     if [[ ! ${content[@]} ]]; then
-        echo "No content found to build, use \`${YELLOW}git-blog write <post_title>${NOCOLOUR}\` to create some!"
+        echo -e "No content found to build, use \`${YELLOW}git-blog write <post_title>${NOCOLOUR}\` to create some!"
         exit 1
     fi
 
@@ -22,25 +29,34 @@ function build() {
     #       file metadata is lost during cloning. Chronological ordering
     #       here is particularly important for building the index, RSS, etc.
     posts=$(find $POST_DIR -name "*.md")
-    posts=$(ls $posts)
+    posts=($(ls $posts))
 
     echo "Generating index of post metadata"
 
-    # Generate a YAML list containing all post metadata. This will be plumbed
-    # through all of the content templates, the index, and RSS feed.
-    #
-    # NOTE: String expression below is necessary to properly escape newlines.
-    index=$'---\nindex:'
-
-    for post in $posts; do
-	index+="
-  - title: $(multimarkdown -e=title $post)
-    timestamp: $(multimarkdown -e=timestamp $post)
-    datestamp: $(multimarkdown -e=datestamp $post)
-    description: $(multimarkdown -e=description $post)"
+    # Generate an array of associated arrays by creating composite keys of
+    # post offset and attribute. This is necessary because the bash version
+    # of mustache (and bash itself, for that matter) doesn't support nested
+    # associated arrays. These will be processed via the runIndex generator.
+    local -A index=()
+    for count in ${!posts[@]}; do
+        post=${posts[$count]}
+        index["$count,title"]=$(multimarkdown -e=title $post)
+        index["$count,timestamp"]=$(multimarkdown -e=timestamp $post)
+        index["$count,datestamp"]=$(multimarkdown -e=datestamp $post)
+        index["$count,description"]=$(multimarkdown -e=description $post)
     done
 
-    index+=$'\n---'
+    source mo
+
+    # Gen index
+    cat <<EOF | mo
+{{#runIndex}}
+  {{post.title}}, {{post.timestamp}}, {{post.datestamp}}
+{{/runIndex}}
+EOF
+    
+    pbold "exiting"
+    exit 1
 
     # Render all content
     for document in $content; do
@@ -70,7 +86,8 @@ function build() {
         pbold "Writing $output"
 
         # TODO: Consider adding support for http://www.html-tidy.org/ on output
-        cat <<METADATA | cat $CONFIG_FILE - | mustache - $template > $output
+        # TODO: Add partials dir?
+        cat <<METADATA | cat $CONFIG_FILE - | mo $template > $output
 $index
 ---
 $(for key in $(multimarkdown -m $document); do
@@ -101,7 +118,7 @@ METADATA
         # NOTE: Need to use triple-quote escaping here because my shell's echo
         #       builtin doesn't support the -e flag, and printf fails on the
         #       dashes in the YAML content. So we escape it and dump to stdin.
-        cat <<< """$index""" | cat $CONFIG_FILE - | mustache - $template > $output
+        cat <<< """$index""" | cat $CONFIG_FILE - | mo - $template > $output
 
         if [ $? -eq 0 ]; then
             psuccess "Generated index"

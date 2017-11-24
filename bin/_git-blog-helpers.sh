@@ -5,12 +5,13 @@ function touch_version() {
 
 function plumb_logs() {
     echo >> $LOG_FILE # Clear a new line
-    pdebug "$(basename $0) $@"
+    # NOTE: "$*" is equivalent to "$@" but prints on the same line
+    pdebug "$(basename $0) $*"
     exec 2>>$LOG_FILE
 }
 
 function pdebug() {
-    echo "[${WHITE}$(date +%s)s${NOCOLOUR}] $1" >> $LOG_FILE
+    echo -e "[${WHITE}$(date "+%h %d, %Y %H:%m:%S")${NOCOLOUR}] $1" >> $LOG_FILE
 }
 
 function is_command() {
@@ -22,8 +23,23 @@ function is_command() {
 }
 
 function check_dependencies() {
+    # Ensure that bash is up-to-date (OSX ships with 3.2, which doesn't
+    # support the associative arrays needed for mustache templates).
+    regex="bash, version ([0-9]+)"
+    # NOTE: If env bash is overridden, fetch shell from script's process
+    shell=$(ps -p $$ -ocomm=)
+
+    if [[ $($shell --version) =~ $regex ]]; then
+        if [[ ${BASH_REMATCH[1]} < 4 ]]; then
+            perror "Bash must be greater than version 4"
+            echo "Your current default shell is $(which $shell):" >&2
+            echo "$($shell --version)" >&2
+            exit 1
+        fi
+    fi
+
     # Ensure that the necessary commands are installed
-    # TODO: Use a package manager with real dependency management
+    # NOFIX: I don't feel like using a real package manager.
     if ! is_command "git"; then
         perror "Missing 'git' source control dependency, please visit: ${WHITE}https://git-scm.com/book/en/v2/Getting-Started-Installing-Git${NOCOLOUR}"
         exit 1
@@ -34,8 +50,8 @@ function check_dependencies() {
         exit 1
     fi
 
-    if ! is_command "mustache"; then
-        perror "Missing 'mustache' templating dependency, please visit: ${WHITE}https://www.npmjs.com/package/mustache${NOCOLOUR}"
+    if ! is_command "mo"; then
+        perror "Missing 'mo' templating dependency, please visit: ${WHITE}https://github.com/tests-always-included/mo${NOCOLOUR}"
         exit 1
     fi
 
@@ -74,19 +90,19 @@ function is_config_attribute() {
 }
 
 function pbold() {
-    echo "${WHITE}$1${NOCOLOUR}"
+    echo -e "${WHITE}$1${NOCOLOUR}"
 }
 
 function psuccess() {
-    echo "${GREEN}Success${NOCOLOUR}: $1"
+    echo -e "${GREEN}Success${NOCOLOUR}: $1"
 }
 
 function pwarning() {
-    echo "${YELLOW}Warning${NOCOLOUR}: $1"
+    echo -e "${YELLOW}Warning${NOCOLOUR}: $1"
 }
 
 function perror() {
-    echo "${RED}ERROR${NOCOLOUR}: $1"
+    echo -e "${RED}ERROR${NOCOLOUR}: $1"
     echo "       $LOG_FILE"
 }
 

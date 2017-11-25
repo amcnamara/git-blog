@@ -1,11 +1,22 @@
 function runIndex() {
+    # Read in the template block from stdin
     template=$(cat)
-    for index in $(seq 0 ${#posts[@]}); do
-        echo -e $template | sed "s/post./index.$index,/g"
+
+    # NOTE: Use arithmetic expansion to generate the sequence of post
+    #       indices from 0 to n-1. The index associative array has
+    #       composite keys of the form [$post,$attribute], replace all
+    #       instances of post.<attribute> in the template from this map.
+    for post in $(seq $((${#posts[@]} - 1))); do
+        echo -e $template | sed "s/post\./index.$post,/g"
     done
 }
 
 function build() {
+    # Bail out if we're in public/ or one of its subdirectories.
+    #
+    # NOTE: If the script is run from the public directory it will get
+    #       into a strange state where the terminal becomes orphaned,
+    #       since part of the build step involves removing that directory.
     if [[ $PWD == $PUBLIC_DIR* ]]; then
         perror "Cannot run this script from within $PUBLIC_DIR, your current working directory will be removed"
         exit 1
@@ -45,15 +56,12 @@ function build() {
         done
     done
 
+    # NOTE: Sketchy as hell
     source mo
 
-    # Gen index
-    cat <<EOF | mo
-{{#runIndex}}
-  {{post.title}}, {{post.timestamp}}, {{post.datestamp}}
-{{/runIndex}}
-EOF
-    
+    # Generate index
+    mo templates/index.mustache
+
     pbold "exiting"
     exit 1
 

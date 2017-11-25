@@ -25,11 +25,22 @@ function is_command() {
 function check_dependencies() {
     # Ensure that bash is up-to-date (OSX ships with 3.2, which doesn't
     # support the associative arrays needed for mustache templates).
+    #
+    # TODO: Might be able to support 3.2 if the hash of values can be
+    #       encoded into local variables with a dynamic naming scheme,
+    #       ex: $var__<$key>="value" and replaced at runtime. Just need
+    #       to ensure it won't pollute the context of other templates.
+    #       Note that ${!var__*} can be used to enumerate over variable
+    #       attributes in the context with this naming convention, ex:
+    #       for key in ${!var__*}; do
+    #         value=${!$key}
+    #       done
     regex="bash, version ([0-9]+)"
     # NOTE: If env bash is overridden, fetch shell from script's process
     shell=$(ps -p $$ -ocomm=)
 
     if [[ $($shell --version) =~ $regex ]]; then
+        # Probably be safe to remove this check when bash v10 is released.
         if [[ ${BASH_REMATCH[1]} < 4 ]]; then
             perror "Bash must be greater than version 4"
             echo "Your current default shell is $(which $shell):" >&2
@@ -98,11 +109,15 @@ function psuccess() {
 }
 
 function pwarning() {
-    echo -e "${YELLOW}Warning${NOCOLOUR}: $1"
+    # Print warns to both the stdout and stderr (which plumbs through to
+    # the debug file). In this case use process substitution to redirect
+    # the output of the process to stderr since the file descriptor on OSX
+    # isn't consistent with other linux distributions.
+    echo -e "${YELLOW}Warning${NOCOLOUR}: $1" | tee >(cat >&2)
 }
 
 function perror() {
-    echo -e "${RED}ERROR${NOCOLOUR}: $1"
+    echo -e "${RED}ERROR${NOCOLOUR}: $1" | tee >(cat >&2)
     echo "       $LOG_FILE"
 }
 

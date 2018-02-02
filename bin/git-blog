@@ -21,19 +21,19 @@ case $1 in
         clone $2
         ;;
     configure)
-	is_gitblog
+        is_gitblog
         configure
         ;;
     write)
-	is_gitblog
+        is_gitblog
         write $2
         ;;
     build)
-	is_gitblog
+        is_gitblog
         build
         ;;
     publish)
-	is_gitblog
+        is_gitblog
         publish
         ;;
     *)

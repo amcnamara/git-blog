@@ -39,10 +39,11 @@ function build() {
     #       have their creation time prepended to the filename since the
     #       file metadata is lost during cloning. Chronological ordering
     #       here is particularly important for building the index, RSS, etc.
+    # TODO: File creation time is also denormalized in the post metadata,
+    #       neither that attribute nor the filename are particularly robust
+    #       ways of tracking a timestamp; should investigate alternatives.
     posts=$(find $POST_DIR -name "*.md")
     posts=($(ls $posts))
-
-    echo "Generating index of post metadata"
 
     # Generate an array of associated arrays by creating composite keys of
     # post offset and attribute. This is necessary because the bash version
@@ -59,11 +60,16 @@ function build() {
     # NOTE: Sketchy as hell
     source mo
 
-    # Generate index
-    mo templates/index.mustache
-
-    pbold "exiting"
-    exit 1
+    # Read global metadata into the environment, since the bash version of
+    # mustache unfortunately pulls template attributes from env variables.
+    OLDIFS=$IFS
+    IFS==
+    while read -r key value; do
+        if [ ! -e $value ]; then
+            export $key=$value
+        fi
+    done < $CONFIG_FILE
+    IFS=$OLDIFS
 
     # Render all content
     for document in $content; do
@@ -79,9 +85,9 @@ function build() {
 
         # Ensure that the template exists for the given document
         if [ ! -e $template ]; then
-            pwarning "Cannot render document, skipping due to missing template:"
-            echo "         document '$document'"
-            echo "         expected template '$template'"
+            pwarning "Cannot render document, skipping due to missing template"
+            echo "    document '$document'"
+            echo "    expected template '$template'"
             continue
         fi
 
@@ -92,17 +98,28 @@ function build() {
 
         pbold "Writing $output"
 
-        # TODO: Consider adding support for http://www.html-tidy.org/ on output
-        # TODO: Add partials dir?
-        cat <<METADATA | cat $CONFIG_FILE - | mo $template > $output
-$index
----
-$(for key in $(multimarkdown -m $document); do
-  echo $key: $(multimarkdown -e=$key $document)
-done)
-content: '$(multimarkdown --snippet $document)'
----
-METADATA
+        # NOTE: Due to how the bash version of mustache reads variables from
+        #       the shell environment, we render all templates in a subshell
+        #       to prevent post attributes from polluting sibling content.
+        (
+            # Read in post metadata
+            for key in $(multimarkdown -m $document); do
+                export $key="$(multimarkdown -e=$key $document)"
+            done
+
+            # Read in post content
+            export content=$(multimarkdown --snippet $document)
+
+            # Render post and prettify markup before writing
+            mo $template | tidy -i -w 0 -q - > $output
+        )
+
+        if [ $? -eq 1 ]; then
+            pwarning "Encountered warnings while rendering $document"
+        elif [ $? -eq 2 ]; then
+            perror "Encountered errors while rendering $document"
+            exit 1
+        fi
     done
 
     # Build options (all are recommended and enabled by default in new projects, see README):
@@ -122,16 +139,15 @@ METADATA
 
         pbold "Writing $output"
 
-        # NOTE: Need to use triple-quote escaping here because my shell's echo
-        #       builtin doesn't support the -e flag, and printf fails on the
-        #       dashes in the YAML content. So we escape it and dump to stdin.
-        cat <<< """$index""" | cat $CONFIG_FILE - | mo - $template > $output
+        mo $template | tidy -i -w 0 -q - > $output
 
-        if [ $? -eq 0 ]; then
-            psuccess "Generated index"
-        else
-            perror "Failed to generate index"
+        if [ $? -eq 1 ]; then
+            pwarning "Encountered warnings while rendering index"
+        elif [ $? -eq 2 ]; then
+            perror "Encountered errors while rendering index"
             exit 1
+        else
+            psuccess "Generated index"
         fi
     fi
 

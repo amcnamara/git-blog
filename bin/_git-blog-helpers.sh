@@ -57,7 +57,12 @@ function check_dependencies() {
     fi
 
     if ! is_command "multimarkdown"; then
-        perror "Missing 'multimarkdown' templating dependency, please visit: ${WHITE}http://fletcher.github.io/MultiMarkdown-5/installation${NOCOLOUR}"
+        perror "Missing 'multimarkdown' templating dependency, please visit: ${WHITE}https://fletcher.github.io/MultiMarkdown-5/installation${NOCOLOUR}"
+        exit 1
+    fi
+
+    if ! is_command "tidy"; then
+        perror "Missing 'tidy' HTML formatter dependency, please visit: ${WHITE}http://www.html-tidy.org/#homepage19700601get_tidy${NOCOLOUR}"
         exit 1
     fi
 
@@ -83,8 +88,13 @@ function is_gitblog() {
 }
 
 function echo_config_attribute() {
+    if [[ ! $1 ]]; then
+        pwarning "Attempting to read config attribute, but no attribute key provided"
+        return
+    fi
+
     # NOTE: This craps out when inlined(?).
-    regex="$1:[[:blank:]]*([[:print:]]+)"
+    regex="$1=[[:blank:]]*([[:print:]]+)"
 
     if [[ $(cat $CONFIG_FILE) =~ $regex ]]; then
 	echo ${BASH_REMATCH[1]}
@@ -98,6 +108,19 @@ function is_config_attribute() {
         return 0
     fi
     return 1
+}
+
+function write_config_attribute() {
+    if [[ ! $1 ]]; then
+        perror "Attempting to write or clear config attribute, but no attribute key provided"
+        exit 1
+    fi
+
+    if grep -qE "$1" $CONFIG_FILE; then
+        sed -i -e "s/$1=.*/$1=$2/" $CONFIG_FILE
+    else
+        echo "$1=$2" >> $CONFIG_FILE
+    fi
 }
 
 function pbold() {

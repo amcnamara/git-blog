@@ -1,17 +1,18 @@
+<!DOCTYPE html>
 <html>
-  {{> ./partials/_meta_header}}
+  {{> ./partials/_meta_header.mustache}}
   <body>
     <div class="container">
-      {{> ./partials/_content_header}}
+      {{> ./partials/_content_header.mustache}}
       <div class="index">
-        {{#index}}
+        {{#runIndex}}
           <div class="post">
-            <div class="title">{{title}}</div>
-            <div class="description">{{description}}</div>
+            <div class="title">{{post.title}}</div>
+            <div class="description">{{post.description}}</div>
           </div>
-        {{/index}}
+        {{/runIndex}}
       </div>
-      {{> ./partials/_content_footer}}
+      {{> ./partials/_content_footer.mustache}}
     </div>
   </body>
 </html>

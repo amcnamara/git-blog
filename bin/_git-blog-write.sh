@@ -1,6 +1,6 @@
 function write() {
-    datestamp=`date '+%b %d, %Y'`
-    timestamp=`date '+%l:%M %p'`
+    datestamp=$(date '+%b %d, %Y')
+    timestamp=$(date '+%l:%M %p')
     timestamp=${timestamp#\ } # Trim leading space if hour has a single digit.
 
     # NOTE: We need to prepend a datestamp to the file in order to sort
@@ -10,8 +10,8 @@ function write() {
 
     # This is exceedingly unlikely now that filenames have a creation timestamp.
     if [ -e $filename ]; then
-	perror "A post with this name already exsits"
-	exit 1
+        perror "A post with this name already exsits"
+        exit 1
     fi
 
     # Generate a friendly title from the filename:
@@ -23,10 +23,10 @@ function write() {
     title=`tr '_' ' ' <<< $title`
 
     cat <<POST > $filename
-title: "$title"
-timestamp: "$timestamp"
-datestamp: "$datestamp"
-description: ""
+title: $title
+timestamp: $timestamp
+datestamp: $datestamp
+description:
 
 <!-- post content starts here -->
 POST
@@ -36,5 +36,5 @@ POST
     # Try to find a default editor, open the new file.
     # NOTE: It's necessary to plumb through std in and out from the subshell
     #       otherwise vi will be orphoned from the terminal.
-    `${EDITOR:-vi} $filename < $(tty) > $(tty)`
+    $(${EDITOR:-vi} $filename < $(tty) > $(tty))
 }

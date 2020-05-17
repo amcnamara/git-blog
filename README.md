@@ -2,10 +2,16 @@ Installation
 ------------
 
 Setup:
-     ./configure
+```
+./configure
+```
 
 Run pre-installation (checks for needed dependencies):
-     make
+```
+make
+```
 
 Install git-blog binaries:
-     make install
+```
+make install
+```

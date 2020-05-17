@@ -1,17 +1,9 @@
 Installation
 ------------
 
-Setup:
+To configure your local environment, validate dependencies and install git-blog; simply run:
 ```
 ./configure
-```
-
-Run pre-installation (checks for needed dependencies):
-```
 make
-```
-
-Install git-blog binaries:
-```
 make install
 ```

@@ -5,7 +5,8 @@ WHITE='\033[0;97m'
 NOCOLOUR='\033[0m'
 
 GIT_BASEDIR=$(git rev-parse --show-toplevel 2> /dev/null)
-CONFIG_FILE=$GIT_BASEDIR/global.cfg
+CONFIG_BASEDIR=~/.git-blog
+CONFIG_FILE=$CONFIG_BASEDIR/global.cfg
 LOG_FILE=${GIT_BASEDIR:-~}/debug.log
 
 PUBLIC_DIR=$GIT_BASEDIR/public

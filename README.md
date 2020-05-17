@@ -1,4 +1,11 @@
-Picking up this old project and simplifying my original concept for git-managed static blog generator, more to come soon.
+Installation
+------------
 
-todo:
-* create an installer script that marks bin/_* as read-only
+Setup:
+     ./configure
+
+Run pre-installation (checks for needed dependencies):
+     make
+
+Install git-blog binaries:
+     make install

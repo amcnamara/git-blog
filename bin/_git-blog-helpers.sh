@@ -1,3 +1,5 @@
+source _git-blog-constants.sh
+
 VERSION="1.0"
 function touch_version() {
     echo "version=$VERSION" > $GIT_BASEDIR/.gitblog
@@ -23,6 +25,7 @@ function is_command() {
 }
 
 function check_dependencies() {
+    plumb_logs $@
     # Ensure that bash is up-to-date (OSX ships with 3.2, which doesn't
     # support the associative arrays needed for mustache templates).
     #
@@ -156,3 +159,5 @@ Usage:
   git-blog publish           Copies static assets to target S3 bucket
 USAGE
 }
+
+$@

@@ -6,7 +6,10 @@ function touch_version() {
 }
 
 function plumb_logs() {
-    echo >> $LOG_FILE # Clear a new line
+    if [ -e "$LOG_FILE" ]; then
+        # Clear a new line if a log file already exists.
+        echo >> $LOG_FILE
+    fi
     # NOTE: "$*" is equivalent to "$@" but prints on the same line
     pdebug "$(basename $0) $*"
     exec 2>>$LOG_FILE
@@ -87,6 +90,7 @@ function is_gitblog() {
         exit 1
     fi
 
+    # Bump the last-touched version to whatever is running locally.
     touch_version
 }
 

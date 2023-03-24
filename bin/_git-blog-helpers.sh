@@ -13,7 +13,7 @@ function plumb_logs() {
 }
 
 function pdebug() {
-    echo -e "[${WHITE}$(date "+%h %d, %Y %H:%m:%S")${NOCOLOUR}] $1" >> $LOG_FILE
+    echo -e "[${WHITE}$(date "+%h %d, %Y %H:%M:%S")${NOCOLOUR}] $1" >> $LOG_FILE
 }
 
 function is_command() {
@@ -120,7 +120,9 @@ function write_config_attribute() {
     fi
 
     if grep -qE "$1" $CONFIG_FILE; then
-        sed -i -e "s/$1=.*/$1=$2/" $CONFIG_FILE
+        # NOTE: Use # as an arbitrary sed delimiter since / conflicts with
+        #       https:// on domain config attribute. Neato.
+        sed -i -e "s#$1=.*#$1=$2#" $CONFIG_FILE
     else
         echo "$1=$2" >> $CONFIG_FILE
     fi

@@ -16,7 +16,7 @@ To validate dependencies and install git-blog:
 make all
 ```
 
-`NOTE:` Ensure that /usr/local/bin is on the $PATH
+> NOTE: Ensure that `/usr/local/bin` is on the `$PATH`
 
 Usage
 -----

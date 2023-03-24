@@ -1,12 +1,22 @@
 Installation
 ------------
 
-To configure your local environment, validate dependencies and install git-blog; simply run:
+To run this project, the following dependencies need to be available locally:
+
+- https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+- https://fletcher.github.io/MultiMarkdown-5/installation
+- http://www.html-tidy.org/#homepage19700601get_tidy
+- https://github.com/tests-always-included/mo
+- http://docs.aws.amazon.com/cli/latest/userguide/installing.html
+
+To validate dependencies and install git-blog:
+
 ```
 ./configure
-make
-make install
+make all
 ```
+
+`NOTE:` Ensure that /usr/local/bin is on the $PATH
 
 Usage
 -----

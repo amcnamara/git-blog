@@ -9,6 +9,7 @@ preinstall:
 	@echo -e "\033[0;32mPreinstall complete\033[0m"
 
 install:
+	@echo -e "Installing binary and default assets..."
 	@source ./bin/_git-blog-constants.sh
 	@mkdir -p /usr/local/bin/git-blog
 	@cp -R ./bin /usr/local/bin/git-blog

@@ -4,12 +4,12 @@ SHELL := /usr/bin/env bash
 all: preinstall install
 
 preinstall:
-	@./_preinstall.sh
-	#./bin/_git-blog-helpers.sh check_dependencies
-	# TODO: verify configs in homedir
+	@echo -e "Checking third-party dependencies..."
+	@./bin/_git-blog-helpers.sh check_dependencies
+	@echo -e "\033[0;32mPreinstall complete\033[0m"
 
 install:
-	@./_install.sh
+	@source ./bin/_git-blog-constants.sh
 	@mkdir -p /usr/local/bin/git-blog
 	@cp -R ./bin /usr/local/bin/git-blog
-	@echo -e "Success: git-blog installed to /usr/local/bin/git-blog, please refer to \`\033[0;97mgit-blog --help\033[0m\` for initializing a new project."
+	@echo -e "\033[0;32mSuccess\033[0m: git-blog installed to /usr/local/bin/git-blog, please refer to \`\033[0;97mgit-blog --help\033[0m\` for initializing a new project."

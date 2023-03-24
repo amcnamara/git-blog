@@ -3,7 +3,6 @@
 source ./bin/_git-blog-helpers.sh
 
 plumb_logs $@
-
 mkdir -p $CONFIG_BASEDIR
 
 # Configure social handles

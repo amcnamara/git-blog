@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-BINSRC=$(dirname $0)
+BINSRC=$(dirname $(readlink -f $(which git-blog)))
 
 source $BINSRC/_git-blog-constants.sh
 source $BINSRC/_git-blog-helpers.sh

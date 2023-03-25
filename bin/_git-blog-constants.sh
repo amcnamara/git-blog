@@ -1,20 +1,20 @@
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-WHITE='\033[0;97m'
-NOCOLOUR='\033[0m'
+export GREEN='\033[0;32m'
+export YELLOW='\033[1;33m'
+export RED='\033[0;31m'
+export WHITE='\033[0;97m'
+export NOCOLOUR='\033[0m'
 
-GIT_BASEDIR=$(git rev-parse --show-toplevel 2> /dev/null)
-CONFIG_BASEDIR=~/.git-blog
-CONFIG_FILE=$CONFIG_BASEDIR/global.cfg
-LOG_FILE=${GIT_BASEDIR:-~}/debug.log
+export GIT_BASEDIR=$(git rev-parse --show-toplevel 2> /dev/null)
+export CONFIG_BASEDIR=~/.git-blog
+export CONFIG_FILE=$CONFIG_BASEDIR/global.cfg
+export LOG_FILE=${GIT_BASEDIR:-~}/debug.log
 
-PUBLIC_DIR=$GIT_BASEDIR/public
-TEMPLATE_DIR=$GIT_BASEDIR/templates
-CONTENT_DIR=$GIT_BASEDIR/content
-POST_DIR=$CONTENT_DIR/posts
-STATIC_DIR=$GIT_BASEDIR/static
+export PUBLIC_DIR=$GIT_BASEDIR/public
+export TEMPLATE_DIR=$GIT_BASEDIR/templates
+export CONTENT_DIR=$GIT_BASEDIR/content
+export POST_DIR=$CONTENT_DIR/posts
+export STATIC_DIR=$GIT_BASEDIR/static
 
-OUT_INDEX_FILE=$PUBLIC_DIR/index.html
-OUT_SITEMAP_FILE=$PUBLIC_DIR/sitemap.txt
-OUT_RSS_FILE=$PUBLIC_DIR/rss.xml
+export OUT_INDEX_FILE=$PUBLIC_DIR/index.html
+export OUT_SITEMAP_FILE=$PUBLIC_DIR/sitemap.txt
+export OUT_RSS_FILE=$PUBLIC_DIR/rss.xml

@@ -1,5 +1,3 @@
-source _git-blog-constants.sh
-
 VERSION="1.0"
 function touch_version() {
     echo "version=$VERSION" > $GIT_BASEDIR/.gitblog
@@ -165,5 +163,3 @@ Usage:
   git-blog publish           Copies static assets to target S3 bucket
 USAGE
 }
-
-$@

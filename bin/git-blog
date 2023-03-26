@@ -17,9 +17,6 @@ case $1 in
     init)
         initialize $2
         ;;
-    clone)
-        clone $2
-        ;;
     configure)
         is_gitblog
         configure

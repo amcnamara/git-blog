@@ -1,7 +1,3 @@
-function reload_constants() {
-    source $BINSRC/_git-blog-constants.sh
-}
-
 function initialize() {
     if [ -z $1 ]; then
         perror "Argument missing, must provide a directory name for the repo"
@@ -16,38 +12,17 @@ function initialize() {
     mkdir $1
     cd $1
     git init
+    export GIT_BASEDIR = $(pwd)
+
     echo "Copying initial resources"
     rsync -a $BINSRC/../new/ .
 
-    reload_constants
-
     # Now that we know the repo name, try to add a rule in robots for the bundle.
-    if [ -e $STATIC_DIR/robots.txt ]; then
-	echo "Disallow: /$1.git" >> $STATIC_DIR/robots.txt
+    if [ -e ./static/robots.txt ]; then
+	echo "Disallow: /$1.git" >> ./static/robots.txt
     fi
 
     configure
 
     psuccess "Created new blog repo ${WHITE}$GIT_BASEDIR${NOCOLOUR}"
-}
-
-function clone() {
-    if [ -z $1 ]; then
-        perror "Argument missing, must provide upstream git bundle"
-        exit 1
-    fi
-
-    # Parse repo name out of bundle name:
-    # - If a URL or bath is provided drop everything until the last /
-    # - If the bundle filename ends with .git strip it out
-    repo=${1##*\/}
-    repo=${repo%\.git}
-
-    # Clone an existing git-blog repo.
-    git clone $1 $repo
-
-    cd $repo
-    reload_constants
-
-    psuccess "Created cloned repo $repo"
 }

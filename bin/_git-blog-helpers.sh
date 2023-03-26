@@ -1,8 +1,3 @@
-VERSION="1.0"
-function touch_version() {
-    echo "version=$VERSION" > $GIT_BASEDIR/.gitblog
-}
-
 function plumb_logs() {
     if [ -e "$LOG_FILE" ]; then
         # Clear a new line if a log file already exists.
@@ -87,9 +82,6 @@ function is_gitblog() {
         perror "You are not in a git-blog directory"
         exit 1
     fi
-
-    # Bump the last-touched version to whatever is running locally.
-    touch_version
 }
 
 function echo_config_attribute() {

@@ -20,9 +20,8 @@ To run this project, the following dependencies need to be available locally:
 - https://github.com/tests-always-included/mo
 - http://docs.aws.amazon.com/cli/latest/userguide/installing.html
 
-Run the following to configure (optional) social account handles, configure AWS hosting, validate dependencies, and install `git-blog`:
+Run the following to validate dependencies and install `git-blog`:
 ```
-./configure
 make all
 ```
 

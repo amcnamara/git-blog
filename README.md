@@ -1,19 +1,19 @@
 Description
 -----------
 
-`Git-blog` is a locally-run content publishing workflow with a few (somewhat arbitrary) personal goals:
+`Git-blog` is a locally-run content publishing workflow with a few broad goals:
 - Content should be portable (can be pulled, written, and published from a fresh machine easily).
 - Content should be entirely static and CDN-hosted (very fast and serverless).
 - Content should be deeply archivable.
 
 That last point is probably the most interesting. What I mean by deeply archivable is that the full history of all published content should be published alongside the content itself; even down to iterations on content, HTML/JS templating, and CSS. In practice this means that all of the content is version-controlled through Git and a bundle is pushed into the CDN with each new post. The bundle can be used to pull down the full history at any point, and by resetting locally a facsimile of content can be rebuilt for any commit in the past. The web has become disappointinly ephemeral over time and while the [Internet Archive](https://archive.org/) is an incredible resource I wanted to see if other approaches could be used to achive more permanence online.
 
-You're welcome to use and improve this tool if you like but [GitHub pages](https://pages.github.com/) accomplishes almost all of the main goals of this project, and is a better tool in general. This project was written entirely in Bash simply as a personal challenge to bulid a somewhat complex tool purely in shell script.
+You're welcome to use and improve this tool if you like but [GitHub pages](https://pages.github.com/) with [Jekyll](https://jekyllrb.com/) accomplishes almost all of the main goals of this project, and is a better tool in general.
 
 Installation
 ------------
 
-To run this project, the following dependencies need to be available locally:
+To run this project, the following dependencies need to be installed:
 - https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 - https://fletcher.github.io/MultiMarkdown-5/installation
 - http://www.html-tidy.org/#homepage19700601get_tidy
@@ -36,9 +36,9 @@ For reference, my development machine is running the following:
 
 Usage
 -----
-
-`git-blog --help`
-
+```
+git-blog --help
+```
 
 Getting Started
 ---------------

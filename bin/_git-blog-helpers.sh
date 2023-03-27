@@ -39,7 +39,6 @@ function check_dependencies() {
     shell=$(ps -p $$ -ocomm=)
 
     if [[ $($shell --version) =~ $regex ]]; then
-        # Probably be safe to remove this check when bash v10 is released.
         if [[ ${BASH_REMATCH[1]} < 4 ]]; then
             perror "Bash must be greater than version 4"
             echo "Your current default shell is $(which $shell):" >&2

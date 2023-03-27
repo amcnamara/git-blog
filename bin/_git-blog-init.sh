@@ -34,11 +34,11 @@ function initialize() {
         write_config_attribute bucket $1
         write_config_attribute region "us-east-1"
     else
-        perror "Could not create S3 bucket ${WHITE}$1${NOCOLOUR}, create bucket manually and run ${WHITE}git-blog configure${NOCOLOUR}"
+        perror "Could not create S3 bucket ${WHITE}$1${NOCOLOUR}, create bucket manually and run ${WHITE}git-blog configure upstream${NOCOLOUR}"
     fi
 
     configure_social
     configure_domain
 
-    psuccess "Configuration complete, written to ${WHITE}$CONFIG_FILE${NOCOLOUR}"
+    psuccess "Writing configuration to ${WHITE}$CONFIG_FILE${NOCOLOUR}"
 }

@@ -29,8 +29,22 @@ function configure_upstream() {
 }
 
 function configure() {
-    configure_social
-    configure_domain
-    configure_upstream
-    pbold "Writing $CONFIG_FILE"
+    case $1 in
+        social)
+            configure_social
+            ;;
+        domain)
+            configure_domain
+            ;;
+        upstream)
+            configure_upstream
+            ;;
+        *)
+            configure_social
+            configure_domain
+            configure_upstream
+            ;;
+    esac
+
+    psuccess "Writing configuration to ${WHITE}$CONFIG_FILE${NOCOLOUR}"
 }

@@ -37,11 +37,15 @@ For reference, my development machine is running the following:
 Usage
 -----
 
-| | |
-| - | - |
-| `git-blog init <name>`      | Creates a new local blog repo, with some default assets.
-| `git-blog configure`        | Configures global metadata (social handles, AWS credentials, etc) on an existing blog repo.
-| `git-blog write <title>`    | Creates a new blog post.
-| `git-blog build`            | Builds all static assets into public.
-| `git-blog publish`          | Copies static assets to target S3 bucket.
-| | |
+`git-blog --help`
+
+
+Getting Started
+---------------
+
+1) Sign into the AWS CLI
+2) Start by initializing a new blog: `git-blog init example.com` bootstraps a new git repo with some default assets, creates an upstream S3 bucket to publish to, and sets some project config attributes.
+3) Create a new post: `git-blog write hello_world` will create an empty post in `content/posts` with some markdown metadata, fill in the body of the post and save.
+4) Review content: `git-blog build` and then open `public/index.html` in a browser to navigate the built assets.
+5) Publish content: `git-blog publish` will build assets and push to S3, if you have CloudFront configured for that bucket the assets should appear after the previous CDN entries expire.
+6) It's a good idea to backup the blog's repo by pushing to a second upstream source such as Github.

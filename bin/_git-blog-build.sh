@@ -18,7 +18,7 @@ function build() {
     #       into a strange state where the terminal becomes orphaned,
     #       since part of the build step involves removing that directory.
     if [[ $PWD == $PUBLIC_DIR* ]]; then
-        perror "Cannot run this script from within $PUBLIC_DIR, your current working directory will be removed"
+        perror "Cannot run build from within $PUBLIC_DIR, run from $GIT_BASEDIR"
         exit 1
     fi
 
@@ -30,7 +30,7 @@ function build() {
     content=$(find $CONTENT_DIR -name "*.md")
 
     if [[ ! ${content[@]} ]]; then
-        echo -e "No content found to build, use \`${YELLOW}git-blog write <post_title>${NOCOLOUR}\` to create some!"
+        pdebug "No content found to build."
         exit 1
     fi
 

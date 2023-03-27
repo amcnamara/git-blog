@@ -22,7 +22,21 @@ function initialize() {
 	echo "Disallow: /$1.git" >> ./static/robots.txt
     fi
 
-    configure
-
     psuccess "Created new blog repo ${WHITE}$GIT_BASEDIR${NOCOLOUR}"
+
+    pdebug "Creating S3 bucket."
+    aws s3api create-bucket --bucket=$1 --region=us-east-1 2>&1 > /dev/null
+
+    if [ $? -eq 0 ]; then
+        psuccess "Created S3 bucket ${WHITE}$1${NOCOLOUR} in ${WHITE}us-east-1${NOCOLOUR}"
+        write_config_attribute bucket $1
+        write_config_attribute region "us-east-1"
+    else
+        perror "Could not create S3 bucket ${WHITE}$1${NOCOLOUR}, create bucket manually and run ${WHITE}git-blog configure${NOCOLOUR}"
+    fi
+
+    configure_social
+    configure_domain
+
+    psuccess "Configuration complete, written to ${WHITE}$CONFIG_FILE${NOCOLOUR}"
 }

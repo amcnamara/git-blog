@@ -10,6 +10,11 @@ function configure_social() {
     write_config_attribute "email" $email
 }
 
+function configure_domain() {
+    read -e -p "Please enter the domain (including http[s]://) where your blog is hosted: " -i "$(echo_config_attribute 'domain')" domain 2>&1
+    write_config_attribute "domain" $domain
+}
+
 function configure_upstream() {
     # Configure blog hosting metadata
     read -e -p "Please enter the AWS region where your blog is hosted: " -i "$(echo_config_attribute 'region')" region 2>&1
@@ -18,9 +23,6 @@ function configure_upstream() {
     read -e -p "Please enter the ARN of the S3 bucket where your blog is hosted: " -i "$(echo_config_attribute 'bucket')" bucket 2>&1
     write_config_attribute "bucket" $bucket
 
-    read -e -p "Please enter the domain (including http[s]://) where your blog is hosted: " -i "$(echo_config_attribute 'domain')" domain 2>&1
-    write_config_attribute "domain" $domain
-
     if [[ -z $bucket || -z $region ]]; then
         pwarning "No bucket location or region provided, please provision before publishing"
     fi
@@ -28,6 +30,7 @@ function configure_upstream() {
 
 function configure() {
     configure_social
+    configure_domain
     configure_upstream
     pbold "Writing $CONFIG_FILE"
 }

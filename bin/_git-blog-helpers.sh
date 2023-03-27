@@ -146,11 +146,12 @@ function perror() {
 function usage() {
     cat <<USAGE
 Usage:
-  git-blog --help            This message
-  git-blog init <name>       Creates a new local blog repo, with some default assets
-  git-blog configure         Configures global metadata (social handles, AWS credentials, etc) on an existing blog repo
-  git-blog write <title>     Creates a new blog post
-  git-blog build             Builds all static assets into public
-  git-blog publish           Copies static assets to target S3 bucket
+  git-blog --help                 This message
+  git-blog init <name>            Creates a new local blog repo, with some default assets
+  git-blog configure [partial]    Configures social handles, AWS credentials, etc on an existing blog repo
+                                  partial config options are: social, domain, upstream, and all (default)
+  git-blog write <title>          Creates a new blog post
+  git-blog build                  Builds all static assets into public directory for review
+  git-blog publish                Copies built static assets to configured upstream S3 bucket
 USAGE
 }

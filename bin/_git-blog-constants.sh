@@ -5,8 +5,8 @@ export WHITE='\033[0;97m'
 export NOCOLOUR='\033[0m'
 
 export GIT_BASEDIR=$(git rev-parse --show-toplevel 2> /dev/null)
-export CONFIG_BASEDIR=~/.git-blog
-export CONFIG_FILE=$CONFIG_BASEDIR/global.cfg
+
+export CONFIG_FILE=$GIT_BASEDIR/.gitblog.cfg
 export LOG_FILE=${GIT_BASEDIR:-~}/debug.log
 
 export PUBLIC_DIR=$GIT_BASEDIR/public

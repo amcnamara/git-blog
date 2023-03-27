@@ -78,7 +78,7 @@ function check_dependencies() {
 
 function is_gitblog() {
     # Ensure that the git repo we're in is a git-blog.
-    if [ ! -e "$GIT_BASEDIR/.gitblog" ]; then
+    if [ ! -e "$GIT_BASEDIR/.gitblog.cfg" ]; then
         perror "You are not in a git-blog directory"
         exit 1
     fi

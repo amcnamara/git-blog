@@ -12,10 +12,12 @@ function initialize() {
     mkdir $1
     cd $1
     git init
-    export GIT_BASEDIR = $(pwd)
 
     echo "Copying initial resources"
     rsync -a $BINSRC/../new/ .
+
+    # Reload constants now that we can resolve $GIT_BASEDIR
+    source $BINSRC/_git-blog-constants.sh
 
     # Now that we know the repo name, try to add a rule in robots for the bundle.
     if [ -e ./static/robots.txt ]; then

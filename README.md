@@ -18,6 +18,7 @@ To run this project, the following dependencies need to be installed:
 - https://fletcher.github.io/MultiMarkdown-5/installation
 - http://www.html-tidy.org/#homepage19700601get_tidy
 - https://github.com/tests-always-included/mo
+- https://www.python.org/downloads
 - http://docs.aws.amazon.com/cli/latest/userguide/installing.html
 
 Run the following to validate dependencies and install `git-blog`:
@@ -32,6 +33,7 @@ For reference, my development machine is running the following:
 - Mo v2.2.0
 - Tidy build 8765
 - MultiMarkdown v6.6.0
+- Python 3.11.2
 - AWS CLI v2.11.5
 
 Usage
@@ -46,6 +48,6 @@ Getting Started
 1) Sign into the AWS CLI
 2) Start by initializing a new blog: `git-blog init example.com` bootstraps a new git repo with some default assets, creates an upstream S3 bucket to publish to, and sets some project config attributes.
 3) Create a new post: `git-blog write hello_world` will create an empty post in `content/posts` with some markdown metadata, fill in the body of the post and save.
-4) Review content: `git-blog build` and then open `public/index.html` in a browser to navigate the built assets.
+4) Review content: `git-blog build` and then open `http://localhost:8080` in a browser to navigate the built assets.
 5) Publish content: `git-blog publish` will build assets and push to S3, if you have CloudFront configured for that bucket the assets should appear after the previous CDN entries expire.
 6) It's a good idea to backup the blog's repo by pushing to a second upstream source such as Github.

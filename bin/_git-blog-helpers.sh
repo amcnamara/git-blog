@@ -69,6 +69,11 @@ function check_dependencies() {
         exit 1
     fi
 
+    if ! is_command "python3"; then
+        perror "Missing 'python3' runtime, please visit: ${WHITE}https://www.python.org/downloads${NOCOLOUR}"
+        exit 1
+    fi
+
     if ! is_command "aws"; then
         perror "Missing 'aws' hosting dependency, please visit: ${WHITE}http://docs.aws.amazon.com/cli/latest/userguide/installing.html${NOCOLOUR}"
         exit 1
@@ -150,7 +155,7 @@ Usage:
   git-blog configure [partial]    Configures social handles, AWS credentials, etc on an existing blog repo
                                   partial config options are: social, domain, upstream, and all (default)
   git-blog write <title>          Creates a new blog post
-  git-blog build                  Builds all static assets into public directory for review
+  git-blog build [port]           Builds all static assets into public directory, and serve for review
   git-blog publish                Copies built static assets to configured upstream S3 bucket
 USAGE
 }

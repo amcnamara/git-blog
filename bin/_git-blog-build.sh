@@ -128,67 +128,64 @@ function build() {
     # - Generate RSS feed of content, ordered by creation time
     # - Generate Git bundle asset
 
-    if is_config_attribute "index"; then
-        output=$PUBLIC_DIR/index.html
-        template=$TEMPLATE_DIR/index.mustache
+    ## INDEX
+    output=$PUBLIC_DIR/index.html
+    template=$TEMPLATE_DIR/index.mustache
 
-        if [ ! -e $template ]; then
-            perror "Could not generate index.html, missing template $TEMPLATE_DIR/index.mustache"
-            exit 1
-        fi
-
-        pbold "Writing $output"
-
-        mo $template | tidy -i -w 0 -q - > $output
-
-        if [ $? -eq 1 ]; then
-            pwarning "Encountered warnings while rendering index"
-        elif [ $? -eq 2 ]; then
-            perror "Encountered errors while rendering index"
-            exit 1
-        else
-            psuccess "Generated index"
-        fi
+    if [ ! -e $template ]; then
+        perror "Could not generate index.html, missing template $TEMPLATE_DIR/index.mustache"
+        exit 1
     fi
 
-    if is_config_attribute "sitemap"; then
-        # Lookup all public markup, including both generated and copied static pages.
-        paths=$(find $PUBLIC_DIR -name '*.html')
+    pbold "Writing $output"
 
-        # Sitemaps should only contain fully qualified URLs, prefix domain if it's set.
-        domain=$(echo_config_attribute "domain")
+    mo $template | tidy -i -w 0 -q - > $output
+
+    if [ $? -eq 1 ]; then
+        pwarning "Encountered warnings while rendering index"
+    elif [ $? -eq 2 ]; then
+        perror "Encountered errors while rendering index"
+        exit 1
+    else
+        psuccess "Generated index"
+    fi
+
+    ## SITEMAP
+    # Lookup all public markup, including both generated and copied static pages.
+    paths=$(find $PUBLIC_DIR -name '*.html')
+
+    # Sitemaps should only contain fully qualified URLs, prefix domain if it's set.
+    domain=$(echo_config_attribute "domain")
 
 	# TODO: Validate domain against RFC-3986
-        if [ -z $domain ]; then
-            pwarning "Blog domain not set in config, can only generate relative URLs"
-        fi
-
-        pbold "Writing $OUT_SITEMAP_FILE"
-
-        for path in $paths; do
-            echo $domain${path#$PUBLIC_DIR} >> $OUT_SITEMAP_FILE
-        done
-
-        psuccess "Generated sitemap"
+    if [ -z $domain ]; then
+        pwarning "Blog domain not set in config, can only generate relative URLs"
     fi
 
-    if is_config_attribute "rss"; then
-        pwarning "RSS generation not yet implemented."
-    fi
+    pbold "Writing $OUT_SITEMAP_FILE"
 
-    if is_config_attribute "bundle"; then
-        if [ -z $(git rev-list -n 1 --all) ]; then
-            pwarning "Cannot build a git bundle, no commits have been detected."
-        else
-            name="$PUBLIC_DIR/$(basename $GIT_BASEDIR).git"
+    for path in $paths; do
+        echo $domain${path#$PUBLIC_DIR} >> $OUT_SITEMAP_FILE
+    done
+
+    psuccess "Generated sitemap"
+
+    ## RSS
+    pwarning "RSS generation not yet implemented."
+
+
+    ## BUNDLE
+    if [ -z $(git rev-list -n 1 --all) ]; then
+        pwarning "Cannot build a git bundle, no commits have been detected."
+    else
+        name="$PUBLIC_DIR/$(basename $GIT_BASEDIR).git"
 
 	    pbold "Writing $name"
 
 	    if git bundle create $name --all; then
-                psuccess "Generated git bundle"
-            else
-                perror "Could not create git bundle"
-            fi
+            psuccess "Generated git bundle"
+        else
+            perror "Could not create git bundle"
         fi
     fi
 }

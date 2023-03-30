@@ -28,6 +28,10 @@ case $1 in
     build)
         is_gitblog
         build
+        cd $PUBLIC_DIR
+        PORT=${2:-8080}
+        pbold "Bringing up webserver: http://localhost:$PORT" 
+        python3 -m http.server $PORT & open "http://localhost:$PORT"
         ;;
     publish)
         is_gitblog

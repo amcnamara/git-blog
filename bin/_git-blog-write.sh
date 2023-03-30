@@ -26,9 +26,10 @@ function write() {
 title: $title
 timestamp: $timestamp
 datestamp: $datestamp
+keywords:
 description:
 
-<!-- post content starts here -->
+<!-- post content starts below here -->
 POST
 
     pbold "Writing $filename"

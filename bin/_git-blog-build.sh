@@ -111,7 +111,7 @@ function build() {
             export content=$(multimarkdown --snippet $document)
 
             # Render post and prettify markup before writing
-            mo $template | tidy -i -w 0 -q - > $output
+            mo $template | tidy --tidy-mark no -i -w 0 -q - > $output
         )
 
         if [ $? -eq 1 ]; then
@@ -139,7 +139,7 @@ function build() {
 
     pbold "Writing $output"
 
-    mo $template | tidy -i -w 0 -q - > $output
+    mo $template | tidy --tidy-mark no -i -w 0 -q - > $output
 
     if [ $? -eq 1 ]; then
         pwarning "Encountered warnings while rendering index"

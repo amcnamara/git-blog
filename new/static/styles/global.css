@@ -1,0 +1,107 @@
+:root {
+    --primary: #FFF;
+    --secondary: #222;
+    --highlight: blue;
+    --spacing: 2em;
+    --corner-radius: 0.4em;
+    --content-width: 50%;
+}
+
+body {
+    margin: 0;
+    background-color: var(--primary);
+    color: var(--secondary);
+    z-index: -2;
+    position: absolute;
+    font-family: helvetica, sans-serif;
+    font-weight: 200;
+    font-size: 18;
+}
+
+div.navigation {
+    display: block;
+    position: fixed;
+    left: 0;
+    top: var(--spacing);
+    padding: calc(var(--spacing) / 2);
+    background-color: var(--primary);
+    border: 1px solid var(--secondary);
+    border-left: 0;
+    border-radius: 0 var(--corner-radius) var(--corner-radius) 0;
+}
+
+div.navigation a.home {
+    writing-mode: vertical-lr;
+    text-decoration: none;
+    color: var(--secondary);
+}
+
+div.navigation a.home:hover {
+    color: var(--highlight);
+}
+
+div.content {
+    display: block;
+    background-color: var(--primary);
+    width: var(--content-width);
+    border: 1px solid var(--secondary);
+    box-sizing: border-box;
+    padding: calc(var(--spacing) / 2) var(--spacing);
+    height: fit-content;
+    border-radius: var(--corner-radius);
+    margin: var(--spacing) auto;
+}
+
+div.content h1 {
+    font-weight: 400;
+    margin-bottom: 0.2em;
+}
+
+div.content h2, div.content h3 {
+    font-weight: 200;
+    margin-top: 1em;
+    margin-bottom: 0.2em;
+}
+
+div.content h6 {
+    font-weight: 400;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary: #111;
+        --secondary: #DDD;
+        --highlight: yellow;
+    }
+}
+
+@media (orientation: portrait) {
+    :root {
+        --content-width: 85%;
+    }
+
+    div.navigation {
+        position: relative;
+        width: var(--content-width);
+        margin: 0 auto;
+        top: 0;
+        left: initial;
+        padding: calc(var(--spacing) / 2) var(--spacing);
+        box-sizing: border-box;
+        border-left: 1px solid var(--secondary);
+        border-top: 0;
+        border-radius: 0 0 var(--corner-radius) var(--corner-radius);
+    }
+
+    div.navigation a.home {
+        writing-mode: initial;
+    }
+}
+
+@media screen and (max-width: 40em) {
+    :root {
+        --content-width: 100%;
+    }
+}

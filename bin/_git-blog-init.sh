@@ -40,5 +40,8 @@ function initialize() {
     configure_social
     configure_domain
 
+    git add . 2>$1 > /dev/null
+    git commit -m "Initial commit of default assets." 2>$1 > /dev/null
+
     psuccess "Writing configuration to ${WHITE}$CONFIG_FILE${NOCOLOUR}"
 }

@@ -3,6 +3,10 @@ function write() {
     timestamp=$(date '+%l:%M %p')
     timestamp=${timestamp#\ } # Trim leading space if hour has a single digit.
 
+    # Create content directory if it doesn't exist (git can't hold an empty dir
+    # in the `new` default directory)
+    mkdir -p $POST_DIR
+
     # NOTE: We need to prepend a datestamp to the file in order to sort
     #       posts by creation time, since this file metadata is lost on
     #       cloned repositories.

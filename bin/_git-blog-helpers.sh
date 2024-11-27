@@ -60,7 +60,7 @@ function check_dependencies() {
     fi
 
     if ! is_command "tidy"; then
-        perror "Missing 'tidy' HTML formatter dependency, please visit: ${WHITE}http://www.html-tidy.org/#homepage19700601get_tidy${NOCOLOUR}"
+        perror "Missing 'tidy-html5' HTML formatter dependency, please visit: ${WHITE}http://www.html-tidy.org/#homepage19700601get_tidy${NOCOLOUR}"
         exit 1
     fi
 

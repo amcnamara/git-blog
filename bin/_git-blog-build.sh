@@ -15,6 +15,7 @@ function loadHeaderMetadata() {
     # Strip leading http[s] from domain, since it's just a label.
     export _domain=$(echo_config_attribute "domain" | sed -r "s/https?:\/\///")
     export _twitter=$(echo_config_attribute "twitter")
+    export _bluesky=$(echo_config_attribute "bluesky")
     export _github=$(echo_config_attribute "github")
     export _facebook=$(echo_config_attribute "facebook")
 }

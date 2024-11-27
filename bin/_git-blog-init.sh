@@ -13,7 +13,7 @@ function initialize() {
     cd $1
     git init
 
-    echo "Copying initial resources"
+    plog "Copying initial resources"
     rsync -a $BINSRC/../new/ .
 
     # Reload constants now that we can resolve $GIT_BASEDIR
@@ -21,7 +21,7 @@ function initialize() {
 
     # Now that we know the repo name, try to add a rule in robots for the bundle.
     if [ -e ./static/robots.txt ]; then
-	echo "Disallow: /$1.git" >> ./static/robots.txt
+	  plog "Disallow: /$1.git" >> ./static/robots.txt
     fi
 
     psuccess "Created new blog repo ${WHITE}$GIT_BASEDIR${NOCOLOUR}"

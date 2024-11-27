@@ -122,7 +122,7 @@ function build() {
             loadHeaderMetadata
 
             # Render post and prettify markup before writing
-            mo $template | tidy --tidy-mark no -i -w 0 -q - > $output
+            mo $template | tidy --tidy-mark no --show-warnings no -i -w 0 -q - > $output
         )
 
         if [ $? -eq 1 ]; then
@@ -152,7 +152,7 @@ function build() {
 
     loadHeaderMetadata
 
-    mo $template | tidy --tidy-mark no -i -w 0 -q - > $output
+    mo $template | tidy --tidy-mark no --show-warnings no -i -w 0 -q - > $output
 
     if [ $? -eq 1 ]; then
         pwarning "Encountered warnings while rendering index"

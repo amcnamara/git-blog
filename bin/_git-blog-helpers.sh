@@ -10,7 +10,7 @@ function plumb_logs() {
 
 function is_command() {
     if command -v ${1} > /dev/null 2 >&1; then
-	return 0
+        return 0
     fi
 
     return 1
@@ -103,7 +103,7 @@ function echo_config_attribute() {
     regex="$1=[[:blank:]]*([[:print:]]+)"
 
     if [[ $(cat $CONFIG_FILE) =~ $regex ]]; then
-	echo ${BASH_REMATCH[1]}
+        plog ${BASH_REMATCH[1]}
     fi
 }
 
@@ -127,7 +127,7 @@ function write_config_attribute() {
         #       https:// on domain config attribute. Neato.
         sed -i -e "s#$1=.*#$1=$2#" $CONFIG_FILE
     else
-        echo "$1=$2" >> $CONFIG_FILE
+        plog "$1=$2" >> $CONFIG_FILE
     fi
 }
 
@@ -136,11 +136,11 @@ function plog() {
 }
 
 function pbold() {
-    echo -e "${WHITE}$1${NOCOLOUR}"
+    plog "${WHITE}$1${NOCOLOUR}"
 }
 
 function psuccess() {
-    echo -e "${GREEN}Success${NOCOLOUR}: $1"
+    plog "${GREEN}Success${NOCOLOUR}: $1"
 }
 
 function pwarning() {
@@ -148,16 +148,16 @@ function pwarning() {
     # the debug file). In this case use process substitution to redirect
     # the output of the process to stderr since the file descriptor on OSX
     # isn't consistent with other linux distributions.
-    echo -e "${YELLOW}Warning${NOCOLOUR}: $1" | tee >(cat >&2)
+    plog "${YELLOW}Warning${NOCOLOUR}: $1" | tee >(cat >&2)
 }
 
 function perror() {
-    echo -e "${RED}ERROR${NOCOLOUR}: $1" | tee >(cat >&2)
-    echo "       $LOG_FILE"
+    plog "${RED}ERROR${NOCOLOUR}: $1" | tee >(cat >&2)
+    plog "       $LOG_FILE"
 }
 
 function pdebug() {
-    echo -e "[${WHITE}$(date "+%h %d, %Y %H:%M:%S")${NOCOLOUR}] $1" >> $LOG_FILE
+    plog "[${WHITE}$(date "+%h %d, %Y %H:%M:%S")${NOCOLOUR}] $1" >> $LOG_FILE
 }
 
 function usage() {

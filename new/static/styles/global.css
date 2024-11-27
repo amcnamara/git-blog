@@ -15,7 +15,14 @@ body {
     position: absolute;
     font-family: helvetica, sans-serif;
     font-weight: 200;
-    font-size: 18;
+    font-size: 18px;
+    height: 100%;
+    width: 100%;
+}
+
+svg#background {
+    height: 100%;
+    width: 100%;
 }
 
 div.navigation {

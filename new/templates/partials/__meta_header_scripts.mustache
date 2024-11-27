@@ -34,7 +34,7 @@
           `${(255 * Math.random()).toFixed()},` +
           `${(255 * Math.random()).toFixed()})`
 
-      corpus += `<polygon points="${path}" fill="${colour}" />`;
+      corpus += `<polygon points="${path}" fill="${colour}"></polygon>`;
     }
   }
 
@@ -43,9 +43,9 @@
     background.id = 'background';
     background.setAttribute('height', '100%');
     background.setAttribute('width', '100%');
-    background.innerHTML = corpus;
 
     document.body.appendChild(background);
+    background.innerHTML = corpus;
 
     function makeBright(element) {
       element.style.transitionDuration = '0s';
@@ -61,17 +61,6 @@
       element.style.transitionDuration = `${duration / 1000}s`;
       return window.setTimeout(reset.bind(this, element), duration);
     }
-
-    function blink() {
-      console.log('blinking');
-      let polygons = document.querySelectorAll('svg#background polygon');
-      let poly = polygons[Math.floor(polygons.length * Math.random())];
-
-      makeBright(poly);
-      window.setTimeout(makeDim.bind(window, poly, 8000), 0);
-    }
-
-    window.setInterval(blink, 1000);
   });
 
   let r = Math.floor(20 + Math.random() * 100);

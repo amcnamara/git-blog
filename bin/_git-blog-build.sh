@@ -152,9 +152,6 @@ function build() {
 
     loadHeaderMetadata
 
-    echo $_domain
-    echo $_twitter
-
     mo $template | tidy --tidy-mark no -i -w 0 -q - > $output
 
     if [ $? -eq 1 ]; then

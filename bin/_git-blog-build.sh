@@ -170,7 +170,7 @@ function build() {
     # Sitemaps should only contain fully qualified URLs, prefix domain if it's set.
     domain=$(echo_config_attribute "domain")
 
-	# TODO: Validate domain against RFC-3986
+    # TODO: Validate domain against RFC-3986
     if [ -z $domain ]; then
         pwarning "Blog domain not set in config, can only generate relative URLs"
     fi
@@ -193,9 +193,9 @@ function build() {
     else
         name="$PUBLIC_DIR/$(basename $GIT_BASEDIR).git"
 
-	    pbold "Writing $name"
+        pbold "Writing $name"
 
-	    if git bundle create $name --all; then
+        if git bundle create $name --all; then
             psuccess "Generated git bundle"
         else
             perror "Could not create git bundle"

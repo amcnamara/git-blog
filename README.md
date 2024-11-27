@@ -31,7 +31,7 @@ For reference, my development machine is running the following:
 - Bash v5.2.15
 - Git v2.40.0
 - Mo v2.2.0
-- Tidy build 8765
+- Tidy v5.8.0
 - MultiMarkdown v6.6.0
 - Python 3.11.2
 - AWS CLI v2.11.5

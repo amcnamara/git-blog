@@ -11,6 +11,14 @@ function runIndex() {
     done
 }
 
+function loadHeaderMetadata() {
+    # Strip leading http[s] from domain, since it's just a label.
+    export _domain=$(echo_config_attribute "domain" | sed -r "s/https?:\/\///")
+    export _twitter=$(echo_config_attribute "twitter")
+    export _github=$(echo_config_attribute "github")
+    export _facebook=$(echo_config_attribute "facebook")
+}
+
 function build() {
     # Bail out if we're in public/ or one of its subdirectories.
     #
@@ -110,6 +118,8 @@ function build() {
             # Read in post content
             export content=$(multimarkdown --snippet $document)
 
+            loadHeaderMetadata
+
             # Render post and prettify markup before writing
             mo $template | tidy --tidy-mark no -i -w 0 -q - > $output
         )
@@ -138,6 +148,11 @@ function build() {
     fi
 
     pbold "Writing $output"
+
+    loadHeaderMetadata
+
+    echo $_domain
+    echo $_twitter
 
     mo $template | tidy --tidy-mark no -i -w 0 -q - > $output
 

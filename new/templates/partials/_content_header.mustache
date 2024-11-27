@@ -1,8 +1,14 @@
 <div class="header">
-  <a class="left hero" href="/index.html">amcnamara.me</a>
+  <a class="left hero" href="/index.html">{{domain}}</a>
   <a href="/about.html">about</a>
   <a class="logo-button rss" href="/rss.xml">rss</a>
-  <a class="logo-button twitter" href="https://twitter.com/__amcnamara">twitter</a>
-  <a class="logo-button github" href="https://github.com/amcnamara">github</a>
-  <a class="logo-button facebook" href="https://facebook.com/mcnamara.alex">facebook</a>
+  {{#_twitter}}
+  <a class="logo-button twitter" href="https://{{_twitter}}">twitter</a>
+  {{/_twitter}}
+  {{#_github}}
+  <a class="logo-button github" href="https://github.com/{{_github}}">github</a>
+  {{/_github}}
+  {{#_facebook}}
+  <a class="logo-button facebook" href="https://facebook.com/{{_facebook}}">facebook</a>
+  {{/_facebook}}
 </div>

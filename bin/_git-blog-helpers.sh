@@ -8,10 +8,6 @@ function plumb_logs() {
     exec 2>>$LOG_FILE
 }
 
-function pdebug() {
-    echo -e "[${WHITE}$(date "+%h %d, %Y %H:%M:%S")${NOCOLOUR}] $1" >> $LOG_FILE
-}
-
 function is_command() {
     if command -v ${1} > /dev/null 2 >&1; then
 	return 0
@@ -80,6 +76,15 @@ function check_dependencies() {
     fi
 }
 
+function show_dependency_versions() {
+    plog "Git version $(pbold $(git --version | sed 's/^[^[:digit:]]*\(.*\)/\1/g')) (recommended $(pbold '>=2.40.0'))"
+    plog "MultiMarkdown version $(pbold $(multimarkdown --help | grep "MultiMarkdown v\d.\d.\d" | cut -d' ' -f2 | cut -c2-)) (recommended $(pbold '>=6.6.0'))"
+    plog "Tidy-HTML5 version $(pbold $(tidy --version | sed 's/^[^[:digit:]]*\(.*\)/\1/g')) (recommended $(pbold '>=5.8.0'))"
+    plog "Mo version $(pbold $(mo --help | grep "MO_VERSION=" | cut -d'=' -f2)) (recommended $(pbold '>=3.0.7'))"
+    plog "Python3 version $(pbold $(python3 --version | cut -d' ' -f2)) (recommended $(pbold '>=3.12.7'))"
+    plog "AWS CLI version $(pbold $(aws --version | cut -d' ' -f1 | cut -d'/' -f2)) (recommended $(pbold '>=2.18.0'))"
+}
+
 function is_gitblog() {
     # Ensure that the git repo we're in is a git-blog.
     if [ ! -e "$GIT_BASEDIR/.gitblog.cfg" ]; then
@@ -126,6 +131,10 @@ function write_config_attribute() {
     fi
 }
 
+function plog() {
+    echo -e "$1"
+}
+
 function pbold() {
     echo -e "${WHITE}$1${NOCOLOUR}"
 }
@@ -147,6 +156,10 @@ function perror() {
     echo "       $LOG_FILE"
 }
 
+function pdebug() {
+    echo -e "[${WHITE}$(date "+%h %d, %Y %H:%M:%S")${NOCOLOUR}] $1" >> $LOG_FILE
+}
+
 function usage() {
     cat <<USAGE
 Usage:
@@ -157,5 +170,6 @@ Usage:
   git-blog write <title>          Creates a new blog post
   git-blog build [port]           Builds all static assets into public directory, and serve for review
   git-blog publish                Copies built static assets to configured upstream S3 bucket
+  git-blog doctor                 Print out system dependencies which may be missing or require updates
 USAGE
 }

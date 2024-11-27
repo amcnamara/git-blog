@@ -37,6 +37,10 @@ case $1 in
         is_gitblog
         publish
         ;;
+    doctor)
+        check_dependencies
+        show_dependency_versions
+        ;;
     *)
         usage
         ;;

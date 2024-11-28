@@ -36,10 +36,22 @@ div.navigation a.home {
     writing-mode: vertical-lr;
     text-decoration: none;
     color: var(--secondary);
+    user-select: none;
 }
 
 div.navigation a.home:hover {
     color: var(--highlight);
+}
+
+div.navigation a {
+    float: left;
+    clear: left;
+}
+
+div.navigation a svg {
+    height: 35px;
+    width: 35px;
+    margin: 5px;
 }
 
 div.content {

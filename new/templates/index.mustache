@@ -5,15 +5,15 @@
     {{> ./partials/_content_background.mustache}}
     {{> ./partials/_content_navigation.mustache}}
     <div class="content">
-      <div class="index">
-        {{#runIndex}}
-          <div class="post">
-            <div class="title">{{post.title}}</div>
-            <div class="description">{{post.description}}</div>
-          </div>
-        {{/runIndex}}
-      </div>
-      {{> ./partials/_content_footer.mustache}}
+      <h1 class="index">All Posts:</h1>
+      {{#runIndex}}
+        <div class="post">
+          <h5 class="title">{{post.title}}</h6>
+          <h6 class="description">{{post.description}}</h6>
+          <h6 class="keywords">{{post.keywords}}</h6>
+        </div>
+      {{/runIndex}}
     </div>
+    {{> ./partials/_content_footer.mustache}}
   </body>
 </html>

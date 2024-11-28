@@ -1,18 +1,18 @@
 <div class="navigation">
-  <a class="left hero" href="/index.html">{{domain}}</a>
-  <a href="/about.html">about</a>
-  <a class="logo-button rss" href="/rss.xml">rss</a>
+  <a class="left hero home" href="/index.html">{{_domain}}</a>
+  <a class="logo-button about" href="/about.html">{{> ../../static/images/profile.svg}}</a>
+  <a class="logo-button rss" href="/rss.xml">{{> ../../static/images/rss.svg}}</a>
   {{#_bluesky}}
-  <a class="logo-button bluesky" href="https://{{_bluesky}}">bluesky</a>
+  <a class="logo-button bluesky" href="https://{{_bluesky}}">{{> ../../static/images/bluesky.svg}}</a>
   {{/_bluesky}}
   {{#_twitter}}
-  <a class="logo-button twitter" href="https://{{_twitter}}">twitter</a>
+  <a class="logo-button twitter" href="https://{{_twitter}}">{{> ../../static/images/twitter.svg}}</a>
   {{/_twitter}}
   {{#_github}}
-  <a class="logo-button github" href="https://github.com/{{_github}}">github</a>
+  <a class="logo-button github" href="https://github.com/{{_github}}">{{> ../../static/images/github.svg}}</a>
   {{/_github}}
   {{#_facebook}}
-  <a class="logo-button facebook" href="https://facebook.com/{{_facebook}}">facebook</a>
+  <a class="logo-button facebook" href="https://facebook.com/{{_facebook}}">{{> ../../static/images/facebook.svg}}</a>
   {{/_facebook}}
-  <a class="logo-button backup" href="/{{domain}}.git">bundle</a>
+  <a class="logo-button backup" href="/{{_domain}}.git">{{> ../../static/images/backup.svg}}</a>
 </div>

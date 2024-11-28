@@ -1,6 +1,7 @@
 <div class="navigation">
   <a class="left hero home" href="/index.html">{{_domain}}</a>
   <a class="logo-button about" href="/about.html">{{> ../../static/images/profile.svg}}</a>
+  <a class="logo-button backup" href="/{{_domain}}.git">{{> ../../static/images/backup.svg}}</a>
   <a class="logo-button rss" href="/rss.xml">{{> ../../static/images/rss.svg}}</a>
   {{#_bluesky}}
   <a class="logo-button bluesky" href="https://{{_bluesky}}">{{> ../../static/images/bluesky.svg}}</a>
@@ -14,5 +15,4 @@
   {{#_facebook}}
   <a class="logo-button facebook" href="https://facebook.com/{{_facebook}}">{{> ../../static/images/facebook.svg}}</a>
   {{/_facebook}}
-  <a class="logo-button backup" href="/{{_domain}}.git">{{> ../../static/images/backup.svg}}</a>
 </div>

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48" height="48" data-ember-extension="1">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="4 4 40 40" data-ember-extension="1">
   <defs>
     <linearGradient id="d">
       <stop offset="0"/>
@@ -23,7 +23,7 @@
     <radialGradient id="e" cx="24.313" cy="41.156" r="22.875" fx="24.313" fy="41.156" gradientTransform="matrix(1 0 0 .26913 0 30.08)" gradientUnits="userSpaceOnUse" xlink:href="#d"/>
   </defs>
   
-  <path fill="url(#f)" stroke="#25375f" stroke-linecap="round" stroke-linejoin="round" d="M4.558 3.568h38.89c.59 0 1.064.474 1.064 1.063v37.765c0 .59-.475 1.064-1.064 1.064H6.558l-3.064-3.064V4.631a1.06 1.06 0 0 1 1.064-1.063z"/>
+  <path fill="teal" stroke="#25375f" stroke-linecap="round" stroke-linejoin="round" d="M4.558 3.568h38.89c.59 0 1.064.474 1.064 1.063v37.765c0 .59-.475 1.064-1.064 1.064H6.558l-3.064-3.064V4.631a1.06 1.06 0 0 1 1.064-1.063z"/>
   <path fill="#fff" d="M9 4h30v23H9z"/>
   <rect width="30" height="4" x="9" y="4" fill="#d31c00" rx=".126" ry=".126"/>
   <rect width="2" height="2" x="6" y="6" opacity=".739" rx=".126" ry=".126"/>

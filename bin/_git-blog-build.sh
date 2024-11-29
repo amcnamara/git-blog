@@ -13,10 +13,12 @@ function runIndex() {
 
 function loadHeaderMetadata() {
     export _domain=$(echo_config_attribute "domain")
-    export _twitter=$(echo_config_attribute "twitter")
-    export _bluesky=$(echo_config_attribute "bluesky")
     export _github=$(echo_config_attribute "github")
+    export _linkedin=$(echo_config_attribute "linkedin")
+    export _bluesky=$(echo_config_attribute "bluesky")
+    export _twitter=$(echo_config_attribute "twitter")
     export _facebook=$(echo_config_attribute "facebook")
+    export _email=$(echo_config_attribute "email")
 }
 
 function build() {

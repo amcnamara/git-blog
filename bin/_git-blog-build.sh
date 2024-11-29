@@ -12,8 +12,7 @@ function runIndex() {
 }
 
 function loadHeaderMetadata() {
-    # Strip leading http[s] from domain, since it's just a label.
-    export _domain=$(echo_config_attribute "domain" | sed -r "s/https?:\/\///")
+    export _domain=$(echo_config_attribute "domain")
     export _twitter=$(echo_config_attribute "twitter")
     export _bluesky=$(echo_config_attribute "bluesky")
     export _github=$(echo_config_attribute "github")
@@ -167,12 +166,14 @@ function build() {
     # Lookup all public markup, including both generated and copied static pages.
     paths=$(find $PUBLIC_DIR -name '*.html')
 
-    # Sitemaps should only contain fully qualified URLs, prefix domain if it's set.
-    domain=$(echo_config_attribute "domain")
+    domain=$(echo_config_attribute 'domain')
 
     # TODO: Validate domain against RFC-3986
     if [ -z $domain ]; then
         pwarning "Blog domain not set in config, can only generate relative URLs"
+    else
+        # Sitemaps should only contain fully qualified URLs, so prefix the domain.
+        domain="https://$domain"
     fi
 
     pbold "Writing $OUT_SITEMAP_FILE"

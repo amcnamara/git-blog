@@ -20,8 +20,9 @@ function configure_social() {
 }
 
 function configure_domain() {
-    read -e -p "Please enter the domain (including http[s]://) where your blog is hosted: " -i "$(echo_config_attribute 'domain')" domain 2>&1
-    write_config_attribute "domain" $domain
+    read -e -p "Please enter the domain where your blog is hosted: " -i "$(echo_config_attribute 'domain')" domain 2>&1
+    # Strip leading http[s] if provided
+    write_config_attribute "domain" $($domain | sed -r "s/https?:\/\///")
 }
 
 function configure_upstream() {

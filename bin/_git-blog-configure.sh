@@ -1,5 +1,14 @@
 function configure_social() {
     # Configure social handles
+    read -e -p "Please enter your github handle (or leave blank): " -i "$(echo_config_attribute 'github')" github 2>&1
+    write_config_attribute "github" $github
+
+    read -e -p "Please enter your linkedin handle (or leave blank): " -i "$(echo_config_attribute 'linkedin')" linkedin 2>&1
+    write_config_attribute "linkedin" $linkedin
+
+    read -e -p "Please enter your bluesky handle (or leave blank): " -i "$(echo_config_attribute 'bluesky')" bluesky 2>&1
+    write_config_attribute "bluesky" $bluesky
+
     read -e -p "Please enter your twitter handle (or leave blank): " -i "$(echo_config_attribute 'twitter')" twitter 2>&1
     write_config_attribute "twitter" $twitter
 

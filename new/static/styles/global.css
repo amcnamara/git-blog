@@ -15,7 +15,7 @@ body {
     position: absolute;
     font-family: helvetica, sans-serif;
     font-weight: 200;
-    font-size: 18px;
+    font-size: 1.1em;
     height: 100%;
     width: 100%;
 }
@@ -107,6 +107,20 @@ svg#background polygon:active {
     stroke-width: 0.3em;
 }
 
+div.footer {
+    display: block;
+    background-color: var(--primary);
+    width: var(--content-width);
+    border: 1px solid var(--secondary);
+    border-bottom: 0;
+    box-sizing: border-box;
+    padding: calc(var(--spacing) / 3) var(--spacing);
+    height: fit-content;
+    border-radius: var(--corner-radius) var(--corner-radius) 0 0;
+    margin: var(--spacing) auto 0 auto;
+    position: sticky;
+    top: 100vh;
+}
 
 @media (prefers-color-scheme: dark) {
     :root {

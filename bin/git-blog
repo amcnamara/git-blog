@@ -41,6 +41,10 @@ case $1 in
         check_dependencies
         show_dependency_versions
         ;;
+    migrate)
+        is_gitblog
+        import_assets $2
+        ;;
     *)
         usage
         ;;

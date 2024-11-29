@@ -1,3 +1,13 @@
+function import_assets() {
+    # Clean install, kill any additionally added templates and static files.
+    if [ -n $1 ]; then
+        rm -rf $TEMPLATE_DIR $STATIC_DIR
+    fi
+    
+    plog "Copying initial resources"
+    rsync -a $BINSRC/../new/ $GIT_BASEDIR
+}
+
 function initialize() {
     if [ -z $1 ]; then
         perror "Argument missing, must provide a directory name for the repo"
@@ -13,11 +23,10 @@ function initialize() {
     cd $1
     git init
 
-    plog "Copying initial resources"
-    rsync -a $BINSRC/../new/ .
-
     # Reload constants now that we can resolve $GIT_BASEDIR
     source $BINSRC/_git-blog-constants.sh
+
+    import_assets
 
     # Now that we know the repo name, try to add a rule in robots for the bundle.
     if [ -e ./static/robots.txt ]; then
@@ -40,8 +49,9 @@ function initialize() {
     configure_social
     configure_domain
 
-    git add . 2>$1 > /dev/null
-    git commit -m "Initial commit of default assets." 2>$1 > /dev/null
+    git add . 2>&1 > /dev/null
+
+    git commit -m "Initial commit of default assets." 2>&1 > /dev/null
 
     psuccess "Writing configuration to ${WHITE}$CONFIG_FILE${NOCOLOUR}"
 }

@@ -10,7 +10,7 @@ function import_assets() {
 
 function initialize() {
     if [ -z $1 ]; then
-        perror "Argument missing, must provide a directory name for the repo"
+        perror "Argument missing: must provide a name for the new blog"
         exit 1
     fi
     if [ -e $1 ]; then

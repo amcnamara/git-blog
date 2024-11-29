@@ -1,4 +1,9 @@
 function write() {
+    if [ -z $1 ]; then
+        perror "Argument missing: must provide a post title"
+        exit 1
+    fi
+
     datestamp=$(date '+%b %d, %Y')
     timestamp=$(date '+%l:%M %p')
     timestamp=${timestamp#\ } # Trim leading space if hour has a single digit.

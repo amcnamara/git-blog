@@ -43,7 +43,7 @@ case $1 in
         ;;
     migrate)
         is_gitblog
-        import_assets $2
+        import_assets true
         ;;
     *)
         usage

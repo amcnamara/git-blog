@@ -171,6 +171,6 @@ Usage:
   git-blog build [port]           Builds all static assets into public directory, and serve for review
   git-blog publish                Copies built static assets to configured upstream S3 bucket
   git-blog doctor                 Print out system dependencies which may be missing or require updates
-  git-blog migrate [clean]        Re-import templates and static assets, clean removes all existing assets
+  git-blog migrate                Re-import templates and static assets
 USAGE
 }

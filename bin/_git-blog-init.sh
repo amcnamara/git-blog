@@ -1,11 +1,14 @@
 function import_assets() {
-    # Clean install, kill any additionally added templates and static files.
+    # Partial import, used for migration to update assets in place
     if [ -n $1 ]; then
+        plog "Copying templates and static assets"
         rm -rf $TEMPLATE_DIR $STATIC_DIR
+        rsync -a $BINSRC/../new/static $BINSRC/../new/templates $GIT_BASEDIR
+    # Full import for new blog repos
+    else
+        plog "Copying initial resources"
+        rsync -a $BINSRC/../new/ $GIT_BASEDIR
     fi
-    
-    plog "Copying initial resources"
-    rsync -a $BINSRC/../new/ $GIT_BASEDIR
 }
 
 function initialize() {

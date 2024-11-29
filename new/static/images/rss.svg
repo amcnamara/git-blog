@@ -1,6 +1,6 @@
 <svg class="logo border rss" role="img" aria-label="RSS" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
   <!-- OPTIONAL: set rect fill to create square backgrounds with the page's palette -->
   <rect fill="transparent" height="512" width="512"/>
-  <circle cx="123" cy="389" fill="#fff" r="67"/>
+  <circle cx="123" cy="389" fill="var(--secondary)" r="67"/>
   <path d="m56 89c203 0 367 164 367 367m-133 0c0-128-105-234-234-234" fill="none" stroke="var(--secondary)" stroke-width="68"/>
 </svg>

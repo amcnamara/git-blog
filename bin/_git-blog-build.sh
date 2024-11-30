@@ -1,16 +1,3 @@
-function runIndex() {
-    # Read in the template block from stdin
-    template=$(cat)
-
-    # NOTE: Use arithmetic expansion to generate the sequence of post
-    #       indices from 0 to n-1. The index associative array has
-    #       composite keys of the form [$post,$attribute], replace all
-    #       instances of post.<attribute> in the template from this map.
-    for post in $(seq $((${#posts[@]} - 1))); do
-        echo -e $template | sed "s/post\./index.$post,/g"
-    done
-}
-
 function loadHeaderMetadata() {
     export _domain=$(echo_config_attribute "domain")
     export _github=$(echo_config_attribute "github")
@@ -152,6 +139,8 @@ function build() {
     pbold "Writing $output"
 
     loadHeaderMetadata
+
+    export postIndicies=($(seq 0 $((${#posts[@]} - 1))))
 
     mo $template | tidy --tidy-mark no --show-warnings no -i -w 0 -q - > $output
 

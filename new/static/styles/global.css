@@ -69,6 +69,25 @@ div.content {
     height: fit-content;
     border-radius: var(--corner-radius);
     margin: var(--spacing) auto;
+    color: var(--secondary);
+}
+
+div.content a.post {
+    display: block;
+    padding: calc(var(--spacing) / 2);
+    text-decoration: none;
+    color: var(--secondary);
+    border: 1px solid var(--primary);
+    border-radius: calc(var(--corner-radius) /2);
+}
+
+div.content a.post:hover {
+    border: 1px solid var(--secondary);
+}
+
+div.content a.post:hover .title {
+    text-decoration: underline;
+    color: var(--highlight);
 }
 
 div.content h1 {
@@ -76,16 +95,23 @@ div.content h1 {
     margin-bottom: 0.2em;
 }
 
-div.content h6 {
-    font-weight: 400;
-    margin-top: 0.2em;
+div.content h2, div.content h3 {
+    font-weight: 200;
     margin-bottom: 0.2em;
 }
 
-div.content h2, div.content h3 {
-    font-weight: 200;
-    margin-top: 1em;
-    margin-bottom: 0.2em;
+div.content h4, div.content h5 {
+    font-weight: 400;
+    margin: 0;
+}
+
+div.content h6 {
+    font-weight: 400;
+    margin: 0.2em 0;
+}
+
+div.content div.post {
+    margin: 1em 0;
 }
 
 svg#background {

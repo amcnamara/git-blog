@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <!-- Channel metadata -->
+    <title>{{_domain}}</title>
+    <link>{{domain}}</link>
+    <description></description>
+    <language>en-us</language>
+    <lastBuildDate>{{_buildtime}}</lastBuildDate>
+
+    {{#postIndicies}}
+    <item>
+      <title>{{('index.' @key ',title')}}</title>
+      <link>{{domain}}/posts/{{@key}}.html</link>
+      <description>{{('index.' @key ',description')}}</description>
+      <pubDate>{{('index.' @key ',datestamp')}} {{('index.' @key ',timestamp')}}</pubDate>
+      {{generateKeywordLinks @key 'category'}}
+    </item>
+    {{/postIndicies}}
+  </channel>
+</rss>

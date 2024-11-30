@@ -9,7 +9,7 @@
       {{#postIndicies}}
         <a class="post" href="/posts/{{@key}}.html">
           <h5 class="title">{{('index.' @key ',title')}}</h6>
-          <h6 class="keywords">{{generateKeywordLinks @key}}</h6>
+          <h6 class="keywords">{{generateKeywordLinks @key 'span'}}</h6>
           <h6 class="description">{{('index.' @key ',description')}}</h6>
         </a>
       {{/postIndicies}}

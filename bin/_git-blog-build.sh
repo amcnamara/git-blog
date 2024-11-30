@@ -1,7 +1,7 @@
 function generateKeywordLinks() {
     keywords=(${index[$1,keywords]//:/ })
     for i in "${!keywords[@]}"; do
-        echo -e "<span>#${keywords[i]}</span>"
+        echo -e "<$2>#${keywords[i]}</$2>"
     done
 }
 
@@ -183,8 +183,14 @@ function build() {
     psuccess "Generated sitemap"
 
     ## RSS
-    pwarning "RSS generation not yet implemented."
+    template=$TEMPLATE_DIR/rss.mustache
+    buildtime=$(date)
 
+    pbold "Writing $OUT_RSS_FILE"
+
+    mo --allow-function-arguments $template > $OUT_RSS_FILE
+
+    psuccess "Generated RSS feed"
 
     ## BUNDLE
     if [ -z $(git rev-list -n 1 --all) ]; then

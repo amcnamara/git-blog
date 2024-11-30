@@ -86,7 +86,6 @@ div.content a.post:hover {
 }
 
 div.content a.post:hover .title {
-    text-decoration: underline;
     color: var(--highlight);
 }
 

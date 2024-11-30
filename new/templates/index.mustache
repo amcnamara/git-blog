@@ -5,11 +5,11 @@
     {{> ./partials/_content_background.mustache}}
     {{> ./partials/_content_navigation.mustache}}
     <div class="content">
-      <h1 class="index">Posts</h1>
+      <h1 class="index">Index</h1>
       {{#postIndicies}}
         <a class="post" href="/posts/{{@key}}.html">
           <h5 class="title">{{('index.' @key ',title')}}</h6>
-          <h6 class="keywords">{{('index.' @key ',keywords')}}</h6>
+          <h6 class="keywords">{{generateKeywordLinks @key}}</h6>
           <h6 class="description">{{('index.' @key ',description')}}</h6>
         </a>
       {{/postIndicies}}

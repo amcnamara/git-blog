@@ -1,3 +1,10 @@
+function generateKeywordLinks() {
+    keywords=(${index[$1,keywords]//:/ })
+    for i in "${!keywords[@]}"; do
+        echo -e "<span>#${keywords[i]}</span>"
+    done
+}
+
 function loadHeaderMetadata() {
     export _domain=$(echo_config_attribute "domain")
     export _github=$(echo_config_attribute "github")
@@ -110,7 +117,7 @@ function build() {
             loadHeaderMetadata
 
             # Render post and prettify markup before writing
-            mo $template | tidy --tidy-mark no --show-warnings no -i -w 0 -q - > $output
+            mo --allow-function-arguments $template | tidy --tidy-mark no --show-warnings no -i -w 0 -q - > $output
         )
 
         if [ $? -eq 1 ]; then
@@ -142,7 +149,7 @@ function build() {
 
     export postIndicies=($(seq 0 $((${#posts[@]} - 1))))
 
-    mo $template | tidy --tidy-mark no --show-warnings no -i -w 0 -q - > $output
+    mo --allow-function-arguments $template | tidy --tidy-mark no --show-warnings no -i -w 0 -q - > $output
 
     if [ $? -eq 1 ]; then
         pwarning "Encountered warnings while rendering index"

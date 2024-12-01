@@ -61,7 +61,7 @@ function build() {
         # Read in post content
         export content=$(multimarkdown --snippet "$GIT_BASEDIR/about.md")
 
-        if [ ! -e $content ]; then
+        if [ -z $content ]; then
             pwarning "Could not generate about.html, missing content $GIT_BASEDIR/about.md"
         else
             pbold "Writing $output"

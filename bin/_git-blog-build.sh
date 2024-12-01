@@ -30,11 +30,51 @@ function build() {
         perror "Cannot run build from within $PUBLIC_DIR, run from $GIT_BASEDIR"
         exit 1
     fi
-
+        
     # Blow away all existing built assets, and copy in all static assets
     rm -rf $PUBLIC_DIR
     rsync -a $STATIC_DIR/* $PUBLIC_DIR
 
+    # NOTE: Sketchy as hell
+    source mo
+
+    # Read global metadata into the environment, since the bash version of
+    # mustache unfortunately pulls template attributes from env variables.
+    OLDIFS=$IFS
+    IFS==
+    while read -r key value; do
+        if [ ! -e $value ]; then
+            export $key=$value
+        fi
+    done < $CONFIG_FILE
+    IFS=$OLDIFS
+
+
+    ## ABOUT
+    output=$PUBLIC_DIR/about.html
+    template=$TEMPLATE_DIR/about.mustache
+
+    if [ ! -e $template ]; then
+        pwarning "Could not generate about.html, missing template $TEMPLATE_DIR/about.mustache"
+    else
+        # Read in post content
+        export content=$(multimarkdown --snippet "$GIT_BASEDIR/about.md")
+
+        if [ ! -e $content ]; then
+            pwarning "Could not generate about.html, missing content $GIT_BASEDIR/about.md"
+        else
+            pbold "Writing $output"
+
+            # Used to toggle profile in navigation
+            export _about=1
+            mo --allow-function-arguments $template | tidy --tidy-mark no --show-warnings no -i -w 0 -q - > $output
+
+            psuccess "Generated about page."
+        fi
+    fi
+
+
+    ## POSTS
     # Find all markdown content (including siblings of the posts directory)
     content=$(find $CONTENT_DIR -name "*.md")
 
@@ -65,21 +105,6 @@ function build() {
         done
     done
 
-    # NOTE: Sketchy as hell
-    source mo
-
-    # Read global metadata into the environment, since the bash version of
-    # mustache unfortunately pulls template attributes from env variables.
-    OLDIFS=$IFS
-    IFS==
-    while read -r key value; do
-        if [ ! -e $value ]; then
-            export $key=$value
-        fi
-    done < $CONFIG_FILE
-    IFS=$OLDIFS
-
-    # Render all content
     for document in $content; do
         # Find the template and corresponding output path for the given document
 
@@ -132,11 +157,6 @@ function build() {
         fi
     done
 
-    # Build options (all are recommended and enabled by default in new projects, see README):
-    # - Index content, ordered by creation time
-    # - Sitemap of content links
-    # - Generate RSS feed of content, ordered by creation time
-    # - Generate Git bundle asset
 
     ## INDEX
     output=$PUBLIC_DIR/index.html
@@ -186,6 +206,7 @@ function build() {
 
     psuccess "Generated sitemap"
 
+
     ## RSS
     template=$TEMPLATE_DIR/rss.mustache
     buildtime=$(date)
@@ -195,6 +216,7 @@ function build() {
     mo --allow-function-arguments $template > $OUT_RSS_FILE
 
     psuccess "Generated RSS feed"
+
 
     ## BUNDLE
     if [ -z $(git rev-list -n 1 --all) ]; then

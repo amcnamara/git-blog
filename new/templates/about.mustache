@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  {{> ./partials/_meta_header.mustache}}
+  <body>
+    {{> ./partials/_content_background.mustache}}
+    {{> ./partials/_content_navigation.mustache}}
+    <div class="content">
+      <div class="about">
+        {{{content}}}
+      </div>
+      {{> ./partials/_content_footer.mustache}}
+    </div>
+  </body>
+</html>

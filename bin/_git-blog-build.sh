@@ -1,3 +1,8 @@
+function getPostID() {
+    postCount=${#posts[@]}
+    echo -e $(($postCount - $1 - 1))
+}
+
 function generateKeywordLinks() {
     keywords=(${index[$1,keywords]//:/ })
     for i in "${!keywords[@]}"; do

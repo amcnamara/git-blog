@@ -49,6 +49,7 @@ function build() {
     done < $CONFIG_FILE
     IFS=$OLDIFS
 
+    loadHeaderMetadata
 
     ## ABOUT
     output=$PUBLIC_DIR/about.html
@@ -168,8 +169,6 @@ function build() {
     fi
 
     pbold "Writing $output"
-
-    loadHeaderMetadata
 
     export postIndicies=($(seq 0 $((${#posts[@]} - 1))))
 

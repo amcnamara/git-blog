@@ -46,8 +46,7 @@ function build() {
     # TODO: File creation time is also denormalized in the post metadata,
     #       neither that attribute nor the filename are particularly robust
     #       ways of tracking a timestamp; should investigate alternatives.
-    posts=$(find $POST_DIR -name "*.md")
-    posts=($(ls $posts))
+    posts=(`echo $(find content/posts -name "*.md" | sort -r)`)
 
     # Generate an array of associated arrays by creating composite keys of
     # post offset and attribute. This is necessary because the bash version

@@ -151,6 +151,10 @@ div.footer {
     top: 100vh;
 }
 
+div.copyright a, div.copyright a:visited {
+    color: var(--highlight) !important;
+}
+
 div.footer a.sitemap {
     display: inline-block;
 }

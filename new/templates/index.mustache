@@ -7,7 +7,7 @@
     <div class="content">
       <h1 class="index">Index</h1>
       {{#postIndicies}}
-        <a class="post" href="/posts/{{getPostID @key}}.html">
+        <a class="post" href="/posts/{{@key}}.html">
           <h5 class="title">{{('index.' @key ',title')}}</h6>
           <h6 class="keywords">{{generateKeywordLinks @key 'span'}}</h6>
           <h6 class="description">{{('index.' @key ',description')}}</h6>

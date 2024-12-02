@@ -18,3 +18,5 @@ export STATIC_DIR=$GIT_BASEDIR/static
 export OUT_INDEX_FILE=$PUBLIC_DIR/index.html
 export OUT_SITEMAP_FILE=$PUBLIC_DIR/sitemap.txt
 export OUT_RSS_FILE=$PUBLIC_DIR/rss.xml
+export OUT_ABOUT_FILE=$PUBLIC_DIR/about.html
+export OUT_POSTS=$PUBLIC_DIR/posts

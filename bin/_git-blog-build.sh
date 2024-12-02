@@ -1,8 +1,3 @@
-function getPostID() {
-    postCount=${#posts[@]}
-    echo -e $(($postCount - $1 - 1))
-}
-
 function generateKeywordLinks() {
     keywords=(${index[$1,keywords]//:/ })
     for i in "${!keywords[@]}"; do
@@ -51,6 +46,7 @@ function build() {
 
     loadHeaderMetadata
 
+
     ## ABOUT
     output=$PUBLIC_DIR/about.html
     template=$TEMPLATE_DIR/about.mustache
@@ -77,45 +73,30 @@ function build() {
 
     ## POSTS
     # Find all markdown content (including siblings of the posts directory)
-    content=$(find $CONTENT_DIR -name "*.md")
+    posts=(`echo $(find $POST_DIR -name "*.md" | sort)`)
 
-    if [[ ! ${content[@]} ]]; then
-        pdebug "No content found to build."
+    if [[ ! ${posts[@]} ]]; then
+        pdebug "No post content found to build."
         exit 1
     fi
 
-    # NOTE: Separately from \$content, which may include other documents,
-    #       find all posts and order them alphabetically. Generated posts
-    #       have their creation time prepended to the filename since the
-    #       file metadata is lost during cloning. Chronological ordering
-    #       here is particularly important for building the index, RSS, etc.
-    # TODO: File creation time is also denormalized in the post metadata,
-    #       neither that attribute nor the filename are particularly robust
-    #       ways of tracking a timestamp; should investigate alternatives.
-    posts=(`echo $(find content/posts -name "*.md" | sort -r)`)
-
-    # Generate an array of associated arrays by creating composite keys of
-    # post offset and attribute. This is necessary because the bash version
-    # of mustache (and bash itself, for that matter) doesn't support nested
-    # associated arrays. These will be processed via the runIndex generator.
+    # This will hold all post metadata and content used for rendering the main
+    # index page, it is generated alongside post rendering, see below.
     local -A index=()
+
     for count in ${!posts[@]}; do
-        post=${posts[$count]}
-        for key in $(multimarkdown -m $post); do
-            index[$count,$key]=$(multimarkdown -e=$key $post)
+        document=${posts[$count]};
+
+        # Generate an array of associated arrays by creating composite keys of
+        # post offset and attribute. This is necessary because the bash version
+        # of mustache (and bash itself, for that matter) doesn't support nested
+        # associated arrays. These will be processed via the runIndex generator.
+        for key in $(multimarkdown -m $document); do
+            index[$count,$key]=$(multimarkdown -e=$key $document)
         done
-    done
 
-    for document in $content; do
-        # Find the template and corresponding output path for the given document
-
-        midpath=$(dirname $document)
-        # NOTE: Trim off parent directories from content/ upward, and leading /
-        midpath=${midpath:${#CONTENT_DIR}+1}
-
-        template=$TEMPLATE_DIR/$midpath/template.mustache
-        filename=$(basename $document | cut -d. -f1 -).html
-        output=$PUBLIC_DIR/$midpath/$filename
+        template=$TEMPLATE_DIR/posts/template.mustache
+        output=$OUT_POSTS/$count.html
 
         # Ensure that the template exists for the given document
         if [ ! -e $template ]; then
@@ -126,8 +107,8 @@ function build() {
         fi
 
         # Ensure that public directory and midpath subdirectories exist
-        if [ ! -e $PUBLIC_DIR/$midpath ]; then
-            mkdir -p $PUBLIC_DIR/$midpath
+        if [ ! -e $OUT_POSTS ]; then
+            mkdir -p $OUT_POSTS
         fi
 
         pbold "Writing $output"
@@ -170,7 +151,7 @@ function build() {
 
     pbold "Writing $output"
 
-    export postIndicies=($(seq 0 $((${#posts[@]} - 1))))
+    export postIndicies=($(seq $((${#posts[@]} - 1)) 0))
 
     mo --allow-function-arguments $template | tidy --tidy-mark no --show-warnings no -i -w 0 -q - > $output
 

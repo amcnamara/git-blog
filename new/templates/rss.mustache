@@ -11,12 +11,12 @@
 
     {{#postIndicies}}
     <item>
-      <title>{{('index.' @key ',title')}}</title>
-      <link>{{domain}}/posts/{{@key}}.html</link>
-      <guid isPermaLink="false">{{('index.' @key ',guid')}}</guid>
-      <description>{{('index.' @key ',description')}}</description>
-      <pubDate>{{('index.' @key ',datestamp')}} {{('index.' @key ',timestamp')}}</pubDate>
-      {{generateKeywordLinks @key 'category'}}
+      <title>{{('index.' . ',title')}}</title>
+      <link>{{domain}}/posts/{{.}}.html</link>
+      <guid isPermaLink="false">{{('index.' . ',guid')}}</guid>
+      <description>{{('index.' . ',description')}}</description>
+      <pubDate>{{('index.' . ',datestamp')}} {{('index.' . ',timestamp')}}</pubDate>
+      {{generateKeywordLinks . 'category'}}
     </item>
     {{/postIndicies}}
   </channel>

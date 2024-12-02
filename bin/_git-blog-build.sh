@@ -50,6 +50,7 @@ function build() {
     ## ABOUT
     output=$PUBLIC_DIR/about.html
     template=$TEMPLATE_DIR/about.mustache
+    title="About me"
 
     if [ ! -e $template ]; then
         pwarning "Could not generate about.html, missing template $TEMPLATE_DIR/about.mustache"
@@ -57,7 +58,7 @@ function build() {
         # Read in post content
         export content=$(multimarkdown --snippet "$GIT_BASEDIR/about.md")
 
-        if [ -z $content ]; then
+        if [ -z "$content" ]; then
             pwarning "Could not generate about.html, missing content $GIT_BASEDIR/about.md"
         else
             pbold "Writing $output"
@@ -111,7 +112,7 @@ function build() {
             mkdir -p $OUT_POSTS
         fi
 
-        pbold "Writing $output"
+        pbold "Writing $document to: $output"
 
         # NOTE: Due to how the bash version of mustache reads variables from
         #       the shell environment, we render all templates in a subshell
@@ -128,7 +129,7 @@ function build() {
             loadHeaderMetadata
 
             # Render post and prettify markup before writing
-            mo --allow-function-arguments $template | tidy --tidy-mark no --show-warnings no -i -w 0 -q - > $output
+            mo --allow-function-arguments $template | tidy --tidy-mark no --show-warnings yes -i -w 0 -q - > $output
         )
 
         if [ $? -eq 1 ]; then
@@ -139,10 +140,13 @@ function build() {
         fi
     done
 
+    psuccess "Generated post content"
+
 
     ## INDEX
     output=$PUBLIC_DIR/index.html
     template=$TEMPLATE_DIR/index.mustache
+    title="Index"
 
     if [ ! -e $template ]; then
         perror "Could not generate index.html, missing template $TEMPLATE_DIR/index.mustache"
@@ -151,9 +155,9 @@ function build() {
 
     pbold "Writing $output"
 
-    export postIndicies=($(seq $((${#posts[@]} - 1)) 0))
+    export postIndicies=(`seq $((${#posts[@]} - 1)) 0`)
 
-    mo --allow-function-arguments $template | tidy --tidy-mark no --show-warnings no -i -w 0 -q - > $output
+    mo --allow-function-arguments $template | tidy --tidy-mark no --show-warnings yes -i -w 0 -q - > $output
 
     if [ $? -eq 1 ]; then
         pwarning "Encountered warnings while rendering index"

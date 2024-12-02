@@ -5,6 +5,8 @@
     {{> ../partials/_content_background.mustache}}
     {{> ../partials/_content_navigation.mustache}}
     <div class="content">
+      {{#prev}}<a href="/posts/{{prev}}.html">prev</a>{{/prev}}
+      {{#next}}<a href="/posts/{{next}}.html">next</a>{{/next}}
       <div class="post">
         {{{content}}}
       </div>

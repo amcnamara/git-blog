@@ -5,8 +5,12 @@
     {{> ../partials/_content_background.mustache}}
     {{> ../partials/_content_navigation.mustache}}
     <div class="content">
-      {{#prev}}<a href="/posts/{{prev}}.html">prev</a>{{/prev}}
-      {{#next}}<a href="/posts/{{next}}.html">next</a>{{/next}}
+      <div class="postLinkContainer">
+        {{#firstPost}}<a class="postlink prev" href="/posts/{{firstPost}}.html">{{{'⟪'}}}</a>{{/firstPost}}
+        {{#prevPost}}<a class="postlink prev" href="/posts/{{prevPost}}.html">{{{'⟨'}}}</a>{{/prevPost}}
+        {{#lastPost}}<a class="postlink next" href="/posts/{{lastPost}}.html">{{{'⟫'}}}</a>{{/lastPost}}
+        {{#nextPost}}<a class="postlink next" href="/posts/{{nextPost}}.html">{{{'⟩'}}}</a>{{/nextPost}}
+      </div>
       <div class="post">
         {{{content}}}
       </div>

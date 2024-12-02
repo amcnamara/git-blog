@@ -131,11 +131,13 @@ function build() {
             done
 
             if (( $count > 0 )); then
-                prev=$(($count - 1))
+                firstPost=0
+                prevPost=$(($count - 1))
             fi
 
             if (( $count < $((${#posts[@]} - 1)) )); then
-                next=$(($count + 1))
+                lastPost=$((${#posts[@]} - 1))
+                nextPost=$(($count + 1))
             fi
 
             loadHeaderMetadata

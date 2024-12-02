@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <!-- Channel metadata -->
     <title>{{_domain}}</title>
     <link>{{domain}}</link>
+    <atom:link href="{{domain}}/rss.xml" rel="self" type="application/rss+xml" />
     <description></description>
     <language>en-us</language>
     <lastBuildDate>{{_buildtime}}</lastBuildDate>
@@ -12,6 +13,7 @@
     <item>
       <title>{{('index.' @key ',title')}}</title>
       <link>{{domain}}/posts/{{@key}}.html</link>
+      <guid isPermaLink="false">{{('index.' @key ',guid')}}</guid>
       <description>{{('index.' @key ',description')}}</description>
       <pubDate>{{('index.' @key ',datestamp')}} {{('index.' @key ',timestamp')}}</pubDate>
       {{generateKeywordLinks @key 'category'}}

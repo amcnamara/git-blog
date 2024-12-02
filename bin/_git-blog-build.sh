@@ -96,6 +96,13 @@ function build() {
             index[$count,$key]=$(multimarkdown -e=$key $document)
         done
 
+        # Read in post content
+        export content=$(multimarkdown --snippet $document)
+
+        # Create a checksum to act as a post GUID for the RSS feed. This
+        # is not intendid to be a mechanism to establish content trust.
+        index[$count,'guid']=`echo "$(basename $document)$content" | md5sum | cut -d' ' -f1`
+
         template=$TEMPLATE_DIR/posts/template.mustache
         output=$OUT_POSTS/$count.html
 
@@ -122,9 +129,6 @@ function build() {
             for key in $(multimarkdown -m $document); do
                 export $key="$(multimarkdown -e=$key $document)"
             done
-
-            # Read in post content
-            export content=$(multimarkdown --snippet $document)
 
             loadHeaderMetadata
 

@@ -109,8 +109,8 @@ function build() {
         # Ensure that the template exists for the given document
         if [ ! -e $template ]; then
             pwarning "Cannot render document, skipping due to missing template"
-            echo "    document '$document'"
-            echo "    expected template '$template'"
+            pbold "\tdocument '$document'"
+            pbold "\texpected template '$template'"
             continue
         fi
 
@@ -207,7 +207,7 @@ function build() {
 
     ## RSS
     template=$TEMPLATE_DIR/rss.mustache
-    buildtime=$(date)
+    _buildtime=$(date -R)
 
     pbold "Writing $OUT_RSS_FILE"
 

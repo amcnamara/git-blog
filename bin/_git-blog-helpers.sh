@@ -107,15 +107,6 @@ function echo_config_attribute() {
     fi
 }
 
-function is_config_attribute() {
-    value=$(echo_config_attribute $1)
-
-    if [[ "true" == $(echo $value | tr '[:upper:]' '[:lower:]') ]]; then
-        return 0
-    fi
-    return 1
-}
-
 function write_config_attribute() {
     if [[ ! $1 ]]; then
         perror "Attempting to write or clear config attribute, but no attribute key provided"

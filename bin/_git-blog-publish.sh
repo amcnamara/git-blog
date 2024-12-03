@@ -38,8 +38,16 @@ function publish() {
         fi
     done
 
-    git add $GIT_BASEDIR/content/posts
-    git commit -m "[git-blog publish] Injecting content timestamp."
+    plog "Creating a git commit for publish timestamp injection"
+    git add $GIT_BASEDIR/content/posts 2>&1 > /dev/null
+    git commit -m "[git-blog publish] Injecting content timestamp." 2>&1 > /dev/null
+
+    if [ $? == 0 ]; then
+        psuccess "Publish timestamp(s) have been committed to $GIT_BASEDIR"
+    else
+        perror "Error committing publish datetime injection, please see staged assets"
+        exit 1
+    fi
 
     # Fire off a clean build to pick up publish datestamps
     plog "Generating a clean build"

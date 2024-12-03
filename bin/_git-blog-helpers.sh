@@ -144,7 +144,7 @@ function pwarning() {
 
 function perror() {
     plog "${RED}ERROR${NOCOLOUR}: $1" | tee >(cat >&2)
-    plog "       $LOG_FILE"
+    plog "\t$LOG_FILE"
 }
 
 function pdebug() {

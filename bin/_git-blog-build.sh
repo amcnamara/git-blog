@@ -77,7 +77,7 @@ function build() {
     posts=(`echo $(find $POST_DIR -name "*.md" | sort)`)
 
     if [[ ! ${posts[@]} ]]; then
-        pdebug "No post content found to build."
+        perror "No post content found to build."
         exit 1
     fi
 

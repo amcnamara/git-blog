@@ -15,7 +15,7 @@
       <link>{{domain}}/posts/{{.}}.html</link>
       <guid isPermaLink="false">{{('index.' . ',guid')}}</guid>
       <description>{{('index.' . ',description')}}</description>
-      <pubDate>{{('index.' . ',datestamp')}} {{('index.' . ',timestamp')}}</pubDate>
+      <pubDate>{{('index.' . ',publish_date')}}</pubDate>
       {{generateKeywordLinks . 'category'}}
     </item>
     {{/postIndicies}}

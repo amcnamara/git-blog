@@ -63,6 +63,7 @@ div.content {
     display: block;
     background-color: var(--primary);
     width: var(--content-width);
+    min-width: 43em;
     border: 1px solid var(--secondary);
     box-sizing: border-box;
     padding: calc(var(--spacing) / 2) var(--spacing);
@@ -165,6 +166,7 @@ div.footer {
     display: block;
     background-color: var(--primary);
     width: var(--content-width);
+    min-width: 43em;
     border: 1px solid var(--secondary);
     border-bottom: 0;
     box-sizing: border-box;
@@ -202,7 +204,6 @@ div.footer div.copyright {
     font-size: 0.9em;
 }
 
-
 @media (prefers-color-scheme: dark) {
     :root {
         --primary: #111;
@@ -211,6 +212,7 @@ div.footer div.copyright {
     }
 }
 
+/* Vertical displays and tablets */
 @media (orientation: portrait) {
     :root {
         --content-width: 85%;
@@ -232,10 +234,27 @@ div.footer div.copyright {
     div.navigation a.home {
         writing-mode: initial;
     }
+
+    div.content {
+        min-width: auto;
+    }
+
+    div.footer {
+        min-width: auto;
+    }
 }
 
+/* Phones */
 @media screen and (max-width: 40em) {
     :root {
         --content-width: 100%;
+    }
+
+    div.content {
+        min-width: auto;
+    }
+
+    div.footer {
+        min-width: auto;
     }
 }

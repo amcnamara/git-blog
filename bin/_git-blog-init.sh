@@ -16,8 +16,14 @@ function initialize() {
         perror "Argument missing: must provide a name for the new blog"
         exit 1
     fi
+
     if [ -e $1 ]; then
         perror "Directory with this name already exists"
+        exit 1
+    fi
+
+    if [ ! $(is_aws_active) == 0 ]; then
+        perror "Cannot create AWS assets, please login to AWS CLI"
         exit 1
     fi
 
@@ -31,13 +37,16 @@ function initialize() {
 
     import_assets
 
-    # Now that we know the repo name, try to add a rule in robots for the bundle.
-    if [ -e ./static/robots.txt ]; then
-        plog "Disallow: /$1.git" >> ./static/robots.txt
+    # Now that we know the repo name, add a rule in /robots.txt for the bundle.
+    # NOTE: This should be static, it doesn't need to be re-created on build.
+    if [ -e $STATIC_DIR/robots.txt ]; then
+        plog "Disallow: /$1.git" >> $STATIC_DIR/robots.txt
     fi
 
     psuccess "Created new blog repo $(pbold $GIT_BASEDIR)"
 
+    # Setup AWS S3 bucket to recieve published content, this does not include
+    # configuring CloudFront or R53 to make the content publicly reachable.
     bucket=$1
     region="us-east-1"
 

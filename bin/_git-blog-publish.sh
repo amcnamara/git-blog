@@ -1,7 +1,11 @@
-function publish() {
+function is_aws_active() {
     # Check whether the AWS CLI is logged in, don't echo credential.
     aws sts get-caller-identity &> /dev/null
-    if [ ! $? == 0 ]; then
+    echo $?
+}
+
+function publish() {
+    if [ ! $(is_aws_active) == 0 ]; then
         perror "Cannot publish, please log into the AWS CLI"
         exit 1
     fi

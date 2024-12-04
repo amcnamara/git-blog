@@ -64,7 +64,7 @@ div.content {
     display: block;
     background-color: var(--primary);
     width: var(--content-width);
-    min-width: 43em;
+    min-width: 46em;
     border: 1px solid var(--secondary);
     box-sizing: border-box;
     padding: calc(var(--spacing) / 2) var(--spacing);
@@ -167,7 +167,7 @@ div.footer {
     display: block;
     background-color: var(--primary);
     width: var(--content-width);
-    min-width: 43em;
+    min-width: 46em;
     border: 1px solid var(--secondary);
     border-bottom: 0;
     box-sizing: border-box;
@@ -252,6 +252,19 @@ div.footer div.copyright {
 
     div.footer {
         min-width: auto;
+    }
+
+    div.footer div.copyright {
+        font-size: 0;
+    }
+
+    div.footer div.copyright:after {
+        font-size: initial;
+        position: absolute;
+        content: 'CC BY 4.0 Powered by git-blog.';
+        width: 27em;
+        top: 1.2em;
+        left: 8.5em;
     }
 }
 

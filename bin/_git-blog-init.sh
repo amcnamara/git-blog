@@ -1,6 +1,6 @@
 function import_assets() {
     # Partial import, used for migration to update assets in-place
-    if [ -n $1 ]; then
+    if [ ! -z $1 ]; then
         plog "Copying templates and static assets"
         rm -rf $TEMPLATE_DIR $STATIC_DIR
         rsync -a $BINSRC/../new/static $BINSRC/../new/templates $GIT_BASEDIR

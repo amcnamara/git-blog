@@ -87,7 +87,7 @@ function show_dependency_versions() {
 
 function is_gitblog() {
     # Ensure that the git repo we're in is a git-blog.
-    if [ ! -e "$GIT_BASEDIR/.gitblog.cfg" ]; then
+    if [ ! -e "$CONFIG_FILE" ]; then
         perror "You are not in a git-blog directory"
         exit 1
     fi
@@ -118,7 +118,7 @@ function write_config_attribute() {
         #       https:// on domain config attribute. Neato.
         sed -i -e "s#$1=.*#$1=$2#" $CONFIG_FILE
     else
-        plog "$1=$2" >> $CONFIG_FILE
+        echo "$1=$2" >> $CONFIG_FILE
     fi
 }
 

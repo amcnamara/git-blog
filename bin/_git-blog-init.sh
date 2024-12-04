@@ -38,12 +38,12 @@ function initialize() {
 
     psuccess "Created new blog repo $(pbold $GIT_BASEDIR)"
 
-    plog "Setting default bucket and region for AWS:"
-    pbold "\tbucket: $1"
-    pbold "\tregion: us-east-1"
-
     bucket=$1
     region="us-east-1"
+
+    plog "Setting default bucket and region for AWS:"
+    pbold "\tbucket: $bucket"
+    pbold "\tregion: $region"
 
     write_config_attribute "bucket" $bucket
     write_config_attribute "region" $region
@@ -53,8 +53,6 @@ function initialize() {
 
     if [ $? -eq 0 ]; then
         psuccess "Created S3 bucket $(pbold $1) in $(pbold $region)"
-        write_config_attribute bucket $1
-        write_config_attribute region "us-east-1"
     else
         perror "Could not create S3 bucket $(pbold $1), create bucket manually and run $(pbold git-blog configure upstream)"
     fi

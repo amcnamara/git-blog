@@ -1,5 +1,5 @@
 function import_assets() {
-    # Partial import, used for migration to update assets in place
+    # Partial import, used for migration to update assets in-place
     if [ -n $1 ]; then
         plog "Copying templates and static assets"
         rm -rf $TEMPLATE_DIR $STATIC_DIR
@@ -36,24 +36,35 @@ function initialize() {
         plog "Disallow: /$1.git" >> ./static/robots.txt
     fi
 
-    psuccess "Created new blog repo ${WHITE}$GIT_BASEDIR${NOCOLOUR}"
+    psuccess "Created new blog repo $(pbold $GIT_BASEDIR)"
 
-    pdebug "Creating S3 bucket."
-    aws s3api create-bucket --bucket=$1 --region=us-east-1 2>&1 > /dev/null
+    plog "Setting default bucket and region for AWS:"
+    pbold "\tbucket: $1"
+    pbold "\tregion: us-east-1"
+
+    bucket=$1
+    region="us-east-1"
+
+    write_config_attribute "bucket" $bucket
+    write_config_attribute "region" $region
+
+    plog "Creating S3 bucket."
+    aws s3api create-bucket --bucket=$bucket --region=$region 2>&1 > /dev/null
 
     if [ $? -eq 0 ]; then
-        psuccess "Created S3 bucket ${WHITE}$1${NOCOLOUR} in ${WHITE}us-east-1${NOCOLOUR}"
+        psuccess "Created S3 bucket $(pbold $1) in $(pbold $region)"
         write_config_attribute bucket $1
         write_config_attribute region "us-east-1"
     else
-        perror "Could not create S3 bucket ${WHITE}$1${NOCOLOUR}, create bucket manually and run ${WHITE}git-blog configure upstream${NOCOLOUR}"
+        perror "Could not create S3 bucket $(pbold $1), create bucket manually and run $(pbold git-blog configure upstream)"
     fi
 
+    plog "Setting up social links for header navigation"
+
     configure_social
-    configure_domain
 
     git add . 2>&1 > /dev/null
     git commit -m "Initial commit of default assets." 2>&1 > /dev/null
 
-    psuccess "Writing configuration to ${WHITE}$CONFIG_FILE${NOCOLOUR}"
+    psuccess "Writing configuration to $(pbold $CONFIG_FILE)"
 }

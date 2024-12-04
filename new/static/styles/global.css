@@ -37,7 +37,8 @@ div.navigation a.home {
     text-decoration: none;
     color: var(--secondary);
     user-select: none;
-    margin: 25% 30%;
+    font-weight: 400;
+    margin: 1em 0 1em 0.7em;
 }
 
 div.navigation a.home:hover {
@@ -224,15 +225,25 @@ div.footer div.copyright {
         margin: 0 auto;
         top: 0;
         left: initial;
-        padding: calc(var(--spacing) / 2) var(--spacing);
+        padding: 0.5em calc(var(--spacing) / 2) 0 var(--spacing);
         box-sizing: border-box;
         border-left: 1px solid var(--secondary);
         border-top: 0;
         border-radius: 0 0 var(--corner-radius) var(--corner-radius);
+        display: block;
+        height: calc(var(--spacing) * 1.5);
+    }
+
+    div.navigation a {
+        float: right;
+        clear: none;
+        margin-top: -0.2em;
     }
 
     div.navigation a.home {
         writing-mode: initial;
+        float: left;
+        margin: 0.4em 0;
     }
 
     div.content {
@@ -248,13 +259,5 @@ div.footer div.copyright {
 @media screen and (max-width: 40em) {
     :root {
         --content-width: 100%;
-    }
-
-    div.content {
-        min-width: auto;
-    }
-
-    div.footer {
-        min-width: auto;
     }
 }

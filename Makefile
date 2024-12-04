@@ -11,6 +11,7 @@ preinstall:
 install:
 	@echo -e "Installing binary and default assets..."
 	@source ./bin/_git-blog-constants.sh
+	@rm -rf /usr/local/opt/git-blog
 	@mkdir -p /usr/local/opt/git-blog
 	@cp -R ./bin ./new /usr/local/opt/git-blog
 	@mkdir -p /usr/local/opt/git-blog/new/content/posts

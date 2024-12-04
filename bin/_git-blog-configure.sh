@@ -3,9 +3,6 @@ function configure_social() {
     read -e -p "Please enter your github handle (or leave blank): " -i "$(echo_config_attribute 'github')" github 2>&1
     write_config_attribute "github" $github
 
-    read -e -p "Please enter your linkedin handle (or leave blank): " -i "$(echo_config_attribute 'linkedin')" linkedin 2>&1
-    write_config_attribute "linkedin" $linkedin
-
     read -e -p "Please enter your bluesky handle (or leave blank): " -i "$(echo_config_attribute 'bluesky')" bluesky 2>&1
     write_config_attribute "bluesky" $bluesky
 
@@ -14,9 +11,6 @@ function configure_social() {
 
     read -e -p "Please enter your facebook handle (or leave blank): " -i "$(echo_config_attribute 'facebook')" facebook 2>&1
     write_config_attribute "facebook" $facebook
-
-    read -e -p "Please enter your email address (or leave blank): " -i "$(echo_config_attribute 'email')" email 2>&1
-    write_config_attribute "email" $email
 }
 
 function configure_domain() {

@@ -1,6 +1,8 @@
 Description
 -----------
 
+`Git-blog` is a portable CMS for publishing a personal blog.
+
 `Git-blog` is a locally-run content publishing workflow with a few broad goals:
 - Content should be portable (can be pulled, written, and published from a fresh machine easily).
 - Content should be entirely static and CDN-hosted (very fast and serverless).

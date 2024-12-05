@@ -3,13 +3,13 @@ Description
 
 `Git-blog` is a portable CMS for publishing a personal blog. It's very lightweight, and was created to satisfy a few broad goals:
 
-- Content should be portable (decentralized and can be pulled, written, and published from a fresh machine easily).
+- Content should be portable (decentralized and easily manageable from a new machine).
 - Content should be entirely static (friendly to CDN hosting).
-- Content should be deeply archivable.
+- Content should be *deeply archivable*.
 
-Deeply archivable means that each revision of content is published alongside its full history, including changes to HTML/JS templating and CSS. In practice this means that all of the content is version-controlled through Git and a bundle is pushed into the CDN with each new post. The bundle can be used to pull down the full history at any point, and by resetting locally a facsimile of content can be rebuilt for any commit in the past. The web has become disappointinly ephemeral over time and while the [Internet Archive](https://archive.org/) is an incredible resource I wanted to see if other approaches could be used to achive more permanence online.
+Deeply archivable means that each revision of content is published alongside its full history, including changes to HTML/JS templating and CSS. In practice this means that all of the content is version-controlled through Git and a bundle is pushed into the CDN with each new post. The Git bundle can be used to pull down the full content history at any point, and by resetting locally a facsimile of content can be rebuilt for any commit in the past. The web has become disappointingly ephemeral over time and while the [Internet Archive](https://archive.org/) is an incredible resource I wanted to see if other approaches could be used to achieve more permanence online.
 
-You're welcome to use and improve this tool if you like. Here are some other alternatives you should consider which achieve many of the same goals:
+You're welcome to use and improve this tool if you like. Here are some other alternatives you should consider which can achieve many of the same goals:
 
 - [GitHub pages](https://pages.github.com/) with [Jekyll](https://jekyllrb.com/)
 - [Astro](https://astro.build/)
@@ -23,12 +23,12 @@ This project currently only supports OSX due to some platform-specific bash util
 
 You can install locally by pulling this repo and running `make all`, it will require you to have the following packages installed on your local system:
 
-- https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
-- https://fletcher.github.io/MultiMarkdown-5/installation
-- http://www.html-tidy.org/#homepage19700601get_tidy
-- https://github.com/tests-always-included/mo
-- https://www.python.org/downloads
-- http://docs.aws.amazon.com/cli/latest/userguide/installing.html
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [MultiMarkdown](https://fletcher.github.io/MultiMarkdown-5/installation)
+- [Tidy-HTML5](http://www.html-tidy.org/#homepage19700601get_tidy)
+- [Mustache](https://github.com/tests-always-included/mo)
+- [Python3](https://www.python.org/downloads)
+- [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
 
 
 Usage

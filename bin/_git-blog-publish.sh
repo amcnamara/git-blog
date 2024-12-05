@@ -5,6 +5,10 @@ function is_aws_active() {
 }
 
 function publish() {
+    # Only publish if all content is committed, otherwise the bundle
+    # will be stale compared with the built and published content.
+    break_on_staged_changes
+
     if [ ! $(is_aws_active) == 0 ]; then
         perror "Cannot publish, please log into the AWS CLI"
         exit 1
@@ -19,12 +23,6 @@ function publish() {
     region=$(echo_config_attribute "region")
     if [ -z $region ]; then
         plog "S3 region is not defined, please run 'git-blog configure upstream'"
-        exit 1
-    fi
-
-    # Ensure that all local changes have been committed
-    if [[ $(git status --porcelain) ]]; then
-        perror "Cannot publish, you have uncommited local changes"
         exit 1
     fi
 

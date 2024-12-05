@@ -8,6 +8,14 @@ function plumb_logs() {
     exec 2>>$LOG_FILE
 }
 
+function break_on_staged_changes() {
+    # Ensure that all local changes have been committed
+    if [[ $(git status --porcelain) ]]; then
+        perror "Cannot proceed, you have uncommited local changes"
+        exit 1
+    fi
+}
+
 function is_command() {
     if command -v ${1} > /dev/null 2 >&1; then
         return 0

@@ -122,21 +122,27 @@ function write_config_attribute() {
         exit 1
     fi
 
-    # NOTE: For some reason this craps out in-line
-    match="s/$1=.*/$1=${@:2}/"
-    sed -i '' -e "$match" $CONFIG_FILE
+    # If the attribute exists, edit it inline to the config file
+    if grep -qE "$1" $CONFIG_FILE; then
+        # NOTE: For some reason this craps out in-line
+        match="s/$1=.*/$1=${@:2}/"
+        sed -i '' -e "$match" $CONFIG_FILE
+    # Otherwise append the attribute to the config file
+    else
+        plog "$1=${@:2}" >> $CONFIG_FILE
+    fi
 }
 
 function plog() {
-    echo -e "$1"
+    echo -e "$@"
 }
 
 function pbold() {
-    plog "${WHITE}$1${NOCOLOUR}"
+    plog "${WHITE}$@${NOCOLOUR}"
 }
 
 function psuccess() {
-    plog "${GREEN}Success${NOCOLOUR}: $1"
+    plog "${GREEN}Success${NOCOLOUR}: $@"
 }
 
 function pwarning() {
@@ -144,16 +150,16 @@ function pwarning() {
     # the debug file). In this case use process substitution to redirect
     # the output of the process to stderr since the file descriptor on OSX
     # isn't consistent with other linux distributions.
-    plog "${YELLOW}Warning${NOCOLOUR}: $1" | tee >(cat >&2)
+    plog "${YELLOW}Warning${NOCOLOUR}: $@" | tee >(cat >&2)
 }
 
 function perror() {
-    plog "${RED}ERROR${NOCOLOUR}: $1" | tee >(cat >&2)
+    plog "${RED}ERROR${NOCOLOUR}: $@" | tee >(cat >&2)
     plog "\t$LOG_FILE"
 }
 
 function pdebug() {
-    plog "[${WHITE}$(date "+%h %d, %Y %H:%M:%S")${NOCOLOUR}] $1" >> $LOG_FILE
+    plog "[${WHITE}$(date "+%h %d, %Y %H:%M:%S")${NOCOLOUR}] $@" >> $LOG_FILE
 }
 
 function usage() {

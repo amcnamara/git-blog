@@ -4,16 +4,18 @@ function write() {
         exit 1
     fi
 
-    timestamp=${timestamp#\ } # Trim leading space if hour has a single digit.
-
     # Create content directory if it doesn't exist (git can't hold an empty dir
     # in the `new` default directory)
     mkdir -p $POST_DIR
 
+    filename="${@}"         # Pull all args as the filename
+    filename="${filename// /_}" # Replace whitespace with underscores
+    filename="${filename,,}"    # Make all lowercase
+
     # NOTE: We need to prepend a datestamp to the file in order to sort
     #       posts by creation time, since this file metadata is lost on
     #       cloned repositories.
-    filename="$POST_DIR/`date '+%Y_%m_%d'`_$1.md"
+    filename="$POST_DIR/`date '+%Y_%m_%d'`_$filename.md"
 
     # This is exceedingly unlikely now that filenames have a creation timestamp.
     if [ -e $filename ]; then
@@ -21,20 +23,11 @@ function write() {
         exit 1
     fi
 
-    # Generate a friendly title from the filename:
-    # - Capitalize the first character of the filename
-    # - Append the remaining characters of the filename
-    # - Convert underscores to spaces
-    title=`tr '[:lower:]' '[:upper:]' <<< ${1:0:1}`
-    title=$title${1:1}
-    title=`tr '_' ' ' <<< $title`
-
     cat <<POST > $filename
-title: $title
+title: ${@}
 keywords:
 description:
-
-<!-- post content starts below here -->
+-----
 POST
 
     pbold "Writing $filename"

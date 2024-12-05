@@ -23,7 +23,7 @@ case $1 in
         ;;
     write)
         is_gitblog
-        write $2
+        write ${@:2}
         ;;
     build)
         is_gitblog

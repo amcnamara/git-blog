@@ -4,8 +4,6 @@ function write() {
         exit 1
     fi
 
-    datestamp=$(date '+%b %d, %Y')
-    timestamp=$(date '+%l:%M %p')
     timestamp=${timestamp#\ } # Trim leading space if hour has a single digit.
 
     # Create content directory if it doesn't exist (git can't hold an empty dir
@@ -33,8 +31,6 @@ function write() {
 
     cat <<POST > $filename
 title: $title
-timestamp: $timestamp
-datestamp: $datestamp
 keywords:
 description:
 

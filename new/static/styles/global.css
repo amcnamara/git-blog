@@ -21,11 +21,14 @@ body {
 }
 
 div.navigation {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     position: fixed;
     left: 0;
     top: var(--spacing);
     padding: calc(var(--spacing) / 5);
+    padding-bottom: calc(var(--spacing) / 3);
     background-color: var(--primary);
     border: 1px solid var(--secondary);
     border-left: 0;
@@ -38,16 +41,11 @@ div.navigation a.home {
     color: var(--secondary);
     user-select: none;
     font-weight: 400;
-    margin: 1em 0 1em 0.7em;
+    margin: calc(var(--spacing) /2) 0;
 }
 
 div.navigation a.home:hover {
     color: var(--highlight);
-}
-
-div.navigation a {
-    float: left;
-    clear: left;
 }
 
 div.navigation a svg {
@@ -109,11 +107,11 @@ div.content a.postlink:hover {
 }
 
 div.content a.postlink.prev {
-    float: left;
+    display: none;
 }
 
 div.content a.postlink.next {
-    float: right;
+    display: none;
 }
 
 div.content h1 {
@@ -164,7 +162,6 @@ svg#background polygon:active {
 }
 
 div.footer {
-    display: block;
     background-color: var(--primary);
     width: var(--content-width);
     min-width: 46em;
@@ -172,19 +169,13 @@ div.footer {
     border-bottom: 0;
     box-sizing: border-box;
     padding: calc(var(--spacing) / 5) var(--spacing);
-    height: fit-content;
     border-radius: var(--corner-radius) var(--corner-radius) 0 0;
     margin: var(--spacing) auto 0 auto;
     position: sticky;
     top: 100vh;
-}
-
-div.copyright a, div.copyright a:visited {
-    color: var(--highlight);
-}
-
-div.footer a.sitemap {
-    display: inline-block;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 div.footer a svg {
@@ -199,10 +190,13 @@ div.footer a:hover svg {
 
 div.footer div.copyright {
     display: inline-block;
-    position: absolute;
-    top: 1.2em;
-    left: 8.5em;
     font-size: 0.9em;
+    flex: auto;
+    padding-left: 0.5em;
+}
+
+div.footer div.copyright a, div.footer div.copyright a:visited {
+    color: var(--highlight);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -224,26 +218,17 @@ div.footer div.copyright {
         width: var(--content-width);
         margin: 0 auto;
         top: 0;
-        left: initial;
-        padding: 0.5em calc(var(--spacing) / 2) 0 var(--spacing);
+        padding: 0 calc(var(--spacing) /2) 0 var(--spacing);
         box-sizing: border-box;
         border-left: 1px solid var(--secondary);
         border-top: 0;
         border-radius: 0 0 var(--corner-radius) var(--corner-radius);
-        display: block;
-        height: calc(var(--spacing) * 1.5);
-    }
-
-    div.navigation a {
-        float: right;
-        clear: none;
-        margin-top: -0.2em;
+        flex-direction: row;
     }
 
     div.navigation a.home {
         writing-mode: initial;
-        float: left;
-        margin: 0.4em 0;
+        flex: auto;
     }
 
     div.content {

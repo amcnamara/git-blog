@@ -175,8 +175,4 @@ case $1 in
         show_dependency_versions
         shift
         ;;
-    *)
-        perror "[Make] helper command not supported."
-        exit 1
-        ;;
 esac

@@ -27,7 +27,7 @@ function write() {
 title: ${@}
 keywords:
 description:
------
+-----------
 POST
 
     pbold "Writing $filename"

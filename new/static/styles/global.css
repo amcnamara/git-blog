@@ -90,27 +90,6 @@ div.content a.post:hover .title {
 }
 
 div.content div.postLinkContainer {
-    display: inline-block;
-    width: 100%;
-    font-size: 1.25em;
-}
-
-div.content a.postlink {
-    text-decoration: none;
-    display: inline-block;
-    color: var(--highlight);
-    padding: 0 0.5em;
-}
-
-div.content a.postlink:hover {
-    background-color: var(--secondary);
-}
-
-div.content a.postlink.prev {
-    display: none;
-}
-
-div.content a.postlink.next {
     display: none;
 }
 

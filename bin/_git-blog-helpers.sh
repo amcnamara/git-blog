@@ -103,7 +103,7 @@ function echo_config_attribute() {
     regex="$1=[[:blank:]]*([[:print:]]+)"
 
     if [[ $(cat $CONFIG_FILE) =~ $regex ]]; then
-        plog ${BASH_REMATCH[1]}
+        plog "${BASH_REMATCH[1]}"
     fi
 }
 
@@ -113,13 +113,7 @@ function write_config_attribute() {
         exit 1
     fi
 
-    if grep -qE "$1" $CONFIG_FILE; then
-        # NOTE: Use # as an arbitrary sed delimiter since / conflicts with
-        #       https:// on domain config attribute. Neato.
-        sed -i -e "s#$1=.*#$1=$2#" $CONFIG_FILE
-    else
-        echo "$1=$2" >> $CONFIG_FILE
-    fi
+    echo -e "$1=${@:2}\n$(sed "/$1=.*/d" $CONFIG_FILE)" > $CONFIG_FILE
 }
 
 function plog() {

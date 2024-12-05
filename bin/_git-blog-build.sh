@@ -7,12 +7,12 @@ function generateKeywordLinks() {
 
 function loadHeaderMetadata() {
     export _domain=$(echo_config_attribute "domain")
+    export _title=$(echo_config_attribute "title")
+    export _bundle=$(basename $OUT_BUNDLE)
     export _github=$(echo_config_attribute "github")
-    export _linkedin=$(echo_config_attribute "linkedin")
     export _bluesky=$(echo_config_attribute "bluesky")
     export _twitter=$(echo_config_attribute "twitter")
     export _facebook=$(echo_config_attribute "facebook")
-    export _email=$(echo_config_attribute "email")
 }
 
 function build() {
@@ -220,11 +220,9 @@ function build() {
     if [ -z $(git rev-list -n 1 --all) ]; then
         pwarning "Cannot build a git bundle, no commits have been detected."
     else
-        name="$PUBLIC_DIR/$(basename $GIT_BASEDIR).git"
+        pbold "Writing $OUT_BUNDLE"
 
-        pbold "Writing $name"
-
-        if git bundle create $name --all; then
+        if git bundle create $OUT_BUNDLE --all; then
             psuccess "Generated git bundle"
         else
             perror "Could not create git bundle"

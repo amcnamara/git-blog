@@ -13,10 +13,9 @@ function configure_social() {
     write_config_attribute "facebook" $facebook
 }
 
-function configure_domain() {
-    read -e -p "Please enter the domain where your blog is hosted: " -i "$(echo_config_attribute 'domain')" domain 2>&1
-    # Strip leading http[s] if provided
-    write_config_attribute "domain" $(echo $domain | sed -r "s/https?:\/\///")
+function configure_title() {
+    read -e -p "Please enter the title for your blog: " -i "$(echo_config_attribute 'title')" title 2>&1
+    write_config_attribute "title" $title
 }
 
 function configure_upstream() {
@@ -37,8 +36,8 @@ function configure() {
         social)
             configure_social
             ;;
-        domain)
-            configure_domain
+        title)
+            configure_title
             ;;
         upstream)
             configure_upstream

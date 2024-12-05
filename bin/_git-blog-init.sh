@@ -27,9 +27,12 @@ function initialize() {
         exit 1
     fi
 
+    # Strip leading http[s] if provided
+    domain=$(echo $1 | sed -r "s/https?:\/\///")
+
     # Create new git-blog repo.
-    mkdir $1
-    cd $1
+    mkdir $domain
+    cd $domain
     git init
 
     # Reload constants now that we can resolve $GIT_BASEDIR
@@ -40,17 +43,21 @@ function initialize() {
     # Now that we know the repo name, add a rule in /robots.txt for the bundle.
     # NOTE: This should be static, it doesn't need to be re-created on build.
     if [ -e $STATIC_DIR/robots.txt ]; then
-        plog "Disallow: /$1.git" >> $STATIC_DIR/robots.txt
+        plog "Disallow: /$domain.git" >> $STATIC_DIR/robots.txt
     fi
 
     psuccess "Created new blog repo $(pbold $GIT_BASEDIR)"
 
+    plog "Configuring default title to $(pbold $domain)"
+    write_config_attribute "title" $domain
+    write_config_attribute "domain" $domain
+
     # Setup AWS S3 bucket to recieve published content, this does not include
     # configuring CloudFront or R53 to make the content publicly reachable.
-    bucket=$1
+    bucket=$domain
     region="us-east-1"
 
-    plog "Setting default bucket and region for AWS:"
+    plog "Configuring default bucket and region for AWS:"
     pbold "\tbucket: $bucket"
     pbold "\tregion: $region"
 

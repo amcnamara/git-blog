@@ -6,6 +6,10 @@ all: preinstall install
 preinstall:
 	@echo -e "Checking third-party dependencies..."
 	@source ./bin/_git-blog-constants.sh && ./bin/_git-blog-helpers.sh check_dependencies
+	@echo -e "\033[0;32mAll dependencies are installed\033[0m"
+	@echo -e "Dependency version recommendations:\n"
+	@./bin/_git-blog-helpers.sh show_dependency_versions
+	@echo -e ""
 	@echo -e "\033[0;32mPreinstall complete\033[0m"
 
 install:

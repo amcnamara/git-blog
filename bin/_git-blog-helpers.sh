@@ -18,6 +18,7 @@ function is_command() {
 
 function check_dependencies() {
     plumb_logs $@
+
     # Ensure that bash is up-to-date (OSX ships with 3.2, which doesn't
     # support the associative arrays needed for mustache templates).
     #
@@ -163,3 +164,19 @@ Usage:
   git-blog migrate                Re-import templates and static assets
 USAGE
 }
+
+# Support for MakeFile triggering some of these helpers
+case $1 in
+    "check_dependencies")
+        check_dependencies
+        shift
+        ;;
+    "show_dependency_versions")
+        show_dependency_versions
+        shift
+        ;;
+    *)
+        perror "[Make] helper command not supported."
+        exit 1
+        ;;
+esac

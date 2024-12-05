@@ -19,7 +19,7 @@ case $1 in
         ;;
     configure)
         is_gitblog
-        configure $2
+        configure ${@:2}
         ;;
     write)
         is_gitblog

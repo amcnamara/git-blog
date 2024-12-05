@@ -32,22 +32,46 @@ function configure_upstream() {
 }
 
 function configure() {
-    case $1 in
-        social)
-            configure_social
-            ;;
-        title)
-            configure_title
-            ;;
-        upstream)
-            configure_upstream
-            ;;
-        *)
-            configure_social
-            configure_domain
-            configure_upstream
-            ;;
-    esac
+    # If no flags provided, run all config options
+    if [ $# -eq 0 ]; then
+        social=true
+        title=true
+        upstream=true
+    else
+        # Otherwise, pull out individual flags
+        while [[ $# -gt 0 ]]; do
+            case $1 in
+                -s|--social)
+                    social=true
+                    shift
+                    ;;
+                -t|--title)
+                    title=true
+                    shift
+                    ;;
+                -u|--upstream)
+                    upstream=true
+                    shift
+                    ;;
+                *|-*|--*)
+                    perror "Unknown option: $1"
+                    exit 1
+                    ;;
+            esac
+        done
+    fi
+
+    if [ "$social" = true ]; then
+        configure_social
+    fi
+
+    if [ "$title" = true ]; then
+        configure_title
+    fi
+
+    if [ "$upstream" = true ]; then
+        configure_upstream
+    fi
 
     psuccess "Writing configuration to ${WHITE}$CONFIG_FILE${NOCOLOUR}"
 }

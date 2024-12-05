@@ -113,7 +113,9 @@ function write_config_attribute() {
         exit 1
     fi
 
-    echo -e "$1=${@:2}\n$(sed "/$1=.*/d" $CONFIG_FILE)" > $CONFIG_FILE
+    # NOTE: For some reason this craps out in-line
+    match="s/$1=.*/$1=${@:2}/"
+    sed -i '' -e "$match" $CONFIG_FILE
 }
 
 function plog() {

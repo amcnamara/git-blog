@@ -1,7 +1,7 @@
 Description
 -----------
 
-`Git-blog` is a portable CMS for publishing a personal blog. It's very lightweight, and was created to satisfy a few broad goals:
+`git-blog` is a lightweight CMS for publishing a personal blog. It was created to satisfy a few broad goals:
 
 - Content should be portable (decentralized and easily manageable from a new machine).
 - Content should be entirely static (friendly to CDN hosting).
@@ -99,4 +99,10 @@ git-blog doctor
 Change the S3 bucket or region for publishing:
 ```
 git-blog configure -u
+```
+
+Clone the bundle from a published `git-blog`:
+```
+curl https://example.com/example.com.git > bundle
+git clone bundle git-blog-backup
 ```

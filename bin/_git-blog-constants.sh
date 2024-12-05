@@ -20,4 +20,4 @@ export OUT_SITEMAP_FILE=$PUBLIC_DIR/sitemap.txt
 export OUT_RSS_FILE=$PUBLIC_DIR/rss.xml
 export OUT_ABOUT_FILE=$PUBLIC_DIR/about.html
 export OUT_POSTS=$PUBLIC_DIR/posts
-export OUT_BUNDLE=$PUBLIC_DIR/$(basename ${GIT_BASEDIR:-bundle}).git
+export OUT_BUNDLE=$PUBLIC_DIR/bundle.git

@@ -103,6 +103,6 @@ git-blog configure -u
 
 Clone the bundle from a published `git-blog`:
 ```
-curl https://example.com/example.com.git > bundle
+curl https://example.com/bundle.git > bundle
 git clone bundle git-blog-backup
 ```

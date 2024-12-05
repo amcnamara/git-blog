@@ -20,11 +20,6 @@ function initialize() {
         exit 1
     fi
 
-    if [ -e $1 ]; then
-        perror "Directory with this name already exists"
-        exit 1
-    fi
-
     if [ ! $(is_aws_active) == 0 ]; then
         perror "Cannot create AWS assets, please login to AWS CLI"
         exit 1
@@ -32,6 +27,11 @@ function initialize() {
 
     # Strip leading http[s] if provided
     domain=$(echo $1 | sed -r "s/https?:\/\///")
+
+    if [ -e $domain ]; then
+        perror "Directory with this name already exists"
+        exit 1
+    fi
 
     # Create new git-blog repo.
     mkdir $domain
@@ -71,9 +71,9 @@ function initialize() {
     aws s3api create-bucket --bucket=$bucket --region=$region 2>&1 > /dev/null
 
     if [ $? -eq 0 ]; then
-        psuccess "Created S3 bucket $(pbold $1) in $(pbold $region)"
+        psuccess "Created S3 bucket $(pbold $bucket) in $(pbold $region)"
     else
-        perror "Could not create S3 bucket $(pbold $1), create bucket manually and run $(pbold git-blog configure upstream)"
+        perror "Could not create S3 bucket $(pbold $bucket), create bucket manually and run $(pbold git-blog configure upstream)"
     fi
 
     plog "Setting up social links for header navigation"

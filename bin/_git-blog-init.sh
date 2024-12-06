@@ -73,7 +73,8 @@ function initialize() {
     write_config_attribute "region" $region
 
     plog "Creating S3 bucket."
-    aws s3api create-bucket --bucket=$bucket --region=$region 2>&1 > /dev/null
+    aws s3api create-bucket --bucket $bucket --region $region --object-ownership BucketOwnerPreferred 2>&1 > /dev/null
+    aws s3api delete-public-access-block --bucket $bucket --region $region 2>&1 > /dev/null
 
     if [ $? -eq 0 ]; then
         psuccess "Created S3 bucket $(pbold $bucket) in $(pbold $region)"

@@ -130,16 +130,6 @@ function build() {
                 export $key="$(multimarkdown -e=$key $document)"
             done
 
-            if (( $count > 0 )); then
-                firstPost=0
-                prevPost=$(($count - 1))
-            fi
-
-            if (( $count < $((${#posts[@]} - 1)) )); then
-                lastPost=$((${#posts[@]} - 1))
-                nextPost=$(($count + 1))
-            fi
-
             loadHeaderMetadata
 
             # Render post and prettify markup before writing

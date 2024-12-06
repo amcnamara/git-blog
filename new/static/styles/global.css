@@ -5,6 +5,7 @@
     --spacing: 2em;
     --corner-radius: 0.4em;
     --content-width: 50%;
+    font-size: 1.1em;
 }
 
 body {
@@ -15,7 +16,6 @@ body {
     position: absolute;
     font-family: helvetica, sans-serif;
     font-weight: 200;
-    font-size: 1.1em;
     height: 100%;
     width: 100%;
 }
@@ -168,6 +168,14 @@ div.footer div.copyright.small, div.footer div.spacer {
         --content-width: 85%;
     }
 
+    /* High-DPI phones in portrait */
+    @media (min-resolution: 3dppx) {
+        :root {
+            --content-width: 100%;
+            font-size: 2.5em;
+        }
+    }
+
     div.navigation {
         position: relative;
         width: var(--content-width);
@@ -209,8 +217,8 @@ div.footer div.copyright.small, div.footer div.spacer {
     }
 }
 
-/* Phones */
-@media screen and (max-width: 40em) {
+/* Phones and other narrow viewports */
+@media (max-width: 40em) {
     :root {
         --content-width: 100%;
     }

@@ -5,12 +5,19 @@ div.content a {
 
 div.content h1 {
     font-weight: 400;
-    margin-bottom: calc(var(--spacing) / 2);
+    margin-bottom: calc(var(--spacing) / 3);
+    padding-bottom: calc(var(--spacing) / 6);
+    border-bottom: 4px double var(--secondary);
 }
 
 div.content h2, div.content h3 {
     font-weight: 200;
     border-left: 1px solid;
+    margin-bottom: 0.2em;
+    margin-top: 1.5em;
+    border-left: 2px solid var(--secondary);
+    border-bottom: 2px solid var(--secondary);
+    font-weight: 200;
     margin-bottom: 0.2em;
 }
 

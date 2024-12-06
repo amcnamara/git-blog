@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html>
-  {{> ./partials/_meta_header.mustache}}
+  <head>
+    {{> ./partials/_meta_header.mustache}}
+    <link type="text/css" rel="stylesheet" href="/styles/index.css">
+  </head>
   <body>
     {{> ./partials/_content_background.mustache}}
     {{> ./partials/_content_navigation.mustache}}
     <div class="content">
       <h1 class="index">Index</h1>
+      <hr />
       {{#postIndicies}}
         <a class="post" href="/posts/{{.}}.html">
           <h5 class="title">{{('index.' . ',title')}}</h5>

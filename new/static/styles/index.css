@@ -1,0 +1,14 @@
+div.content a.post {
+    display: block;
+    padding: calc(var(--spacing) / 2);
+    border: 1px solid var(--primary);
+    border-radius: calc(var(--corner-radius) /2);
+}
+
+div.content a.post:hover {
+    border: 1px solid var(--secondary);
+}
+
+div.content a.post:hover .title {
+    color: var(--highlight);
+}

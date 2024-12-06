@@ -1,7 +1,5 @@
-<head>
-  <title>{{title}}</title>
-  <meta charset="UTF-8">
-  {{> ./__meta_header_styling.mustache}}
-  {{> ./__meta_header_scripts.mustache}}
-  {{> ./__meta_header_favicon.mustache}}
-</head>
+<title>{{title}}</title>
+<meta charset="UTF-8">
+<link rel="icon" id="favicon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎉</text></svg>" />
+<link type="text/css" rel="stylesheet" href="/styles/global.css">
+{{> ./__meta_header_scripts.mustache}}

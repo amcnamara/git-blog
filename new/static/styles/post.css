@@ -1,0 +1,33 @@
+div.content a {
+    color: var(--highlight);
+    text-decoration: none;
+}
+
+div.content div.postLinkContainer {
+    display: none;
+}
+
+div.content h2, div.content h3, div.content h4, div.content h5, div.content h6 {
+    padding-left: 0.5em;
+}
+
+div.content h1 {
+    font-weight: 400;
+    margin-bottom: calc(var(--spacing) / 2);
+}
+
+div.content h2, div.content h3 {
+    font-weight: 200;
+    border-left: 1px solid;
+    margin-bottom: 0.2em;
+}
+
+div.content h4, div.content h5 {
+    font-weight: 400;
+    margin: 0;
+}
+
+div.content h6 {
+    font-weight: 400;
+    margin: 0.2em 0;
+}

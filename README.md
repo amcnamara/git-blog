@@ -63,6 +63,9 @@ git-blog init example.com
 ```
 
 Create a new post, and edit its contents with your default `$EDITOR` if one is defined in your shell's env:
+
+> **NOTE**: [Markdown](https://daringfireball.net/projects/markdown/) is used as the formatting markup for post content
+
 ```
 git-blog write Hello World
 ```

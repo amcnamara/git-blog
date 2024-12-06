@@ -4,9 +4,14 @@ function import_assets() {
         # We don't want to clobber uncommitted local changes to assets
         break_on_staged_changes
 
+        mv $STATIC_DIR/robots.txt $GIT_BASEDIR
+
         plog "Copying templates and static assets"
         rm -rf $TEMPLATE_DIR $STATIC_DIR
-        rsync -a $BINSRC/../new/static $BINSRC/../new/templates $GIT_BASEDIR
+        rsync -a --exclude robots.txt $BINSRC/../new/static $BINSRC/../new/templates $GIT_BASEDIR
+
+        plog "Restoring robots.txt"
+        mv $GIT_BASEDIR/robots.txt $STATIC_DIR
     # Full import for new blog repos
     else
         plog "Copying initial resources"

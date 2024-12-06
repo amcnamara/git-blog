@@ -131,6 +131,7 @@ div.footer div.copyright {
 
 div.footer div.copyright a, div.footer div.copyright a:visited {
     color: var(--highlight);
+    text-decoration: none;
 }
 
 @media (prefers-color-scheme: dark) {

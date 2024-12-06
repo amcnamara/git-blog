@@ -1,4 +1,6 @@
 div.content a.post {
+    color: var(--secondary);
+    text-decoration: none;
     display: block;
     padding: calc(var(--spacing) / 2);
     border: 1px solid var(--primary);
@@ -11,4 +13,25 @@ div.content a.post:hover {
 
 div.content a.post:hover .title {
     color: var(--highlight);
+}
+
+div.content h1 {
+    font-weight: 400;
+    margin-bottom: calc(var(--spacing) / 2);
+}
+
+div.content h2, div.content h3 {
+    font-weight: 200;
+    border-left: 1px solid;
+    margin-bottom: 0.2em;
+}
+
+div.content h4, div.content h5 {
+    font-weight: 400;
+    margin: 0;
+}
+
+div.content h6 {
+    font-weight: 400;
+    margin: 0.2em 0;
 }

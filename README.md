@@ -88,7 +88,7 @@ View the contents of your S3 bucket
 aws s3 ls example.com
 ```
 
-Configure AWS to route to your content via R53 and CloudFront: [Instructions](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/getting-started-cloudfront-overview.html)
+Configure AWS to route to your content via R53 and [CloudFront](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/getting-started-cloudfront-overview.html) or [Amplify](https://docs.aws.amazon.com/AmazonS3/latest/userguide/website-hosting-amplify.html)
 
 
 Troubleshooting

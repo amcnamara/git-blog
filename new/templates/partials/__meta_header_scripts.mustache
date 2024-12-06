@@ -1,44 +1,60 @@
 <script>
-  let numRows = 20;
-  let numCols = Math.floor(numRows * (window.screen.width / window.screen.height));
+  let drawBackground = () => {
+    // Account for mobile viewports
+    let screenWidth = window.innerWidth;
+    let screenHeight = window.innerHeight;
 
-  let chunkX = window.screen.width / numCols;
-  let chunkY = window.screen.height / numRows;
+    let numRows = 0;
+    let numCols = 0;
 
-  let grid = new Array();
-  for (let i = -1; i <= numRows + 1; i++) {
-    let row = new Array();
-    for (let j = -1; j <= numCols + 1; j++) {
-      row.push([
-        ((chunkX * j) + (chunkX * Math.random())).toFixed(1),
-        ((chunkY * i) + (chunkY * Math.random())).toFixed(1)
-      ]);
+    if (screenWidth > screenHeight) {
+      numRows = 20;
+      numCols = Math.floor(numRows * (screenWidth / screenHeight));
+    } else {
+      numCols = 20;
+      numRows = Math.floor(numCols * (screenHeight / screenWidth));
     }
-    grid.push(row);
-  }
 
-  let corpus = '';
+    let chunkX = screenWidth / numCols;
+    let chunkY = screenHeight / numRows;
 
-  for (let i = 0; i <= numRows; i++) {
-    for (let j = 0; j <= numCols; j++) {
-      let [x1, y1] = grid[i][j];
-      let [x2, y2] = grid[i][j + 1];
-      let [x3, y3] = grid[i + 1][j + 1];
-      let [x4, y4] = grid[i + 1][j];
-
-      let path = `${x1},${y1} ${x2},${y2} ${x3},${y3} ${x4},${y4}`;
-
-      let strokeWeight = Math.random() / i;
-      let colour = `rgb(` +
-                   `${(255 * Math.random()).toFixed()},` +
-                   `${(255 * Math.random()).toFixed()},` +
-                   `${(255 * Math.random()).toFixed()})`
-
-      corpus += `<polygon points="${path}" fill="${colour}" />`;
+    let grid = new Array();
+    for (let i = -1; i <= numRows + 1; i++) {
+      let row = new Array();
+      for (let j = -1; j <= numCols + 1; j++) {
+        row.push([
+          ((chunkX * j) + (chunkX * Math.random())).toFixed(1),
+          ((chunkY * i) + (chunkY * Math.random())).toFixed(1)
+        ]);
+      }
+      grid.push(row);
     }
+
+    let corpus = '';
+
+    for (let i = 0; i <= numRows; i++) {
+      for (let j = 0; j <= numCols; j++) {
+        let [x1, y1] = grid[i][j];
+        let [x2, y2] = grid[i][j + 1];
+        let [x3, y3] = grid[i + 1][j + 1];
+        let [x4, y4] = grid[i + 1][j];
+
+        let path = `${x1},${y1} ${x2},${y2} ${x3},${y3} ${x4},${y4}`;
+
+        let strokeWeight = Math.random() / i;
+        let colour = `rgb(` +
+                     `${(255 * Math.random()).toFixed()},` +
+                     `${(255 * Math.random()).toFixed()},` +
+                     `${(255 * Math.random()).toFixed()})`
+
+        corpus += `<polygon points="${path}" fill="${colour}" />`;
+      }
+    }
+
+    return corpus;
   }
 
   window.addEventListener('DOMContentLoaded', function() {
-    document.querySelector('svg#background').innerHTML = corpus;
+    document.querySelector('svg#background').innerHTML = drawBackground();
   });
 </script>

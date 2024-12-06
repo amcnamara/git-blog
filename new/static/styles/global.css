@@ -50,14 +50,26 @@ div.navigation a.home:hover {
     color: var(--highlight);
 }
 
+div.navigation a:hover svg.rss path {
+    stroke: var(--highlight);
+}
+
+div.navigation a:hover svg.rss circle {
+    fill: var(--highlight);
+}
+
+div.navigation a:hover svg.github path, div.navigation a:hover svg.bluesky path {
+    fill: var(--highlight);
+}
+
+div.navigation a:hover svg.avatar g {
+    fill: var(--highlight);
+}
+
 div.navigation a svg {
     height: calc(var(--spacing) / 1.3);
     width: calc(var(--spacing) / 1.3);
     margin: calc(var(--spacing) / 5);
-}
-
-div.navigation a:hover svg {
-    filter: saturate(200%) brightness(200%);
 }
 
 div.content {
@@ -124,7 +136,7 @@ div.footer a svg {
 }
 
 div.footer a:hover svg {
-    filter: saturate(200%) brightness(200%);
+    filter: saturate(125%) brightness(125%);
 }
 
 div.footer div.copyright {

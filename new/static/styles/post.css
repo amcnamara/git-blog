@@ -1,6 +1,7 @@
 div.content a {
     color: var(--highlight);
     text-decoration: none;
+    font-weight: 400;
 }
 
 div.content h1 {

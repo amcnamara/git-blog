@@ -1,8 +1,8 @@
 <script>
   let drawBackground = () => {
     // Account for mobile viewports
-    let screenWidth = window.innerWidth;
-    let screenHeight = window.innerHeight;
+    let screenWidth = Math.max(window.innerWidth, window.screen.width);
+    let screenHeight = Math.max(window.innerHeight, window.screen.height);
 
     let numRows = 0;
     let numCols = 0;

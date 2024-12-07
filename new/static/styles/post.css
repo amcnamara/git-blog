@@ -20,6 +20,8 @@ div.content h2, div.content h3 {
     border-bottom: 2px solid var(--secondary);
     font-weight: 200;
     margin-bottom: 0.2em;
+    font-size: 1.35em;
+    padding-bottom: 0.2em;
 }
 
 div.content h4, div.content h5 {

@@ -46,6 +46,15 @@ function build() {
 
     loadHeaderMetadata
 
+    domain=$(echo_config_attribute 'domain')
+
+    # TODO: Validate domain against RFC-3986
+    if [ -z $domain ]; then
+        pwarning "Blog domain not set in config, can only generate relative URLs"
+    else
+        # Sitemaps should only contain fully qualified URLs, so prefix the domain.
+        domain="https://$domain"
+    fi
 
     ## ABOUT
     output=$PUBLIC_DIR/about.html
@@ -175,16 +184,6 @@ function build() {
     ## SITEMAP
     # Lookup all public markup, including both generated and copied static pages.
     paths=$(find $PUBLIC_DIR -name '*.html')
-
-    domain=$(echo_config_attribute 'domain')
-
-    # TODO: Validate domain against RFC-3986
-    if [ -z $domain ]; then
-        pwarning "Blog domain not set in config, can only generate relative URLs"
-    else
-        # Sitemaps should only contain fully qualified URLs, so prefix the domain.
-        domain="https://$domain"
-    fi
 
     pbold "Writing $OUT_SITEMAP_FILE"
 

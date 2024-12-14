@@ -37,3 +37,15 @@ div.content h6 {
 div.content h2, div.content h3, div.content h4, div.content h5, div.content h6 {
     padding-left: 0.5em;
 }
+
+div.content pre {
+    padding: 1em;
+    background-color: var(--lowlight);
+    border-radius: 0.2em;
+    overflow-x: scroll;
+}
+
+div.content pre code {
+    font-family: consolas, monospace;
+    font-size: 0.9em;
+}

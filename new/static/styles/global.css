@@ -2,6 +2,7 @@
     --primary: #FFF;
     --secondary: #222;
     --highlight: blue;
+    --lowlight: rgba(0, 0, 255, 0.1);
     --spacing: 2em;
     --corner-radius: 0.4em;
     --content-width: 50%;
@@ -159,6 +160,7 @@ div.footer div.copyright.small, div.footer div.spacer {
         --primary: #111;
         --secondary: #DDD;
         --highlight: yellow;
+        --lowlight: rgba(255, 255, 0, 0.15);
     }
 }
 

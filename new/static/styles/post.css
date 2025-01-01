@@ -49,3 +49,21 @@ div.content pre code {
     font-family: consolas, monospace;
     font-size: 0.9em;
 }
+
+div.content p code {
+    border-radius: 0.2em;
+    font-size: 0.9em;
+    font-family: consolas, monospace;
+    font-weight: 400;
+    padding: 0.2em 0.3em 0.1em 0.3em;
+    background-color: var(--lowlight);
+}
+
+div.content blockquote {
+    margin-left: 1em;
+}
+
+div.content blockquote p {
+    padding-left: 1em;
+    border-left: 2px dotted var(--secondary);
+}

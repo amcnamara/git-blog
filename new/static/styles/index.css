@@ -35,4 +35,8 @@ div.content h4, div.content h5 {
 div.content h6 {
     font-weight: 400;
     margin: 0.2em 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 0.67em;
 }

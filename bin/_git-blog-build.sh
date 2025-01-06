@@ -1,12 +1,24 @@
 function generateKeywordLinks() {
-    keywords=(${index[$1,keywords]//:/ })
+    keywords=(${index[$1,keywords]})
     for i in "${!keywords[@]}"; do
         echo -e "<$2>#${keywords[i]}</$2>"
     done
 }
 
-function friendly_date() {
+function friendlyDate() {
+    # Convert from RFC 5322 to a friendlier format.
     echo $(date -jf "%a, %d %b %Y %H:%M:%S %z" "$1" +"%b %-d, %Y")
+}
+
+function injectYearHeader() {
+    # Fetch the publication year of the current and previous posts from the index.
+    curr=$(date -jf "%a, %d %b %Y %H:%M:%S %z" "${index[$1,publish_date]}" +"%Y")
+    prev=$(date -jf "%a, %d %b %Y %H:%M:%S %z" "${index[$(($1 + 1)),publish_date]}" +"%Y")
+
+    # If the above post is from a different year, inject the header for the current year.
+    if [ $prev -gt $curr ] || [ -z $prev ]; then
+        echo "<h4>$curr</h4>"
+    fi
 }
 
 function loadHeaderMetadata() {

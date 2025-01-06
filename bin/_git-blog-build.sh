@@ -19,6 +19,11 @@ function injectYearHeader() {
     if [ $prev -gt $curr ] || [ -z $prev ]; then
         echo "<h4>$curr</h4>"
     fi
+
+    # Posts in progress
+    if [ -z $curr ]; then
+        echo "<h4>Not Published</h4>"
+    fi
 }
 
 function loadHeaderMetadata() {

@@ -1,3 +1,11 @@
+div.publication-date {
+    font-size: 0.7em;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 0.25em;
+}
+
 div.content a {
     color: var(--highlight);
     text-decoration: none;
@@ -13,29 +21,26 @@ div.content h1 {
 
 div.content h2, div.content h3 {
     font-weight: 200;
-    border-left: 1px solid;
     margin-bottom: 0.2em;
     margin-top: 1.5em;
     border-left: 2px solid var(--secondary);
     border-bottom: 2px solid var(--secondary);
     font-weight: 200;
-    margin-bottom: 0.2em;
     font-size: 1.35em;
     padding-bottom: 0.2em;
-}
-
-div.content h4, div.content h5 {
-    font-weight: 400;
-    margin: 0;
-}
-
-div.content h6 {
-    font-weight: 400;
-    margin: 0.2em 0;
-}
-
-div.content h2, div.content h3, div.content h4, div.content h5, div.content h6 {
     padding-left: 0.5em;
+}
+
+div.content li > h4, div.content li > h5, div.content li > h6 {
+    margin: 1.75em 0 0 0;
+}
+
+div.content h4, div.content h5, div.content h6 {
+    border-bottom: 2px dotted var(--secondary);
+    margin: 0.75em 0;
+    display: block;
+    width: fit-content;
+    font-weight: 400;
 }
 
 div.content pre {
@@ -50,7 +55,7 @@ div.content pre code {
     font-size: 0.9em;
 }
 
-div.content p code {
+div.content p code, div.content li > code {
     border-radius: 0.2em;
     font-size: 0.9em;
     font-family: consolas, monospace;
@@ -66,4 +71,29 @@ div.content blockquote {
 div.content blockquote p {
     padding-left: 1em;
     border-left: 2px dotted var(--secondary);
+}
+
+/* Vertical displays and tablets */
+@media (orientation: portrait) {
+    div.publication-date {
+        position: relative;
+        text-align: center;
+        margin: 1em;
+    }
+
+    div.content {
+        margin: calc(var(--spacing) / 3) auto var(--spacing) auto;
+    }
+
+    /* High-DPI phones in portrait */
+    @media (min-resolution: 3dppx) {
+        div.publication-date {
+        }
+    }
+}
+
+/* Phones and other narrow viewports */
+@media (max-width: 40em) {
+    div.publication-date {
+    }
 }

@@ -5,6 +5,10 @@ function generateKeywordLinks() {
     done
 }
 
+function friendly_date() {
+    echo $(date -jf "%a, %d %b %Y %H:%M:%S %z" "$1" +"%b %-d, %Y")
+}
+
 function loadHeaderMetadata() {
     export _domain=$(echo_config_attribute "domain")
     export _title=$(echo_config_attribute "title")

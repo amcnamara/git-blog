@@ -15,14 +15,12 @@ function injectYearHeader() {
     curr=$(date -jf "%a, %d %b %Y %H:%M:%S %z" "${index[$1,publish_date]}" +"%Y")
     prev=$(date -jf "%a, %d %b %Y %H:%M:%S %z" "${index[$(($1 + 1)),publish_date]}" +"%Y")
 
-    # If the above post is from a different year, inject the header for the current year.
-    if [ $prev -gt $curr ] || [ -z $prev ]; then
-        echo "<h4>$curr</h4>"
-    fi
-
-    # Posts in progress
     if [ -z $curr ]; then
+        # Posts in progress
         echo "<h4>Not Published</h4>"
+    elif [ $prev -gt $curr ] || [ -z $prev ]; then
+        # If the above post is from a different year, inject the header for the current year.
+        echo "<h4>$curr</h4>"
     fi
 }
 

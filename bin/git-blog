@@ -7,6 +7,7 @@ source $BINSRC/_git-blog-helpers.sh
 source $BINSRC/_git-blog-init.sh
 source $BINSRC/_git-blog-configure.sh
 source $BINSRC/_git-blog-write.sh
+source $BINSRC/_git-blog-render.sh
 source $BINSRC/_git-blog-build.sh
 source $BINSRC/_git-blog-publish.sh
 

@@ -27,6 +27,7 @@ You can install locally by pulling this repo and running `make all`, it will req
 - [MultiMarkdown](https://fletcher.github.io/MultiMarkdown-5/installation)
 - [Tidy-HTML5](http://www.html-tidy.org/#homepage19700601get_tidy)
 - [Mustache](https://github.com/tests-always-included/mo)
+- [NPM](https://www.npmjs.com/)
 - [Python3](https://www.python.org/downloads)
 - [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
 

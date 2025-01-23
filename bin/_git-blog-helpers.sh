@@ -55,33 +55,52 @@ function check_dependencies() {
     # Ensure that the necessary commands are installed
     # NOFIX: I don't feel like using a real package manager.
     if ! is_command "git"; then
-        perror "Missing 'git' source control dependency, please visit: ${WHITE}https://git-scm.com/book/en/v2/Getting-Started-Installing-Git${NOCOLOUR}"
+        perror "Missing 'git' source control dependency, please visit: $(pbold 'https://git-scm.com/book/en/v2/Getting-Started-Installing-Git')"
         exit 1
     fi
 
     if ! is_command "multimarkdown"; then
-        perror "Missing 'multimarkdown' templating dependency, please visit: ${WHITE}https://fletcher.github.io/MultiMarkdown-5/installation${NOCOLOUR}"
+        perror "Missing 'multimarkdown' templating dependency, please visit: $(pbold 'https://fletcher.github.io/MultiMarkdown-5/installation')"
         exit 1
     fi
 
     if ! is_command "tidy"; then
-        perror "Missing 'tidy-html5' HTML formatter dependency, please visit: ${WHITE}http://www.html-tidy.org/#homepage19700601get_tidy${NOCOLOUR}"
+        perror "Missing 'tidy-html5' HTML formatter dependency, please visit: $(pbold 'http://www.html-tidy.org/#homepage19700601get_tidy')"
         exit 1
     fi
 
     if ! is_command "mo"; then
-        perror "Missing 'mo' templating dependency, please visit: ${WHITE}https://github.com/tests-always-included/mo${NOCOLOUR}"
+        perror "Missing 'mo' templating dependency, please visit: $(pbold 'https://github.com/tests-always-included/mo')"
+        exit 1
+    fi
+
+    if ! is_command "npm"; then
+        perror "Missing 'npm' pre-rendering dependency, please visit: $(pbold 'https://docs.npmjs.com/downloading-and-installing-node-js-and-npm')"
         exit 1
     fi
 
     if ! is_command "python3"; then
-        perror "Missing 'python3' runtime, please visit: ${WHITE}https://www.python.org/downloads${NOCOLOUR}"
+        perror "Missing 'python3' runtime, please visit: $(pbold 'https://www.python.org/downloads')"
         exit 1
     fi
 
     if ! is_command "aws"; then
-        perror "Missing 'aws' hosting dependency, please visit: ${WHITE}http://docs.aws.amazon.com/cli/latest/userguide/installing.html${NOCOLOUR}"
+        perror "Missing 'aws' hosting dependency, please visit: $(pbold 'http://docs.aws.amazon.com/cli/latest/userguide/installing.html')"
         exit 1
+    fi
+}
+
+function pull_npm_puppeteer() {
+    # Puppeteer is needed for (optional) pre-rendering, pull it if needed
+    if ! [ -d "node_modules/puppeteer" ]; then
+        plog "NPM Puppeteer module not found. Installing."
+        npm install puppeteer --silent >&2
+
+        if [ $? -eq 0 ]; then
+            psuccess "NPM Puppeteer successfully installed"
+        else
+            perror "NPM Puppeteer could not be installed"
+        fi
     fi
 }
 
@@ -90,6 +109,7 @@ function show_dependency_versions() {
     plog "MultiMarkdown version $(pbold $(multimarkdown --help | grep "MultiMarkdown v\d.\d.\d" | cut -d' ' -f2 | cut -c2-)) (recommended $(pbold '>=6.6.0'))"
     plog "Tidy-HTML5 version $(pbold $(tidy --version | sed 's/^[^[:digit:]]*\(.*\)/\1/g')) (recommended $(pbold '>=5.8.0'))"
     plog "Mo version $(pbold $(mo --help | grep "MO_VERSION=" | cut -d'=' -f2)) (recommended $(pbold '>=3.0.7'))"
+    plog "NPM version $(pbold $(npm --version)) (recommended $(pbold '>=10.9.2'))"
     plog "Python3 version $(pbold $(python3 --version | cut -d' ' -f2)) (recommended $(pbold '>=3.12.7'))"
     plog "AWS CLI version $(pbold $(aws --version | cut -d' ' -f1 | cut -d'/' -f2)) (recommended $(pbold '>=2.18.0'))"
 }
@@ -187,6 +207,10 @@ case $1 in
         ;;
     "show_dependency_versions")
         show_dependency_versions
+        shift
+        ;;
+    "pull_npm_puppeteer")
+        pull_npm_puppeteer
         shift
         ;;
 esac

@@ -31,22 +31,23 @@ You can install locally by pulling this repo and running `make all`, it will req
 - [Python3](https://www.python.org/downloads)
 - [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
 
+> NOTE: As long as `git-blog` is on your `$PATH` then `git` will find it and bind it as a subcommand.
 
 Usage
 -----
 
 ```
-git-blog --help                 This message
-git-blog init <domain>          Creates a new local blog repo, with some default assets
-git-blog configure [-stu]       Configures navigation links and AWS resources [default: all]
+git blog --help                 This message
+git blog init <domain>          Creates a new local blog repo, with some default assets
+git blog configure [-stu]       Configures navigation links and AWS resources [default: all]
   -s --social                   Write social handles for navigation links
   -t --title                    Write title for the blog [default: domain]
   -u --upstream                 Write AWS resource locations for S3
-git-blog write <post-title>     Creates a new blog post
-git-blog build [port]           Builds all static assets into public directory, and serve for review
-git-blog publish                Copies built static assets to configured upstream S3 bucket
-git-blog doctor                 Print out system dependencies which may be missing or require updates
-git-blog migrate                Re-import templates and static assets
+git blog write <post-title>     Creates a new blog post
+git blog build [port]           Builds all static assets into public directory, and serve for review
+git blog publish                Copies built static assets to configured upstream S3 bucket
+git blog doctor                 Print out system dependencies which may be missing or require updates
+git blog migrate                Re-import templates and static assets
 ```
 
 
@@ -60,7 +61,7 @@ aws configure
 
 Initialize a new blog, this will automatically create a corresponding bucket in S3 where assets will be published:
 ```
-git-blog init example.com
+git blog init example.com
 ```
 
 Create a new post, and edit its contents with your default `$EDITOR` if one is defined in your shell's env:
@@ -68,12 +69,12 @@ Create a new post, and edit its contents with your default `$EDITOR` if one is d
 > **NOTE**: [Markdown](https://daringfireball.net/projects/markdown/) is used as the formatting markup for post content
 
 ```
-git-blog write Hello World
+git blog write Hello World
 ```
 
 Build and view the content that was just created:
 ```
-git-blog build
+git blog build
 ```
 
 Commit the new content, and publish it:
@@ -81,7 +82,7 @@ Commit the new content, and publish it:
 git add content/posts
 git commit -m "My first post."
 
-git-blog publish
+git blog publish
 ```
 
 View the contents of your S3 bucket
@@ -97,12 +98,12 @@ Troubleshooting
 
 Check your installed dependencies to ensure that they're up-to-date:
 ```
-git-blog doctor
+git blog doctor
 ```
 
 Change the S3 bucket or region for publishing:
 ```
-git-blog configure -u
+git blog configure -u
 ```
 
 Clone the bundle from a published `git-blog`:

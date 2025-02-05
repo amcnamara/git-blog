@@ -24,10 +24,11 @@ function write() {
     fi
 
     cat <<POST > $filename
+---
 title: ${@}
 keywords:
 description:
------------
+---
 POST
 
     pbold "Writing $filename"

@@ -26,7 +26,11 @@ const puppeteer = require("puppeteer");
   await page.setContent(htmlContent, { waitUntil: "domcontentloaded" });
 
   // Wait for JavaScript execution (adjust timeout if necessary)
-  await page.waitForTimeout(1000);
+  await (() => {
+    return new Promise(resolve => {
+      setTimeout(resolve, 1000);
+    });
+  })();
 
   // Remove or clear elements as needed
   await page.evaluate(() => {
@@ -40,11 +44,9 @@ const puppeteer = require("puppeteer");
   // Write to the output file
   fs.writeFileSync("$1", updatedHTML);
 
-  console.log("Updated HTML saved to $1");
+  console.log("Pre-render pass complete, saving snapshot to: $1");
 
   await browser.close();
 })();
 SCRIPT
-
-    
 }

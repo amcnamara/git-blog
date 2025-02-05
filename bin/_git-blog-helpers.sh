@@ -92,9 +92,9 @@ function check_dependencies() {
 
 function pull_npm_puppeteer() {
     # Puppeteer is needed for (optional) pre-rendering, pull it if needed
-    if ! [ -d "node_modules/puppeteer" ]; then
+    if ! npm list -g puppeteer --depth=0 > /dev/null; then
         plog "NPM Puppeteer module not found. Installing."
-        npm install puppeteer --silent >&2
+        npm install -g puppeteer --silent >&2
 
         if [ $? -eq 0 ]; then
             psuccess "NPM Puppeteer successfully installed"

@@ -18,7 +18,7 @@ function injectYearHeader() {
     if [ -z $curr ]; then
         # Posts in progress
         echo "<h4>Not Published</h4>"
-    elif [ $prev -gt $curr ] || [ -z $prev ]; then
+    elif [ -z $prev ] || [ $prev -gt $curr ]; then
         # If the above post is from a different year, inject the header for the current year.
         echo "<h4>$curr</h4>"
     fi
@@ -162,6 +162,11 @@ function build() {
 
             # Render post and prettify markup before writing
             mo --allow-function-arguments $template | tidy --tidy-mark no --show-warnings yes -i -w 0 -q - > $output
+
+            # Pre-render page if needed
+            if [ $(sed -n '/^---*$/,/^---*$/p' $document | grep -i "^\!prerender$") ]; then
+                pre_render $output
+            fi
         )
 
         if [ $? -eq 1 ]; then

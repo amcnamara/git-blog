@@ -34,9 +34,9 @@ function publish() {
     # TODO: Have a flag for draft posts which will not get datestamps,
     #       and which are not rendered on build but are in the bundle.
     for post in `echo $(find $POST_DIR -name "*.md")`; do
-        if [[ ! $(head -n 1 $post) =~ "publish_date:" ]]; then
+        if [[ ! $(multimarkdown -e=publish_date $post) ]]; then
             plog "Injecting publish datestamp into $post"
-            echo -e "publish_date: $(date -R)\n$(cat $post)" > $post
+            sed -i '' $'2i\\\npublish_date: '"$(date -R)"$'\n' $post
         fi
     done
 

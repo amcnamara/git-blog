@@ -17,6 +17,7 @@ const puppeteer = require("puppeteer");
 
 (async () => {
   const browser = await puppeteer.launch();
+  
   const page = await browser.newPage();
 
   // Read the input HTML file
@@ -25,17 +26,10 @@ const puppeteer = require("puppeteer");
   // Set the content
   await page.setContent(htmlContent, { waitUntil: "domcontentloaded" });
 
-  // Wait for JavaScript execution (adjust timeout if necessary)
-  await (() => {
-    return new Promise(resolve => {
-      setTimeout(resolve, 1000);
-    });
-  })();
-
   // Remove or clear elements as needed
   await page.evaluate(() => {
-    document.querySelectorAll('.git-blog-prerender-delete').forEach(element => {element.remove()})
-    document.querySelectorAll('.git-blog-prerender-clear').forEach(element => {element.innerHTML=""})
+    document.querySelectorAll('.git-blog-prerender-delete').forEach(element => {element.remove()});
+    document.querySelectorAll('.git-blog-prerender-clear').forEach(element => {element.innerHTML=""});
   });
 
   // Extract the updated HTML

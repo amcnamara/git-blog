@@ -160,11 +160,16 @@ function build() {
 
             loadHeaderMetadata
 
+            # Pre-render page if needed
+            if [ $(sed -n '/^---*$/,/^---*$/p' $document | grep -i "^\!prerender$") ]; then
+                export _prerender="true"
+            fi
+
             # Render post and prettify markup before writing
             mo --allow-function-arguments $template | tidy --tidy-mark no --show-warnings yes -i -w 0 -q - > $output
 
             # Pre-render page if needed
-            if [ $(sed -n '/^---*$/,/^---*$/p' $document | grep -i "^\!prerender$") ]; then
+            if [ -v _prerender ]; then
                 pre_render $output
             fi
         )

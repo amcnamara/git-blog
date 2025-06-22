@@ -161,7 +161,7 @@ function build() {
             loadHeaderMetadata
 
             # Pre-render page if needed
-            if [ $(sed -n '/^---*$/,/^---*$/p' $document | grep -i "^\!prerender$") ]; then
+            if [ $(multimarkdown -e=build-opts $document | grep -i -E "pre\-?render") ]; then
                 export _prerender="true"
             fi
 

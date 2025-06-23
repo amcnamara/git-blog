@@ -3,11 +3,11 @@
 # This can be helpful to have some scripts run a pass on the page, such
 # as for syntax hilighting in code blocks.
 #
-# NOTE: For a pre-render to be applied during build, add !prerender to
-#       the post metadata block.
-# NOTE: Any element with the class .git-blog-prerender-destroy will be
+# NOTE: For a pre-render to be applied during build, add a tag for
+#       'build-opts: pre-render' to the post metadata block.
+# NOTE: Any element with the class '.git-blog-prerender-destroy' will be
 #       removed from the generated asset.
-# NOTE: Any element with the class .git-blog-prerender-clear will have
+# NOTE: Any element with the class '.git-blog-prerender-clear' will have
 #       its children removed from the generated asset (this is helpful
 #       to ensure the background vector container remains empty).
 function pre_render() {

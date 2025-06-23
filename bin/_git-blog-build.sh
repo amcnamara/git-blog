@@ -44,7 +44,12 @@ function build() {
         perror "Cannot run build from within $PUBLIC_DIR, run from $GIT_BASEDIR"
         exit 1
     fi
-        
+
+    # Shortcut some assets for faster iteration of content
+    if [[ $1 == "fast" ]]; then
+        export _skip_build=1
+    fi
+
     # Blow away all existing built assets, and copy in all static assets
     rm -rf $PUBLIC_DIR
     rsync -a $STATIC_DIR/* $PUBLIC_DIR
@@ -76,27 +81,32 @@ function build() {
     fi
 
     ## ABOUT
-    output=$PUBLIC_DIR/about.html
-    template=$TEMPLATE_DIR/about.mustache
-    title="About me"
+    if [ -z "$_skip_build" ]; then            
+        output=$PUBLIC_DIR/about.html
+        template=$TEMPLATE_DIR/about.mustache
+        title="About me"
 
-    if [ ! -e $template ]; then
-        pwarning "Could not generate about.html, missing template $TEMPLATE_DIR/about.mustache"
-    else
-        # Read in post content
-        export content=$(multimarkdown --snippet "$GIT_BASEDIR/about.md")
-
-        if [ -z "$content" ]; then
-            pwarning "Could not generate about.html, missing content $GIT_BASEDIR/about.md"
+        
+        if [ ! -e $template ]; then
+            pwarning "Could not generate about.html, missing template $TEMPLATE_DIR/about.mustache"
         else
-            pbold "Writing $output"
+            # Read in post content
+            export content=$(multimarkdown --snippet "$GIT_BASEDIR/about.md")
 
-            # Used to toggle profile in navigation
-            export _about=1
-            mo --allow-function-arguments $template | tidy --tidy-mark no --show-warnings no -i -w 0 -q - > $output
+            if [ -z "$content" ]; then
+                pwarning "Could not generate about.html, missing content $GIT_BASEDIR/about.md"
+            else
+                pbold "Writing $output"
 
-            psuccess "Generated about page."
+                # Used to toggle profile in navigation
+                export _about=1
+                mo --allow-function-arguments $template | tidy --tidy-mark no --show-warnings no -i -w 0 -q - > $output
+
+                psuccess "Generated about page."
+            fi
         fi
+    else
+        pwarning "Skipping about page for fast build"
     fi
 
 
@@ -170,7 +180,9 @@ function build() {
 
             # Pre-render page if needed
             if [ -v _prerender ]; then
-                pre_render $output
+                if [ -z "$_skip_build" ]; then
+                    pre_render $output
+                fi
             fi
         )
 
@@ -210,40 +222,44 @@ function build() {
         psuccess "Generated index"
     fi
 
-    ## SITEMAP
-    # Lookup all public markup, including both generated and copied static pages.
-    paths=$(find $PUBLIC_DIR -name '*.html')
+    if [ -z "$_skip_build" ]; then
+        ## SITEMAP
+        # Lookup all public markup, including both generated and copied static pages.
+        paths=$(find $PUBLIC_DIR -name '*.html')
 
-    pbold "Writing $OUT_SITEMAP_FILE"
+        pbold "Writing $OUT_SITEMAP_FILE"
 
-    for path in $paths; do
-        echo $domain${path#$PUBLIC_DIR} >> $OUT_SITEMAP_FILE
-    done
+        for path in $paths; do
+            echo $domain${path#$PUBLIC_DIR} >> $OUT_SITEMAP_FILE
+        done
 
-    psuccess "Generated sitemap"
-
-
-    ## RSS
-    template=$TEMPLATE_DIR/rss.mustache
-    _buildtime=$(date -R)
-
-    pbold "Writing $OUT_RSS_FILE"
-
-    mo --allow-function-arguments $template > $OUT_RSS_FILE
-
-    psuccess "Generated RSS feed"
+        psuccess "Generated sitemap"
 
 
-    ## BUNDLE
-    if [ -z $(git rev-list -n 1 --all) ]; then
-        pwarning "Cannot build a git bundle, no commits have been detected."
-    else
-        pbold "Writing $OUT_BUNDLE"
+        ## RSS
+        template=$TEMPLATE_DIR/rss.mustache
+        _buildtime=$(date -R)
 
-        if git bundle create $OUT_BUNDLE --all; then
-            psuccess "Generated git bundle"
+        pbold "Writing $OUT_RSS_FILE"
+
+        mo --allow-function-arguments $template > $OUT_RSS_FILE
+
+        psuccess "Generated RSS feed"
+
+
+        ## BUNDLE
+        if [ -z $(git rev-list -n 1 --all) ]; then
+            pwarning "Cannot build a git bundle, no commits have been detected."
         else
-            perror "Could not create git bundle"
+            pbold "Writing $OUT_BUNDLE"
+
+            if git bundle create $OUT_BUNDLE --all; then
+                psuccess "Generated git bundle"
+            else
+                perror "Could not create git bundle"
+            fi
         fi
+    else
+        pwarning "Skipping Sitemap, RSS, and Bundle for fast build."
     fi
 }

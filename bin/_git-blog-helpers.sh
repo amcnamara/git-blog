@@ -88,6 +88,16 @@ function check_dependencies() {
         perror "Missing 'aws' hosting dependency, please visit: $(pbold 'http://docs.aws.amazon.com/cli/latest/userguide/installing.html')"
         exit 1
     fi
+
+    check_optional_dependencies
+}
+
+function check_optional_dependencies() {
+    plumb_logs $@
+    # Puppeteer is optional for pre-rendering; warn if it's missing.
+    if ! npm list -g puppeteer --depth=0 > /dev/null 2>&1; then
+        pwarning "Missing global 'puppeteer' (optional pre-rendering dependency). Install instructions: $(pbold 'https://pptr.dev/guides/installation')"
+    fi
 }
 
 function pull_npm_puppeteer() {
@@ -203,6 +213,10 @@ USAGE
 case $1 in
     "check_dependencies")
         check_dependencies
+        shift
+        ;;
+    "check_optional_dependencies")
+        check_optional_dependencies
         shift
         ;;
     "show_dependency_versions")

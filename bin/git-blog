@@ -28,9 +28,42 @@ case $1 in
         ;;
     build)
         is_gitblog
-        build ${@:2}
-        cd $PUBLIC_DIR
+        build_args=("${@:2}")
         PORT=8080
+        set -- "${build_args[@]}"
+        while [[ $# -gt 0 ]]; do
+            case $1 in
+                -f|--fast)
+                    shift
+                    ;;
+                -p|--port)
+                    if [ -z "$2" ]; then
+                        perror "Missing port: --port requires an integer"
+                        exit 1
+                    fi
+                    if [[ ! $2 =~ ^[0-9]+$ ]]; then
+                        perror "Invalid port: $2"
+                        exit 1
+                    fi
+                    PORT=$2
+                    shift 2
+                    ;;
+                fast)
+                    perror "Use -f/--fast instead of the 'fast' argument"
+                    exit 1
+                    ;;
+                --)
+                    shift
+                    break
+                    ;;
+                *|-*|--*)
+                    perror "Unknown option: $1"
+                    exit 1
+                    ;;
+            esac
+        done
+        build "${build_args[@]}"
+        cd $PUBLIC_DIR
         pbold "Bringing up webserver: http://localhost:$PORT" 
         python3 -m http.server $PORT & open "http://localhost:$PORT"
         ;;

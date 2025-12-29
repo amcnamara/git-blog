@@ -45,10 +45,41 @@ function build() {
         exit 1
     fi
 
+    unset _skip_build
+
     # Shortcut some assets for faster iteration of content
-    if [[ $1 == "fast" ]]; then
-        export _skip_build=1
-    fi
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -f|--fast)
+                export _skip_build=1
+                shift
+                ;;
+            -p|--port)
+                if [ -z "$2" ]; then
+                    perror "Missing port: --port requires an integer"
+                    exit 1
+                fi
+                if [[ ! $2 =~ ^[0-9]+$ ]]; then
+                    perror "Invalid port: $2"
+                    exit 1
+                fi
+                # Port is handled by the caller; consume it here for ordering.
+                shift 2
+                ;;
+            fast)
+                perror "Use -f/--fast instead of the 'fast' argument"
+                exit 1
+                ;;
+            --)
+                shift
+                break
+                ;;
+            *|-*|--*)
+                perror "Unknown option: $1"
+                exit 1
+                ;;
+        esac
+    done
 
     # Blow away all existing built assets, and copy in all static assets
     rm -rf $PUBLIC_DIR

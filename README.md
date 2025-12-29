@@ -44,8 +44,8 @@ git blog configure [-stu]    Configures navigation links and AWS resources [defa
   -t --title                 Write title for the blog [default: domain]
   -u --upstream              Write AWS resource locations for S3
 git blog write <post-title>  Creates a new blog post
-git blog build [fast] [-p]   Builds all static assets into public directory, and serve for review
-  fast                       Skip building non-content assets (about, sitemap, pre-renders, etc.)
+git blog build [-fp]         Builds all static assets into public directory, and serve for review
+  -f --fast                  Skip building non-content assets (about, sitemap, pre-renders, etc.)
   -p --port <n>              Set the listening port for the preview webserver
 git blog publish             Copies built static assets to configured upstream S3 bucket
 git blog doctor              Print out system dependencies which may be missing or require updates

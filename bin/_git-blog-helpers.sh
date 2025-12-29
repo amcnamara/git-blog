@@ -195,17 +195,19 @@ function pdebug() {
 function usage() {
     cat <<USAGE
 Usage:
-  git blog                        This message
-  git blog init <domain>          Creates a new local blog repo, with some default assets
-  git blog configure [-stu]       Configures navigation links and AWS resources [default: all]
-    -s --social                   Write social handles for navigation links
-    -t --title                    Write title for the blog [default: domain]
-    -u --upstream                 Write AWS resource locations for S3
-  git blog write <post-title>     Creates a new blog post
-  git blog build [port]           Builds all static assets into public directory, and serve for review
-  git blog publish                Copies built static assets to configured upstream S3 bucket
-  git blog doctor                 Print out system dependencies which may be missing or require updates
-  git blog migrate                Re-import templates and static assets
+  git blog                     This message
+  git blog init <domain>       Creates a new local blog repo, with some default assets
+  git blog configure [-stu]    Configures navigation links and AWS resources [default: all]
+    -s --social                Write social handles for navigation links
+    -t --title                 Write title for the blog [default: domain]
+    -u --upstream              Write AWS resource locations for S3
+  git blog write <post-title>  Creates a new blog post
+  git blog build [fast] [-p]   Builds all static assets into public directory, and serve for review
+    fast                       Skip building non-content assets (about, sitemap, pre-renders, etc.)
+    -p --port <n>              Set the listening port for the preview webserver
+  git blog publish             Copies built static assets to configured upstream S3 bucket
+  git blog doctor              Print out system dependencies which may be missing or require updates
+  git blog migrate             Re-import templates and static assets
 USAGE
 }
 

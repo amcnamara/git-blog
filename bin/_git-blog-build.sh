@@ -86,7 +86,6 @@ function build() {
         template=$TEMPLATE_DIR/about.mustache
         title="About me"
 
-        
         if [ ! -e $template ]; then
             pwarning "Could not generate about.html, missing template $TEMPLATE_DIR/about.mustache"
         else

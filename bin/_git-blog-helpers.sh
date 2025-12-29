@@ -195,7 +195,7 @@ function pdebug() {
 function usage() {
     cat <<USAGE
 Usage:
-  git blog --help                 This message
+  git blog                        This message
   git blog init <domain>          Creates a new local blog repo, with some default assets
   git blog configure [-stu]       Configures navigation links and AWS resources [default: all]
     -s --social                   Write social handles for navigation links

@@ -11,7 +11,23 @@
 #       its children removed from the generated asset (this is helpful
 #       to ensure the background vector container remains empty).
 function pre_render() {
-    node <<SCRIPT
+    local global_node_path=""
+    if is_command "npm"; then
+        global_node_path=$(npm root -g 2> /dev/null)
+    fi
+
+    local node_path="${NODE_PATH}"
+    if [ -n "$global_node_path" ]; then
+        if [ -n "$node_path" ]; then
+            if [[ ":$node_path:" != *":$global_node_path:"* ]]; then
+                node_path="$node_path:$global_node_path"
+            fi
+        else
+            node_path="$global_node_path"
+        fi
+    fi
+
+    NODE_PATH="$node_path" node <<SCRIPT
 const fs = require("fs");
 const puppeteer = require("puppeteer");
 

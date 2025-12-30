@@ -96,7 +96,7 @@ function check_optional_dependencies() {
     plumb_logs $@
     # Puppeteer is optional for pre-rendering; warn if it's missing.
     if ! npm list -g puppeteer --depth=0 > /dev/null 2>&1; then
-        pwarning "Missing global 'puppeteer' (optional pre-rendering dependency). Install instructions: $(pbold 'https://pptr.dev/guides/installation')"
+        pwarning "Missing 'puppeteer' dependency (optional, used for pre-rendering content): \`$(pbold 'npm install -g puppeteer')\`"
     fi
 }
 
